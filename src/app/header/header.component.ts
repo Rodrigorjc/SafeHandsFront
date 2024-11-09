@@ -12,8 +12,13 @@ import {NgIf} from '@angular/common';
 })
 export class HeaderComponent {
   isUserMenuVisible = false;
+  isNavMenuVisible = false;
 
   toggleUserMenu() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
+  }
+
+  mostarNav() {
+    this.isNavMenuVisible = !this.isNavMenuVisible;
   }
 }

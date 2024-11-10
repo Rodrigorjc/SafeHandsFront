@@ -8,6 +8,7 @@ import { routes } from './app/app.routes';
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
+
     provideHttpClient(withInterceptors([tokenInterceptor])),
   ],
-}).then(r => console.log('Aplicación iniciada', r));
+}).then(r => console.log('Application started', r));

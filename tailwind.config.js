@@ -8,6 +8,10 @@ module.exports = {
       fontFamily: {
         sans: ['monserrat', 'monserrat'],
       },
+      textStroke: {
+        '1': '1px',
+        '2': '2px',
+      },
       colors: {
         marronClaro: '#CDB28A', // Marrón claro
         fondo: '#F9F4E3', // Color de fondo. Beige
@@ -17,6 +21,19 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.text-stroke-1': {
+          '-webkit-text-stroke': '1px',
+        },
+        '.text-stroke-2': {
+          '-webkit-text-stroke': '2px',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
 }
 

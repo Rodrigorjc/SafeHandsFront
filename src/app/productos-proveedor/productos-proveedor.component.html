@@ -1,0 +1,57 @@
+<app-header></app-header>
+
+<main class="flex-grow container mx-auto py-8 px-4">
+  <h2 class="text-center text-xl font-semibold mb-6">Lista de productos</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let product of products" class="bg-[#d3e4c1] rounded-lg p-4 text-center shadow-md">
+      <img [src]="product.url" alt="{{ product.nombre }}" class="w-full h-24 object-cover rounded-md mb-2" />
+      <p class="text-lg font-medium">{{ product.nombre }}</p>
+      <p class="text-sm text-gray-500">{{ product.descripcion }}</p>
+      <p class="text-lg font-semibold mt-2">{{ product.precio | currency }}</p>
+    </div>
+  </div>
+  <button (click)="toggleForm()" class="mt-8 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Crear Productos</button>
+
+  <div *ngIf="showForm" class="mt-8">
+    <form (ngSubmit)="addProduct()" class="space-y-4">
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+        <input type="text" id="nombre" [(ngModel)]="newProduct.nombre" name="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+      </div>
+      <div>
+        <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen</label>
+        <input type="text" id="imagen" [(ngModel)]="newProduct.url" name="imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+      </div>
+      <div>
+        <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+        <input type="number" id="precio" [(ngModel)]="newProduct.precio" name="precio" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+      </div>
+      <div>
+        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+        <textarea id="descripcion" [(ngModel)]="newProduct.descripcion" name="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required></textarea>
+      </div>
+      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Agregar Producto</button>
+    </form>
+  </div>
+</main>
+
+
+<footer class="bg-[#d7ccb2] mt-10 p-6 text-sm flex flex-col md:flex-row md:justify-between items-center gap-4">
+  <div class="text-center md:text-left">
+    <p>Sobre nosotros</p>
+    <p>Política de cookies</p>
+    <p>Política medioambientales</p>
+    <p>Política de privacidad</p>
+    <p>Aviso legal</p>
+  </div>
+  <div class="flex flex-col items-center">
+    <p>Para recibir nuestras notificaciones sobre eventos registre su correo</p>
+    <input type="email" placeholder="Introduzca su correo..." class="mt-2 p-2 rounded border border-gray-400">
+  </div>
+  <div class="flex gap-4">
+    <a href="#"><img src="facebook_icon_url" alt="Facebook" class="w-6 h-6"></a>
+    <a href="#"><img src="instagram_icon_url" alt="Instagram" class="w-6 h-6"></a>
+    <a href="#"><img src="twitter_icon_url" alt="Twitter" class="w-6 h-6"></a>
+    <a href="#"><img src="youtube_icon_url" alt="YouTube" class="w-6 h-6"></a>
+  </div>
+</footer>

@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private authUrl = 'http://localhost:8080/api/usuarios/login';
+  private authUrl = 'http://localhost:8081/api/usuarios/login';
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   register(userData: { username: string; password: string; email: string }) {
-    return this.http.post('http://localhost:8080/api/usuarios/register', userData);
+    return this.http.post('http://localhost:8081/api/usuarios/register', userData);
   }
 
   logout() {

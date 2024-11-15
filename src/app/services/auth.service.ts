@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   register(userData: { username: string; password: string; email: string }) {
-    return this.http.post('http://localhost:8080/api/usuarios/register', userData);
+    return this.http.post('http://localhost:8081/api/usuarios/register', userData);
   }
 
   logout() {

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './loginCliente/login.component';
+import { RegisterComponent } from './registerCliente/register.component';
 import { HomeComponent } from './home/home.component';
 import {DemoComponent} from './demo/demo.component';
 import {ProductosProveedorComponent} from './productos-proveedor/productos-proveedor.component';
@@ -15,5 +15,5 @@ export const routes: Routes = [
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
   {path:'ong/detalles', component:OngDetallesComponent},
   {path:'ong/detalles/:id', component:OngDetallesComponent},
-  { path: '**', redirectTo: '/login' }  // Redirecciona rutas no encontradas al login
+  { path: '**', redirectTo: '/loginCliente' }  // Redirecciona rutas no encontradas al loginCliente
 ];

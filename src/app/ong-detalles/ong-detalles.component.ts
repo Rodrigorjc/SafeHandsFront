@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {ActivatedRoute} from '@angular/router';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
 import {OngService} from '../services/ong.service';
 
 @Component({
@@ -10,7 +10,8 @@ import {OngService} from '../services/ong.service';
   standalone: true,
   imports: [
     HeaderComponent,
-    DatePipe
+    DatePipe,
+    NgForOf
   ],
   templateUrl: './ong-detalles.component.html',
   styleUrl: './ong-detalles.component.css'

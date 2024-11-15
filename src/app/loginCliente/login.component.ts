@@ -5,7 +5,7 @@ import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-loginCliente',
   standalone: true,
   imports: [
     FormsModule,

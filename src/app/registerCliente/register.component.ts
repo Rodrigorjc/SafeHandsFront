@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-registerCliente',
   standalone: true,
   imports: [
     FormsModule

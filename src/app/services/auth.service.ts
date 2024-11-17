@@ -26,4 +26,6 @@ export class AuthService {
     // Add any additional logout logic here
     console.log('Logged out successfully');
   }
+
+
 }

@@ -13,7 +13,7 @@ export class AcontecimientoService {
     return this.http.get<any[]>(this.authUrl+"/listar");
   }
 
-  getAcontecimientosByOng(ongId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.authUrl}/listar/${ongId}`);
+  getAcontecimientosByOngId(ongId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.authUrl}/ong/${ongId}/acontecimientos`);
   }
 }

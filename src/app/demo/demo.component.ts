@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AuthService} from '../services/auth.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-demo',
@@ -8,33 +9,23 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './demo.component.html',
   styleUrl: './demo.component.css'
 })
-export class DemoComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+export class DemoComponent {
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
-  ngOnInit() {
-    const demoButton = document.getElementById('demoButton');
-    if (demoButton) {
-      demoButton.addEventListener('click', () => {
-        const token = this.authService.getToken();
-        if (token) {
-          fetch('http://localhost:8080/demo', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-            .then(response => response.text())
-            .then(data => {
-              const demoResponse = document.getElementById('demoResponse');
-              if (demoResponse) {
-                demoResponse.innerText = data;
-              }
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-          console.error('No token found');
-        }
-      });
-    }
+
+  onDemoButtonClick() {
+    this.http.get('http://localhost:8081/demo').subscribe(
+      data => console.log('Data:', data),
+      error => console.error('Error:', error)
+    );
+  }
+
+  onGetRemainingTimeClick() {
+
+
+    this.http.get('http://localhost:8081/demo/remaining-time').subscribe(
+      (data: any) => console.log('Remaining Time:', data),
+      error => console.error('Error:', error)
+    );
   }
 }

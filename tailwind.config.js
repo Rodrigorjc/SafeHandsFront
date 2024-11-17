@@ -18,6 +18,8 @@ module.exports = {
         verdeClaro: '#D4DDB1', // Verde claro
         verdeOscuro: '#B1BA8E', // Verde mas oscuro
         marronOscuro: '#7A6448', // Marrón oscuro
+        olivaOscuro: '#6B8E23', // Oliva oscuro
+        jade: '#00A36C'
       },
     },
   },

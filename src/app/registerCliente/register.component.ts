@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-registerCliente',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  user = { username: '', password: '', email: '' };
+  user = { username: '', password: '', email: '', repeatPassword:'' , dni:''};
+  errorMessage = '';
 
   constructor(private authService: AuthService) {}
 

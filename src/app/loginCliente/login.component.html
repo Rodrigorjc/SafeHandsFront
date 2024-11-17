@@ -6,20 +6,20 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST" (ngSubmit)="onLogin()">
+      <form class="space-y-6" #form="ngForm" method="POST" (ngSubmit)="onLogin()">
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900" [(ngModel)]="credentials.username" name="username" required>Usuario</label>
+          <label for="email" class="block text-sm/6 font-medium text-gray-900" >Usuario</label>
           <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+            <input id="email" [(ngModel)]="username" name="username" required type="text" autocomplete="username"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm/6 font-medium text-gray-900" [(ngModel)]="credentials.password" name="password" required>Contraseña</label>
+            <label for="password" class="block text-sm/6 font-medium text-gray-900" >Contraseña</label>
           </div>
           <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+            <input id="password" type="password" autocomplete="current-password" [(ngModel)]="password" name="password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
           </div>
           <div class="text-sm mt-2">
             <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">¿Has olvidado tu contraseña?</a>

@@ -4,13 +4,14 @@ import { tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {RegistroCliente} from '../modelos/RegistroCliente';
 import {Observable} from 'rxjs';
+import {Login} from '../modelos/Login';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(credentials: { username: string, password: string }) {
+  login(credentials: Login) {
     localStorage.removeItem('token');
     return this.http.post<{ token: string }>('/api/usuarios/login', credentials)
       .pipe(tap(response => localStorage.setItem('token', response.token)));

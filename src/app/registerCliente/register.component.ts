@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import {NgIf} from '@angular/common';
+import {RegistroCliente} from '../modelos/RegistroCliente';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registerCliente',
@@ -13,15 +15,33 @@ import {NgIf} from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
-  user = { username: '', password: '', email: '', repeatPassword:'' , dni:''};
+export class RegisterComponent implements OnInit{
+  registroCliente: RegistroCliente = new RegistroCliente();
   errorMessage = '';
+   dni: string = '';
+   email: string = '';
+   username: string = '';
+   password: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router:Router) {}
+
+  ngOnInit() {
+    this.rellenarDatos();
+  }
 
   onRegister() {
-    this.authService.register(this.user).subscribe(response => {
-      console.log("Usuario registrado", response);
+    this.rellenarDatos();
+    this.authService.register(this.registroCliente).subscribe({
+      next:(v) => console.log(v),
+      error: (e) =>console.error(e),
+      complete: () =>  this.router.navigate(['/login']),
     });
+  }
+
+  rellenarDatos() {
+    this.registroCliente.dni = this.dni;
+    this.registroCliente.email = this.email;
+    this.registroCliente.username = this.username;
+    this.registroCliente.password = this.password;
   }
 }

@@ -15,5 +15,6 @@ export const routes: Routes = [
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
   {path:'ong/detalles', component:OngDetallesComponent},
   {path:'ong/detalles/:id', component:OngDetallesComponent},
-  { path: '**', redirectTo: '/login' }  // Redirecciona rutas no encontradas al login
+  {path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
+  { path: '**', redirectTo: '/login' } // Redirecciona rutas no encontradas al login
 ];

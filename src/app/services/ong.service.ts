@@ -15,6 +15,11 @@ export class OngService {
   getOngById(ongId: string): Observable<any> {
     return this.http.get<any>(`${this.authUrl}/detalles/${ongId}`);
   }
+
+
+  validarProveedor(proveedorId: string): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`, {});
+  }
 }
 
 

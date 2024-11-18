@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {RegistroCliente} from '../modelos/RegistroCliente';
+import {Observable} from 'rxjs';
+import {Login} from '../modelos/Login';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private authUrl = 'http://localhost:8081/api/usuarios/login';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login(credentials: { username: string, password: string }) {
-    return this.http.post<{ token: string }>(this.authUrl, credentials)
+  login(credentials: Login) {
+    localStorage.removeItem('token');
+    return this.http.post<{ token: string }>('/api/usuarios/login', credentials)
       .pipe(tap(response => localStorage.setItem('token', response.token)));
   }
 
@@ -17,15 +21,23 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  register(userData: { username: string; password: string; email: string }) {
-    return this.http.post('http://localhost:8081/api/usuarios/register', userData);
+  register(userData: RegistroCliente): Observable<any> {
+    return this.http.post('/api/usuarios/register', userData);
   }
 
   logout() {
     localStorage.removeItem('token');
+    this.router.navigate(['login']);
     // Add any additional logout logic here
     console.log('Logged out successfully');
   }
 
+  autorizarPeticion(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
 
+    return {headers:headers}
+  }
 }

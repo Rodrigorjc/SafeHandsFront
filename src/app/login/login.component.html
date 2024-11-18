@@ -1,6 +1,0 @@
-<form (ngSubmit)="onLogin()">
-  <input type="text" placeholder="Username" [(ngModel)]="credentials.username" name="username" required>
-  <input type="password" placeholder="Password" [(ngModel)]="credentials.password" name="password" required>
-  <button type="submit">Login</button>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
-</form>

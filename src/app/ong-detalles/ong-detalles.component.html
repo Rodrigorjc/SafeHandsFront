@@ -12,7 +12,10 @@
 
     <h3 class="text-2xl font-semibold mt-10 mb-4">Eventos en los que participa</h3>
     <div class="container mx-auto py-8 px-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div *ngIf="acontecimientos.length === 0" class="text-center text-gray-500">
+        <h3 class="text-2xl font-semibold mt-2 mb-4">No hay eventos asociados.</h3>
+      </div>
+      <div *ngIf="acontecimientos.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div *ngFor="let acontecimiento of acontecimientos" class="bg-[#d3e4c1] p-4 rounded-lg text-center">
           <img [src]="acontecimiento.imageUrl" alt="{{ acontecimiento.nombre }}" class="w-full h-40 object-cover rounded-md mb-2">
           <p class="font-medium">{{ acontecimiento.ubicacion }}</p>

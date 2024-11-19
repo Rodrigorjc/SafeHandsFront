@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import {NgIf} from '@angular/common';
 import {RegistroCliente} from '../modelos/RegistroCliente';
 import {Router} from '@angular/router';
+import {RegisterProveedoresService} from '../services/register-proveedores.service';
 
 @Component({
   selector: 'app-registerCliente',
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit{
    username: string = '';
    password: string = '';
 
-  constructor(private authService: AuthService, private router:Router) {}
+  constructor(private authService: RegisterProveedoresService, private router:Router) {}
 
   ngOnInit() {
     this.rellenarDatos();
@@ -31,6 +32,7 @@ export class RegisterComponent implements OnInit{
 
   onRegister() {
     this.rellenarDatos();
+    localStorage.removeItem('token');
     this.authService.register(this.registroCliente).subscribe({
       next:(v) => console.log(v),
       error: (e) =>console.error(e),

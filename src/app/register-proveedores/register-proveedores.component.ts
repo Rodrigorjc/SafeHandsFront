@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
+import {RegistroCliente} from '../modelos/RegistroCliente';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
+import {RegistroProveedores} from '../modelos/RegistroProveedores';
+import {RegisterProveedoresService} from '../services/register-proveedores.service';
 
 @Component({
   selector: 'app-register-proveedores',
@@ -8,26 +13,47 @@ import {NgIf} from '@angular/common';
   imports: [
     ReactiveFormsModule,
     NgIf,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './register-proveedores.component.html',
   styleUrl: './register-proveedores.component.css'
 })
 export class RegisterProveedoresComponent {
-  currentStep = 1; // Paso actual
-  registerForm: FormGroup;
+  registroProveedor: RegistroProveedores = new RegistroProveedores();
+  errorMessage = '';
+  numVoluntarios?:number;
+  sede:string = '';
+  ubicacion:string = '';
+  cif:string = '';
+  username:string = '';
+  email:string = '';
+  password:string = '';
+  currentStep: number = 1;
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.minLength(9)]],
+  constructor(private registerProveedoresService: RegisterProveedoresService, private router:Router) {}
+
+  onRegister() {
+    this.rellenarDatos();
+    this.registerProveedoresService.register(this.registroProveedor).subscribe({
+      next:(v) => console.log(v),
+      error: (e) =>console.error(e),
+      complete: () =>  this.router.navigate(['/login']),
     });
   }
 
+  rellenarDatos() {
+    this.registroProveedor.numVoluntarios = this.numVoluntarios;
+    this.registroProveedor.sede = this.sede;
+    this.registroProveedor.ubicacion = this.ubicacion;
+    this.registroProveedor.cif = this.cif;
+    this.registroProveedor.email = this.email;
+    this.registroProveedor.username = this.username;
+    this.registroProveedor.password = this.password;
+  }
+
   nextStep() {
-    if (this.registerForm.valid || this.currentStep < 3) {
+    if (this.currentStep < 3) {
       this.currentStep++;
     }
   }
@@ -35,13 +61,6 @@ export class RegisterProveedoresComponent {
   prevStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
-    }
-  }
-
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Formulario enviado:', this.registerForm.value);
-      alert('¡Registro completado!');
     }
   }
 }

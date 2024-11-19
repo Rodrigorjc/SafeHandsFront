@@ -19,4 +19,14 @@ export class ProductoService {
   obtenerProductos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.authUrl}/listar`);
   }
+
+  obtenerProductoId(id: string): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/listar/${id}`);
+  }
+
+
+  vincularProductoAcontecimiento(productoId: string, acontecimientoId: string): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/${productoId}/vincular-acontecimiento/${acontecimientoId}`, {});
+  }
+
 }

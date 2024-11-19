@@ -1,0 +1,118 @@
+<!-- Header -->
+<!-- Contenedor principal -->
+<body>
+<div class="container">
+  <!-- Sección superior -->
+  <div class="message-container">
+    <img src="/image18.svg" alt="Voluntarios trabajando" class="image">
+    <div class="text-primero">
+      <p>
+        <strong>Con tu apoyo, juntos nos volvemos más fuertes y capaces de lograr grandes cosas.</strong>
+      </p>
+      <button class="help-button">Ayuda aquí</button>
+    </div>
+  </div>
+</div>
+<!-- Sección inferior -->
+<div class="segundo-container">
+  <strong>
+    <p>Con tu ayuda hemos conseguido un total de</p>
+    <p class="total-amount">{{ totalDonaciones }}</p>
+    <p>Muchas gracias por tu colaboración</p>
+  </strong>
+</div>
+
+<div class="tercer-container">
+  <div class="text-tercero">
+    <p>Ranking de proveedores </p>
+  </div>
+  <div class="imagen-ranking">
+    <img src="/image17.svg" alt="Imagen Ranking" class="image">
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="arriba-container">
+  <div class="text-arriba">
+    <p>Infórmate de lo donado en cada acontecimiento</p>
+  </div>
+
+  <div class="acontecimiento-container">
+    <p>Acontecimiento:</p>
+    <div class="relative inline-block text-left">
+      <button type="button" class="dropdown-button">
+        {{ selectedAcontecimiento }}
+        <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <div class="dropdown-menu">
+        <button class="dropdown-item" (click)="selectAcontecimiento('Valencia')">Valencia</button>
+        <button class="dropdown-item" (click)="selectAcontecimiento('Florida')">Florida</button>
+        <button class="dropdown-item" (click)="selectAcontecimiento('Ucrania')">Ucrania</button>
+        <button class="dropdown-item" (click)="selectAcontecimiento('Hawaii')">Hawaii</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cuarto-container">
+    <div class="container-cuatro">
+      <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">
+      <div class="text-cuarto">
+        <p><strong>En {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() }}€ donados entre todos.</strong></p>
+        <button class="h3lp-button">Ayuda aquí</button>
+      </div>
+    </div>
+  </div>
+
+<br>
+<br>
+
+  <div class="abajo-container">
+    <div class="text-abajo">
+      <p>Infórmate de lo donado por cada proveedor</p>
+    </div>
+
+    <div class="proveedor-container">
+      <p>Proveedor:</p>
+      <div class="relative inline-block text-left">
+        <!-- Botón principal que muestra el proveedor seleccionado -->
+        <button type="button" class="dropdown-button">
+          {{ selectedProveedor }}
+          <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <!-- Menú desplegable -->
+        <div class="dropdown-menu">
+          <button class="dropdown-item" (click)="selectProveedor('MediaMarkt')">MediaMarkt</button>
+          <button class="dropdown-item" (click)="selectProveedor('Dia')">Día</button>
+          <button class="dropdown-item" (click)="selectProveedor('El Corte Inglés')">El Corte Inglés</button>
+          <button class="dropdown-item" (click)="selectProveedor('Bricodepot')">Bricodepot</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="quinto-container">
+      <div class="container-cinco">
+        <!-- Imagen del proveedor seleccionado -->
+        <img [src]="getImagenProveedor()" alt="Imagen del proveedor" class="image">
+        <div class="text-quinto">
+          <!-- Texto dinámico del proveedor seleccionado -->
+          <p><strong>{{ selectedProveedor }} lleva un total de {{ getDonacionesProveedor() | currency }} recaudados.</strong></p>
+          <button class="h3lp-butt0n">Consulta los productos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>

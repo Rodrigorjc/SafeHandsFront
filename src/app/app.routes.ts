@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: 'proveedor/productos', component:ProductosProveedorComponent },
   { path:'ong/detalles', component:OngDetallesComponent },
   { path:'ong/detalles/:id', component:OngDetallesComponent },
-  { path: 'register/proveedores', component: RegisterProveedoresComponent }
+  { path: 'register/proveedores', component: RegisterProveedoresComponent },
   { path: '**', redirectTo: '/login' } // Redirecciona rutas no encontradas al login
 
   //{ path: '**', redirectTo: '/loginCliente' }  // Redirecciona rutas no encontradas al loginCliente

@@ -17,8 +17,6 @@ interface Product {
   selector: 'app-productos-proveedor',
   standalone: true,
   imports: [
-    HeaderComponent,
-    // FooterComponent,
     CommonModule,
     FormsModule
   ],

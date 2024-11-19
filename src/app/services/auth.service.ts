@@ -49,6 +49,22 @@ export class AuthService {
     );
   }
 
+  obtenerImgProveedor(id: Observable<string | null>): Observable<any> {
+    return id.pipe(
+      switchMap(userId => this.http.get<{ img: string }>(`/api/proveedor/img/${userId}`)),
+      map(response => response.img),
+      catchError(this.handleError)
+    );
+  }
+
+  obtenerImgOng(id: Observable<string | null>): Observable<any> {
+    return id.pipe(
+      switchMap(userId => this.http.get<{ img: string }>(`/api/ong/img/${userId}`)),
+      map(response => response.img),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

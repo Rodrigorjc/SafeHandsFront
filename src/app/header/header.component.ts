@@ -42,17 +42,36 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     let token = localStorage.getItem('token');
+    let userId: string | null = localStorage.getItem('userId');
     if (token) {
       let rol = localStorage.getItem('rol');
       if (rol === 'ONG') {
-        this.img = of(''); // or any other Observable value
+        this.authService.obtenerImgOng(of(userId)).subscribe(imgUrl => {
+          if (imgUrl === null) {
+            this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
+          } else {
+            this.img = of(imgUrl);
+          }
+        });
       } else if (rol === 'PROVEEDOR') {
-        this.img = of(''); // or any other Observable value
+        this.authService.obtenerImgProveedor(of(userId)).subscribe(imgUrl => {
+          if (imgUrl === null) {
+            this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
+          } else {
+            this.img = of(imgUrl);
+          }
+        });
       } else if (rol === 'CLIENTE') {
-        let userId: string | null = localStorage.getItem('userId');
-        this.img = this.authService.obtenerImgCliente(of(userId));
+        this.authService.obtenerImgCliente(of(userId)).subscribe(imgUrl => {
+          if (imgUrl === null) {
+            this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
+          } else {
+            this.img = of(imgUrl);
+          }
+        });
       } else {
-        this.img = of(''); // or any other Observable value
+        //imagen por defecto
+        this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
       }
     }
   }

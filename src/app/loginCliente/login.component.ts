@@ -40,6 +40,7 @@ export class LoginComponent implements  OnInit {
   onLogin() {
     this.login.username = this.username;
     this.login.password = this.password;
+    localStorage.clear();
     this.authService.login(this.login).subscribe({
       next: (respuesta) => {
         console.log(respuesta);

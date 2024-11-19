@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {map, switchMap, tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {RegistroCliente} from '../modelos/RegistroCliente';
-import {Observable} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {Login} from '../modelos/Login';
 
 @Injectable({ providedIn: 'root' })
@@ -39,5 +39,25 @@ export class AuthService {
     });
 
     return {headers:headers}
+  }
+
+  obtenerImgCliente(id: Observable<string | null>): Observable<any> {
+    return id.pipe(
+      switchMap(userId => this.http.get<{ img: string }>(`/api/cliente/img/${userId}`)),
+      map(response => response.img),
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
   }
 }

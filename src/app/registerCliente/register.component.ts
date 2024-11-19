@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit{
    username: string = '';
    password: string = '';
 
-  constructor(private authService: RegisterProveedoresService, private router:Router) {}
+  constructor(private authService: AuthService, private router:Router) {}
 
   ngOnInit() {
     this.rellenarDatos();

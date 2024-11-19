@@ -17,8 +17,8 @@ export class OngService {
   }
 
 
-  validarProveedor(proveedorId: string): Observable<any> {
-    return this.http.put<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`, {});
+  validarProveedor(proveedorId: number): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`,{});
   }
 }
 

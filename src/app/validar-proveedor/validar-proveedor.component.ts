@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OngService} from '../services/ong.service';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {ProveedorService} from '../services/proveedor.service';
-interface Proveedor {
+import {ActivatedRoute} from '@angular/router';
+export interface Proveedor {
   id: number;
   nombre: string;
   url: string;
@@ -24,10 +25,7 @@ export class ValidarProveedorComponent implements OnInit {
   proveedores: any[] = [];
 
 
-
-
-
-  constructor(private proveedorService: ProveedorService, private ongService:OngService) {}
+  constructor(private proveedorService: ProveedorService, private ongService:OngService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.proveedorService.getListarProveedores().subscribe({
@@ -39,18 +37,22 @@ export class ValidarProveedorComponent implements OnInit {
   }
 
   validarProveedor(proveedorId: number) {
-    if (proveedorId) {
-      this.ongService.validarProveedor(proveedorId).subscribe(
-        response => {
-          console.log('Proveedor validado:', response);
-        },
-        error => {
-          console.error('Error al validar proveedor:', error);
-        }
-      );
-    } else {
+    if (!proveedorId) {
       console.error('Proveedor ID is null or undefined');
+      return;
     }
+
+    this.ongService.validarProveedor(proveedorId).subscribe({
+      next: (response) => {
+        console.log('Proveedor validated successfully', response);
+        this.proveedores = this.proveedores.map(proveedor =>
+          proveedor.id === proveedorId ? { ...proveedor, validado: true } : proveedor
+        );
+      },
+      error: (err) => {
+        console.error('Error validating proveedor', err);
+      }
+    });
   }
 }
 // validarProveedor(proveedorId: string) {

@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'demo', component: DemoComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
+  {path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
   {path:'ong/detalles', component:OngDetallesComponent},
   {path:'ong/detalles/:id', component:OngDetallesComponent},
   {path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},

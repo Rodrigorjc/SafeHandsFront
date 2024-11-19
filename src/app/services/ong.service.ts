@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Proveedor} from '../validar-proveedor/validar-proveedor.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class OngService {
   validarProveedor(proveedorId: number): Observable<any> {
     return this.http.post<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`,{});
   }
+
+  getOngs(): Observable<any> {
+    return this.http.get(this.authUrl);
+  }
+
+
+
+
 }
 
 

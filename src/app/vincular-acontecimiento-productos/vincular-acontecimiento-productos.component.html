@@ -1,0 +1,14 @@
+<!-- `src/app/vincular-acontecimiento-productos/vincular-acontecimiento-productos.component.html` -->
+<form [formGroup]="vincularForm" (ngSubmit)="vincularProducto()">
+  <div>
+    <label for="productoId">Producto</label>
+    <select id="productoId" formControlName="productoId">
+      <option *ngFor="let product of products" [value]="product.id">{{ product.nombre }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="acontecimientoId">Acontecimiento ID</label>
+    <input id="acontecimientoId" formControlName="acontecimientoId" type="text">
+  </div>
+  <button type="submit" [disabled]="vincularForm.invalid">Vincular Producto</button>
+</form>

@@ -13,7 +13,7 @@ export class AuthService {
 
   login(credentials: Login) {
     localStorage.removeItem('token');
-    return this.http.post<{ token: string }>('/api/usuarios/login', credentials)
+    return this.http.post<{ token: string }>('http://localhost:8081/api/usuarios/login', credentials)
       .pipe(tap(response => localStorage.setItem('token', response.token)));
   }
 

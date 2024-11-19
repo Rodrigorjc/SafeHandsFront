@@ -2,15 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {ActivatedRoute} from '@angular/router';
-import {CommonModule, DatePipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {OngService} from '../services/ong.service';
 
 @Component({
   selector: 'app-ong-detalles',
   standalone: true,
   imports: [
-    HeaderComponent,
-    DatePipe,
     CommonModule
   ],
   templateUrl: './ong-detalles.component.html',

@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, NgForm, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import {
+  VincularAcontecimientoProductosComponent
+} from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 
 interface Product {
   nombre: string;
@@ -21,7 +24,8 @@ interface Product {
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    VincularAcontecimientoProductosComponent
   ],
   templateUrl: './productos-proveedor.component.html',
   styleUrl: './productos-proveedor.component.css'
@@ -30,8 +34,10 @@ export class ProductosProveedorComponent implements OnInit {
   products: Product[] = [];
   showForm: boolean = false;
   newProduct: Product = { nombre: '', url: '' , descripcion: '', precio: 0};
-    productForm: FormGroup;
-    productoId: string | null = null;
+  productForm: FormGroup;
+  productoId: string | null = null;
+  alertMessage: string | null = null;
+
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.productForm = this.fb.group({
@@ -46,6 +52,7 @@ export class ProductosProveedorComponent implements OnInit {
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {
+          console.log('Productos:', data);
           this.products = data;
         },
         error: (err) => console.error('Error fetching products', err)
@@ -66,8 +73,13 @@ export class ProductosProveedorComponent implements OnInit {
           this.products.push(createdProduct);
           this.productForm.reset();
           this.showForm = false;
+          this.alertMessage = 'Producto creado exitosamente';
+
         },
-        error: (err) => console.error('Error creating product', err)
+        error: (err) => {
+          console.error('Error creating product', err);
+          this.alertMessage = 'Error creando producto';
+        }
       });
     }
 }

@@ -1,7 +1,7 @@
 <main class="flex-grow container mx-auto py-8 px-4">
   <h2 class="text-center text-xl font-semibold mb-6">Lista de productos</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let product of products" class="bg-[#d3e4c1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+    <div *ngFor="let product of products" class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
       <img [src]="product.url" alt="{{ product.nombre }}" class="w-full h-24 object-cover rounded-md mb-2" />
       <p class="text-lg font-medium">{{ product.nombre }}</p>
       <p class="text-sm text-gray-500">{{ product.descripcion }}</p>
@@ -12,7 +12,7 @@
   <div *ngIf="alertMessage" class="mb-4 p-4 my-8 bg-green-100 text-green-700 rounded">
     {{ alertMessage }}
   </div>
-  <button (click)="toggleForm()" class="mt-8 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Crear Productos</button>
+  <button (click)="toggleForm()" class="mt-8 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Crear Productos</button>
 
   <div *ngIf="showForm" class="mt-8">
     <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="space-y-4">
@@ -36,7 +36,7 @@
         <textarea id="descripcion" formControlName="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"></textarea>
         <div *ngIf="productForm.get('descripcion')?.invalid && productForm.get('descripcion')?.touched" class="text-red-500 text-sm">La descripción es obligatoria</div>
       </div>
-      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition" [disabled]="productForm.invalid">Agregar Producto</button>
+      <button type="submit" class="bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition" [disabled]="productForm.invalid">Agregar Producto</button>
     </form>
   </div>
 

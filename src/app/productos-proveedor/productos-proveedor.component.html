@@ -8,6 +8,10 @@
       <p class="text-lg font-semibold mt-2">{{ product.precio | currency }}</p>
     </div>
   </div>
+  <!--alerta  -->
+  <div *ngIf="alertMessage" class="mb-4 p-4 my-8 bg-green-100 text-green-700 rounded">
+    {{ alertMessage }}
+  </div>
   <button (click)="toggleForm()" class="mt-8 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Crear Productos</button>
 
   <div *ngIf="showForm" class="mt-8">
@@ -35,4 +39,6 @@
       <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition" [disabled]="productForm.invalid">Agregar Producto</button>
     </form>
   </div>
+
+  <app-vincular-acontecimiento-productos></app-vincular-acontecimiento-productos>
 </main>

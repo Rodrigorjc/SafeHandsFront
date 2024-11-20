@@ -1,0 +1,19 @@
+<div *ngIf="acontecimientos.length > 0" class="my-6 mx-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 justify-center">
+  <div *ngFor="let acontecimiento of acontecimientos" class="bg-[#d3e4c1] p-4 rounded-lg text-center mb-8">
+    <img [src]="acontecimiento.imageUrl" alt="{{ acontecimiento.nombre }}" class="w-full h-40 object-cover rounded-md mb-4">
+    <p class="font-medium mb-2">{{ acontecimiento.ubicacion }}</p>
+    <p class="text-sm text-gray-500 mb-2">{{ acontecimiento.descripcion }}</p>
+    <p class="text-lg font-semibold mt-4">Voluntarios: {{ acontecimiento.voluntarios }}</p>
+  </div>
+</div>
+<form [formGroup]="asociarForm" (ngSubmit)="asociarAcontecimiento()" class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <div class="mb-4">
+    <label for="acontecimientoId" class="block text-gray-700 font-bold mb-2">Acontecimiento</label>
+  </div>
+  <select id="acontecimientoId" formControlName="acontecimientoId" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+    <option *ngFor="let acontecimiento of acontecimientos" [value]="acontecimiento.id">{{ acontecimiento.nombre }}</option>
+  </select>
+  <button type="submit" [disabled]="asociarForm.invalid" class=" my-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    Asociar Acontecimiento
+  </button>
+</form>

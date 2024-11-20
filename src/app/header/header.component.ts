@@ -73,6 +73,8 @@ export class HeaderComponent implements OnInit {
         //imagen por defecto
         this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
       }
+    } else {
+      this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
     }
   }
 }

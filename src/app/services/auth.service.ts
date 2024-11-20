@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   register(userData: RegistroCliente): Observable<any> {
-    return this.http.post('/usuarios/register', userData);
+    return this.http.post('/api/usuarios/register', userData);
   }
 
   logout() {

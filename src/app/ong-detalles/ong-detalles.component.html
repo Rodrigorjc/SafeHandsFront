@@ -1,11 +1,11 @@
 <div class="min-h-screen bg-[#f8f3e9] text-gray-900 font-sans">
   <div class="p-6">
     <div class="flex flex-col items-center md:flex-row md:justify-start gap-8">
-      <img [src]="ong.img" alt="{{ ong.usuario.username }} Logo" class="w-40 h-40">
+      <img [src]="ong?.img" alt="{{ ong?.usuario?.username }} Logo" class="w-40 h-40">
       <div class="text-center md:text-left">
-        <h2 class="text-4xl font-bold mb-4">{{ ong.usuario.username}}</h2>
-        <p class="text-lg">{{ ong.descripcion }}</p>
-        <p class="mt-4 font-semibold">Número de voluntarios: {{ ong.numVoluntarios }}</p>
+        <h2 class="text-4xl font-bold mb-4">{{ ong?.usuario?.username}}</h2>
+        <p class="text-lg">{{ ong?.descripcion }}</p>
+        <p class="mt-4 font-semibold">Número de voluntarios: {{ ong?.numVoluntarios }}</p>
       </div>
     </div>
 
@@ -16,10 +16,10 @@
       </div>
       <div *ngIf="acontecimientos.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div *ngFor="let acontecimiento of acontecimientos" class="bg-[#d3e4c1] p-4 rounded-lg text-center">
-          <img [src]="acontecimiento.imageUrl" alt="{{ acontecimiento.nombre }}" class="w-full h-40 object-cover rounded-md mb-2">
-          <p class="font-medium">{{ acontecimiento.ubicacion }}</p>
-          <p class="text-sm text-gray-500">{{ acontecimiento.descripcion }}</p>
-          <p class="text-lg font-semibold mt-2">Voluntarios: {{ acontecimiento.voluntarios }}</p>
+          <img [src]="acontecimiento?.imageUrl" alt="{{ acontecimiento?.nombre }}" class="w-full h-40 object-cover rounded-md mb-2">
+          <p class="font-medium">{{ acontecimiento?.ubicacion }}</p>
+          <p class="text-sm text-gray-500">{{ acontecimiento?.descripcion }}</p>
+          <p class="text-lg font-semibold mt-2">Voluntarios: {{ acontecimiento?.voluntarios }}</p>
         </div>
       </div>
     </div>

@@ -25,8 +25,8 @@ export class ProductoService {
   }
 
 
-  vincularProductoAcontecimiento(productoId: string, acontecimientoId: string): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/${productoId}/vincular-acontecimiento/${acontecimientoId}`, {});
+  vincularProductoAcontecimiento(productoId: number, acontecimientoId: number): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/${productoId}/vincular/${acontecimientoId}`, {});
   }
 
 }

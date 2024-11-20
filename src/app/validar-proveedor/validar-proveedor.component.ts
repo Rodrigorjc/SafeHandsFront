@@ -31,6 +31,7 @@ export class ValidarProveedorComponent implements OnInit {
     this.proveedorService.getListarProveedores().subscribe({
       next: (fetchedProveedores) => {
         this.proveedores = fetchedProveedores.filter((proveedor:any) => !proveedor.validado);
+        console.log('Proveedores:', this.proveedores);
       },
       error: (err) => console.error('Error fetching proveedores', err)
     });

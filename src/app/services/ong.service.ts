@@ -26,6 +26,10 @@ export class OngService {
     return this.http.get(this.authUrl);
   }
 
+  asociarAcontecimiento(acontecimientoId: number): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/asociarAcontecimiento/${acontecimientoId}`,{});
+  }
+
 
 
 

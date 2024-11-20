@@ -1,39 +1,44 @@
-<app-header></app-header>
-
 <main class="flex-grow container mx-auto py-8 px-4">
   <h2 class="text-center text-xl font-semibold mb-6">Lista de productos</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let product of products" class="bg-[#d3e4c1] rounded-lg p-4 text-center shadow-md">
+    <div *ngFor="let product of products" class="bg-[#d3e4c1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
       <img [src]="product.url" alt="{{ product.nombre }}" class="w-full h-24 object-cover rounded-md mb-2" />
       <p class="text-lg font-medium">{{ product.nombre }}</p>
       <p class="text-sm text-gray-500">{{ product.descripcion }}</p>
       <p class="text-lg font-semibold mt-2">{{ product.precio | currency }}</p>
     </div>
   </div>
+  <!--alerta  -->
+  <div *ngIf="alertMessage" class="mb-4 p-4 my-8 bg-green-100 text-green-700 rounded">
+    {{ alertMessage }}
+  </div>
   <button (click)="toggleForm()" class="mt-8 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Crear Productos</button>
 
   <div *ngIf="showForm" class="mt-8">
-    <form (ngSubmit)="addProduct()" class="space-y-4">
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="space-y-4">
       <div>
         <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-        <input type="text" id="nombre" [(ngModel)]="newProduct.nombre" name="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+        <input type="text" id="nombre" formControlName="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="productForm.get('nombre')?.invalid && productForm.get('nombre')?.touched" class="text-red-500 text-sm">El nombre es obligatorio</div>
       </div>
       <div>
         <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen</label>
-        <input type="text" id="imagen" [(ngModel)]="newProduct.url" name="imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+        <input type="text" id="imagen" formControlName="url" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="productForm.get('url')?.invalid && productForm.get('url')?.touched" class="text-red-500 text-sm">La imagen es obligatoria</div>
       </div>
       <div>
         <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
-        <input type="number" id="precio" [(ngModel)]="newProduct.precio" name="precio" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required>
+        <input type="number" id="precio" formControlName="precio" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="productForm.get('precio')?.invalid && productForm.get('precio')?.touched" class="text-red-500 text-sm">El precio es obligatorio y debe ser mayor o igual a 0</div>
       </div>
       <div>
         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
-        <textarea id="descripcion" [(ngModel)]="newProduct.descripcion" name="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" required></textarea>
+        <textarea id="descripcion" formControlName="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"></textarea>
+        <div *ngIf="productForm.get('descripcion')?.invalid && productForm.get('descripcion')?.touched" class="text-red-500 text-sm">La descripción es obligatoria</div>
       </div>
-      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Agregar Producto</button>
+      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition" [disabled]="productForm.invalid">Agregar Producto</button>
     </form>
   </div>
+
+  <app-vincular-acontecimiento-productos></app-vincular-acontecimiento-productos>
 </main>
-
-
-

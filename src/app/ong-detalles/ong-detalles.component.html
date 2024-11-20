@@ -1,72 +1,29 @@
-<app-header></app-header>
-
 <div class="min-h-screen bg-[#f8f3e9] text-gray-900 font-sans">
   <div class="p-6">
     <div class="flex flex-col items-center md:flex-row md:justify-start gap-8">
-      <img [src]="ong.logoUrl" alt="{{ ong.nombre }} Logo" class="w-40 h-40">
+      <img [src]="ong.img" alt="{{ ong.usuario.username }} Logo" class="w-40 h-40">
       <div class="text-center md:text-left">
-        <h2 class="text-4xl font-bold mb-4">{{ ong.nombre }}</h2>
+        <h2 class="text-4xl font-bold mb-4">{{ ong.usuario.username}}</h2>
         <p class="text-lg">{{ ong.descripcion }}</p>
-        <p class="mt-4 font-semibold">Número de voluntarios: {{ ong.voluntarios }}</p>
+        <p class="mt-4 font-semibold">Número de voluntarios: {{ ong.numVoluntarios }}</p>
       </div>
     </div>
 
     <h3 class="text-2xl font-semibold mt-10 mb-4">Eventos en los que participa</h3>
-    <div class="container mx-auto py-8 px-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="container mx-auto py-4 px-4">
+      <div *ngIf="acontecimientos.length === 0" class="text-center text-gray-500">
+        <h3 class="text-2xl font-semibold mt-2 mb-4">No hay eventos asociados.</h3>
+      </div>
+      <div *ngIf="acontecimientos.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div *ngFor="let acontecimiento of acontecimientos" class="bg-[#d3e4c1] p-4 rounded-lg text-center">
           <img [src]="acontecimiento.imageUrl" alt="{{ acontecimiento.nombre }}" class="w-full h-40 object-cover rounded-md mb-2">
-          <p class="font-medium">{{ acontecimiento.nombre }}</p>
+          <p class="font-medium">{{ acontecimiento.ubicacion }}</p>
           <p class="text-sm text-gray-500">{{ acontecimiento.descripcion }}</p>
-          <p class="text-lg font-semibold mt-2">Volunteers: {{ acontecimiento.voluntarios }}</p>
+          <p class="text-lg font-semibold mt-2">Voluntarios: {{ acontecimiento.voluntarios }}</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<!--    <h3 class="text-2xl font-semibold mt-10 mb-4">Eventos en los que participa</h3>-->
-<!--    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">-->
-<!--      <div class="bg-[#d3e4c1] p-4 rounded-lg text-center">-->
-<!--        <img src="volcan_image_url" alt="Volcan de la Palma" class="w-full h-40 object-cover rounded-md mb-2">-->
-<!--        <p class="font-medium">Volcan de la Palma</p>-->
-<!--      </div>-->
-<!--      <div class="bg-[#d3e4c1] p-4 rounded-lg text-center">-->
-<!--        <img src="huracan_image_url" alt="Huracán en Florida" class="w-full h-40 object-cover rounded-md mb-2">-->
-<!--        <p class="font-medium">Huracán en Florida</p>-->
-<!--      </div>-->
-<!--      <div class="bg-[#d3e4c1] p-4 rounded-lg text-center">-->
-<!--        <img src="tsunami_image_url" alt="Tsunami en Hawaii" class="w-full h-40 object-cover rounded-md mb-2">-->
-<!--        <p class="font-medium">Tsunami en Hawaii</p>-->
-<!--      </div>-->
-<!--      <div class="bg-[#d3e4c1] p-4 rounded-lg text-center">-->
-<!--        <img src="guerra_image_url" alt="Guerra en Ucrania" class="w-full h-40 object-cover rounded-md mb-2">-->
-<!--        <p class="font-medium">Guerra en Ucrania</p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<footer class="bg-[#d7ccb2] mt-10 p-6 text-sm flex flex-col md:flex-row md:justify-between items-center gap-4">
-  <div class="text-center md:text-left">
-    <p>Sobre nosotros</p>
-    <p>Política de cookies</p>
-    <p>Política medioambientales</p>
-    <p>Política de privacidad</p>
-    <p>Aviso legal</p>
-  </div>
-  <div class="flex flex-col items-center">
-    <p>Para recibir nuestras notificaciones sobre eventos registre su correo</p>
-    <input type="email" placeholder="Introduzca su correo..." class="mt-2 p-2 rounded border border-gray-400">
-  </div>
-  <div class="flex gap-4">
-    <a href="#"><img src="facebook_icon_url" alt="Facebook" class="w-6 h-6"></a>
-    <a href="#"><img src="instagram_icon_url" alt="Instagram" class="w-6 h-6"></a>
-    <a href="#"><img src="twitter_icon_url" alt="Twitter" class="w-6 h-6"></a>
-    <a href="#"><img src="youtube_icon_url" alt="YouTube" class="w-6 h-6"></a>
-  </div>
-</footer>
 
 

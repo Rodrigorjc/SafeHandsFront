@@ -2,16 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {ActivatedRoute} from '@angular/router';
-import {DatePipe, NgForOf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {OngService} from '../services/ong.service';
 
 @Component({
   selector: 'app-ong-detalles',
   standalone: true,
   imports: [
-    HeaderComponent,
-    DatePipe,
-    NgForOf
+    CommonModule
   ],
   templateUrl: './ong-detalles.component.html',
   styleUrl: './ong-detalles.component.css'
@@ -34,8 +32,21 @@ export class OngDetallesComponent implements OnInit {
         next: (data) => {
           this.ong = data;
         },
-        error: (err) => console.error('Error fetching ONG details', err)
+        error: (err) => {
+          console.error('Error fetching ONG details', err);
+          alert(`Error fetching ONG details: ${err.message}`);
+        }
       });
+      this.acontecimientoService.getAcontecimientosByOngId(this.ongId).subscribe({
+        next: (data) => {
+          this.acontecimientos = data;
+        },
+        error: (err) => {
+          console.error('Error fetching acontecimientos', err);
+          alert(`Error fetching acontecimientos: ${err.message}`);
+        }
+      });
+
     }
   }
 }

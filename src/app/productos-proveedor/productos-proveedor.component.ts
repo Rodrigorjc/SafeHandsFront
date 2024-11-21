@@ -39,7 +39,7 @@ export class ProductosProveedorComponent implements OnInit {
   productForm: FormGroup;
   productoId: string | null = null;
   alertMessage: string | null = null;
-
+  successMessage: string | null = null
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.productForm = this.fb.group({
@@ -98,13 +98,26 @@ export class ProductosProveedorComponent implements OnInit {
         this.products.push(createdProduct);
         this.productForm.reset();
         this.showForm = false;
-        this.alertMessage = 'Producto creado exitosamente';
+        this.showSuccess('Producto creado exitosamente') ;
 
       },
       error: (err) => {
         console.error('Error creating product', err);
-        this.alertMessage = 'Error creando producto';
+        this.showAlert('Error creando producto');
       }
     });
   }
+  private showAlert(message: string) {
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.alertMessage = null;
+    }, 3000); // Clear the alert after 10 seconds
+  }
+
+  private showSuccess(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000); // Clear the success message after 10 seconds
+}
 }

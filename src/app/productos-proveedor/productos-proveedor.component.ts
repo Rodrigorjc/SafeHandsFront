@@ -35,7 +35,6 @@ export class ProductosProveedorComponent implements OnInit {
   showForm: boolean = false;
   filterTerm: string = '';
   sortOrder: string = 'desc';
-  newProduct: Product = { nombre: '', url: '' , descripcion: '', precio: 0};
   productForm: FormGroup;
   productoId: string | null = null;
   alertMessage: string | null = null;

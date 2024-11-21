@@ -1,7 +1,10 @@
 <nav>
-  <a routerLink="/proveedor/productos" routerLinkActive="active">Pestaña 1</a>
+  <a [routerLink]="['/proveedor/productos/', proveedorId]" routerLinkActive="active">Pestaña 1</a>
   <a routerLink="/tab2" routerLinkActive="active">Pestaña 2</a>
 </nav>
-
+<!-- src/app/movilidad-proveedores/movilidad-proveedores.component.html -->
+<div>
+  <p>ID del proveedor: {{ proveedorId }}</p>
+</div>
 <!-- Aquí se cargarán los componentes -->
 <router-outlet></router-outlet>

@@ -33,6 +33,8 @@ interface Product {
 export class ProductosProveedorComponent implements OnInit {
   products: Product[] = [];
   showForm: boolean = false;
+  filterTerm: string = '';
+  sortOrder: string = 'desc';
   newProduct: Product = { nombre: '', url: '' , descripcion: '', precio: 0};
   productForm: FormGroup;
   productoId: string | null = null;
@@ -47,39 +49,62 @@ export class ProductosProveedorComponent implements OnInit {
       descripcion: ['', Validators.required]
     });
   }
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
     this.productoId = this.route.snapshot.paramMap.get('id');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {
-          console.log('Productos:', data);
           this.products = data;
         },
+
         error: (err) => console.error('Error fetching products', err)
       });
     }
   }
-    toggleForm(){
+
+  filteredProducts(): any[] {
+    let filtered = this.products;
+
+    if (this.filterTerm.trim() !== '') {
+      filtered = filtered.filter(product =>
+        product.nombre.toLowerCase().includes(this.filterTerm.toLowerCase())
+      );
+    }
+
+    return filtered.sort((a, b) => this.sortOrder === 'desc' ? b.precio - a.precio : a.precio - b.precio);
+  }
+  toggleSortOrder(): void {
+    this.sortOrder = this.sortOrder === 'desc' ? 'asc' : 'desc';
+  }
+  clearSearch(): void {
+    this.filterTerm = '';
+  }
+
+  toggleForm(){
       this.showForm = !this.showForm;
+  }
+
+  addProduct(){
+    if (this.productForm.invalid) {
+      return;
     }
 
-    addProduct(){
-      if (this.productForm.invalid) {
-        return;
+    this.productoService.crearProducto(this.productForm.value).subscribe({
+      next: (createdProduct) => {
+        this.products.push(createdProduct);
+        this.productForm.reset();
+        this.showForm = false;
+        this.alertMessage = 'Producto creado exitosamente';
+
+      },
+      error: (err) => {
+        console.error('Error creating product', err);
+        this.alertMessage = 'Error creando producto';
       }
-
-      this.productoService.crearProducto(this.productForm.value).subscribe({
-        next: (createdProduct) => {
-          this.products.push(createdProduct);
-          this.productForm.reset();
-          this.showForm = false;
-          this.alertMessage = 'Producto creado exitosamente';
-
-        },
-        error: (err) => {
-          console.error('Error creating product', err);
-          this.alertMessage = 'Error creando producto';
-        }
-      });
-    }
+    });
+  }
 }

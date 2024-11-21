@@ -1,0 +1,166 @@
+<div class="flex justify-center items-center mt-12 min-h-fit">
+  <div class="flex flex-col-reverse sm:flex-row w-full max-w-6xl">
+    <!-- Primera columna -->
+    <div class="flex flex-col  sm:w-96 flex-1 items-center justify-between p-5 linear sm:rounded-l-2xl">
+      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="text-center text-2xl/9 font-bold tracking-tight text-black text-stroke-1">SafeHands</h2>
+      </div>
+      <div class="max-w-96 mt-auto mb-auto text-center">
+        <h4 class="text-xl font-bold text-marronOscuro">
+          Únete a SafeHands como proveedor y contribuye a nuestra misión de transformar vidas mediante la ayuda humanitaria.
+          Al registrarte, podrás participar en nuestros proyectos, colaborar en iniciativas de alto impacto y aportar tus servicios para marcar una diferencia.
+          ¡Sé un aliado clave en el cambio junto a SafeHands!
+
+        </h4>
+      </div>
+    </div>
+    <!-- Segunda columna -->
+    <div class="flex flex-col h-full bg-verdeClaro p-5 rounded-r-2xl flex-1">
+      <div class="w-full max-w-xl rounded-lg ">
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-0">Registro por pasos</h2>
+        <!-- Barra de progreso -->
+        <div class="flex items-center justify-between mb-6 mt-3">
+          <div class="flex items-center">
+            <div class="w-8 h-8 flex items-center justify-center rounded-full"
+                 [class.bg-jade]="currentStep === 1"
+                 [class.bg-gray-300]="currentStep !== 1">
+              <span class="text-white px-3">1</span>
+            </div>
+            <span class="ml-2 text-sm" [ngClass]="{'text-jade': currentStep === 1, 'font-bold': currentStep === 1}">Datos básicos</span>
+          </div>
+          <div class="w-1/3 h-1 bg-gray-300 font-bold"></div>
+          <div class="flex items-center">
+            <div class="w-8 h-8 flex items-center justify-center rounded-full"
+                 [class.bg-jade]="currentStep === 2"
+                 [class.bg-gray-300]="currentStep !== 2">
+              <span class="text-white">2</span>
+            </div>
+            <span class="ml-2 text-sm" [ngClass]="{'text-jade': currentStep === 2, 'font-bold': currentStep === 2}">Detalles</span>
+          </div>
+          <div class="w-1/3 h-1 bg-gray-300"></div>
+          <div class="flex items-center">
+            <div class="w-8 h-8 flex items-center justify-center rounded-full"
+                 [class.bg-jade]="currentStep === 3"
+                 [class.bg-gray-300]="currentStep !== 3">
+              <span class="text-white">3</span>
+            </div>
+            <span class="ml-2 text-sm"[ngClass]="{'text-jade': currentStep === 3, 'font-bold': currentStep === 3}">Confirmación</span>
+          </div>
+        </div>
+      </div>
+      <!-- Formulario por pasos -->
+      <form class="space-y-6" action="#" method="POST" (ngSubmit)="onRegister()">
+        <div *ngIf="currentStep === 1" class="space-y-6">
+          <div class="relative">
+            <input id="numVoluntarios" type="number"  [(ngModel)]="numVoluntarios" name="numVoluntarios" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Número de voluntarios">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-handshake-angle text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="sede" type="text" [(ngModel)]="sede" name="sede" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Sede">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-house text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="ubicacion" type="text" [(ngModel)]="ubicacion" name="ubicacion" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Ubicación">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-location-dot text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="cif" type="text" [(ngModel)]="cif" name="cif" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="CIF">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-id-card text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentStep === 2" class="space-y-6">
+          <div class="relative">
+            <input id="username" type="text"  [(ngModel)]="username" name="username" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Nombre de usuario">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-user text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="email" type="text" [(ngModel)]="email" name="email" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Correo electrónico">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-envelope text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="password" type="password" [(ngModel)]="password" name="password" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Contraseña">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-lock text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
+            <input id="password2" type="password" [(ngModel)]="password" name="password1" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Repite la contraseña">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-lock text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentStep === 3">
+          <p class="text-gray-600">Confirma los datos ingresados:</p>
+          <ul class="mt-4 space-y-2 text-gray-800">
+            <li><strong>Nombre de usuario:</strong> {{ username }}</li>
+            <li><strong>Email:</strong> {{ email }}</li>
+            <li><strong>Ubicación:</strong> {{ ubicacion }}</li>
+            <li><strong>CIF:</strong> {{ cif }}</li>
+            <li><strong>Nº voluntarios:</strong> {{ numVoluntarios }}</li>
+            <li><strong>Sede:</strong> {{ sede }}</li>
+          </ul>
+        </div>
+        <!-- Botones -->
+        <div class="flex justify-between mt-6">
+          <button
+            type="button"
+            (click)="prevStep()"
+            [disabled]="currentStep === 1"
+            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+          >
+            Anterior
+          </button>
+          <button
+            type="button"
+            (click)="nextStep()"
+            [disabled]="currentStep === 3"
+            class="px-4 py-2 bg-verdeOscuro text-black rounded-lg hover:bg-indigo-600"
+          >
+            Siguiente
+          </button>
+          <button
+            type="submit"
+            *ngIf="currentStep === 3"
+            class="px-4 py-2 bg-jade text-white rounded-lg hover:bg-green-600"
+          >
+            Confirmar
+          </button>
+        </div>
+      </form>
+      <p class="mt-10 text-center text-sm/6 text-gray-500">
+        ¿Ya eres parte de SafeHands?
+        <a href="/login" class="font-semibold text-jade hover:text-fondo">Inicia sesión aquí</a>
+      </p>
+      <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    </div>
+  </div>
+</div>

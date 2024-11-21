@@ -7,6 +7,8 @@ import {ProductosProveedorComponent} from './productos-proveedor/productos-prove
 import {OngDetallesComponent} from './ong-detalles/ong-detalles.component';
 import {ValidarProveedorComponent} from './validar-proveedor/validar-proveedor.component';
 import {RegisterProveedoresComponent} from './register-proveedores/register-proveedores.component';
+import {HomeProveedorComponent} from './home-proveedor/home-proveedor.component';
+import {HomeONGComponent} from './home-ong/home-ong.component';
 import {
   VincularAcontecimientoProductosComponent
 } from './vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
@@ -26,9 +28,8 @@ export const routes: Routes = [
   {path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
   {path:'ong/validar/proveedor', component:ValidarProveedorComponent},
   {path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},
-  { path: 'proveedor/productos', component:ProductosProveedorComponent },
-  { path:'ong/detalles', component:OngDetallesComponent },
-  { path:'ong/detalles/:id', component:OngDetallesComponent },
+  { path: 'homeProveedor', component: HomeProveedorComponent},
+  { path: 'homeONG', component: HomeONGComponent},
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   {path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   {path:'ong/acontecimientos/:id  ', component:OngAsociarAcontecimientoComponent},

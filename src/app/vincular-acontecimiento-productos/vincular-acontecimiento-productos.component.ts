@@ -28,6 +28,7 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
   acontecimientos: any[] = []; // Add a variable to store events
   proveedorId: string | null = null;
   alertMessage: string|null = null;
+  successMessage: string|null = null;
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute,private eventoService: AcontecimientoService) {
     this.vincularForm = this.fb.group({
@@ -70,12 +71,25 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
     this.productoService.vincularProductoAcontecimiento(productoId, acontecimientoId).subscribe({
       next: (response) => {
         console.log('Producto vinculado exitosamente', response);
-        this.alertMessage='Producto vinculado exitosamente';
+        this.showSuccess('Producto vinculado exitosamente');
       },
       error: (err) => {
         console.error('Error vinculando producto', err);
-        this.alertMessage= 'Error vinculando producto';
+        this.showAlert('Error vinculando producto');
       }
     });
+  }
+  private showAlert(message: string) {
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.alertMessage = null;
+    }, 3000); // Clear the alert after 10 seconds
+  }
+
+  private showSuccess(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000); // Clear the success message after 10 seconds
   }
 }

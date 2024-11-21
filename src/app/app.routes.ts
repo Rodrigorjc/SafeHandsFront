@@ -11,6 +11,7 @@ import {
   VincularAcontecimientoProductosComponent
 } from './vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/ong-asociar-acontecimiento.component';
+import {MovilidadProveedoresComponent} from './movilidad-proveedores/movilidad-proveedores.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,7 +31,8 @@ export const routes: Routes = [
   { path:'ong/detalles/:id', component:OngDetallesComponent },
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   {path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
-  {path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
+  {path:'ong/acontecimientos/:id  ', component:OngAsociarAcontecimientoComponent},
+  {path:'movilidad-proveedores', component:MovilidadProveedoresComponent},
   { path: '**', redirectTo: '/login' } // Redirecciona rutas no encontradas al login
 
   //{ path: '**', redirectTo: '/loginCliente' }  // Redirecciona rutas no encontradas al loginCliente

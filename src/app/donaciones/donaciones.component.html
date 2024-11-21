@@ -1,6 +1,11 @@
 <!-- Header -->
 <!-- Contenedor principal -->
 <body>
+
+<br>
+<br>
+<br>
+
 <div class="container">
   <!-- Sección superior -->
   <div class="message-container">
@@ -18,7 +23,9 @@
   <strong>
     <p>Con tu ayuda hemos conseguido un total de</p>
     <!-- Muestra el total de donaciones -->
-    <p class="total-amount">{{ totalDonaciones | currency }}</p>  <!-- Mostramos la cantidad con el pipe de moneda -->
+    <p class="total-amount">
+      {{ totalDonaciones | currency }}
+    </p>
     <p>Muchas gracias por tu colaboración</p>
   </strong>
 </div>
@@ -93,7 +100,7 @@
         <!-- Menú desplegable -->
         <div class="dropdown-menu">
           <button class="dropdown-item" (click)="selectProveedor('MediaMarkt')">MediaMarkt</button>
-          <button class="dropdown-item" (click)="selectProveedor('Dia')">Día</button>
+          <button class="dropdown-item" (click)="selectProveedor('Dia')">DIA</button>
           <button class="dropdown-item" (click)="selectProveedor('El Corte Inglés')">El Corte Inglés</button>
           <button class="dropdown-item" (click)="selectProveedor('Bricodepot')">Bricodepot</button>
         </div>

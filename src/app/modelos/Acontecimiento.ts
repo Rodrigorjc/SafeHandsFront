@@ -1,4 +1,4 @@
-export class Proveedor{
+export class Acontecimiento{
   id?: number;
   nombre?: string;
   totalRecaudado?: number;

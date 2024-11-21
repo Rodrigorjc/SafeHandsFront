@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {CommonModule} from '@angular/common';
-import {Proveedor} from '../modelos/Proveedor';
-import {ProveedorService} from '../services/proveedor.service';
+import { CommonModule } from '@angular/common';
+import { Proveedor } from '../modelos/Proveedor';
+import { ProveedorService } from '../services/proveedor.service';
+import { TotalService } from '../services/total.service';
+import { AcontecimientoService } from '../services/acontecimiento.service';
 
 @Component({
   selector: 'app-donaciones',
@@ -11,14 +13,12 @@ import {ProveedorService} from '../services/proveedor.service';
   styleUrls: ['./donaciones.component.css'],
   imports: [CommonModule]
 })
-export class DonacionesComponent implements OnInit{
+export class DonacionesComponent implements OnInit {
   // Variables para mostrar datos del backend
   totalDonaciones: number = 0;
   acontecimientos: { nombre: string; totalRecaudado: number }[] = [];
   proveedores: { nombre: string; totalRecaudado: number }[] = [];
   proveedor: Proveedor[] = [];  // Usa el tipo de datos 'Proveedor'
-
-
 
   // Variables para controlar la visibilidad de menús y modal
   isUserMenuVisible = false;
@@ -44,43 +44,55 @@ export class DonacionesComponent implements OnInit{
     Bricodepot: 'brico.png',
   };
 
-  constructor(private http: HttpClient, private proveedorService: ProveedorService) {
-    // Cargar los datos desde el backend directamente en el constructor
-    this.loadTotalDonaciones();
-    this.loadTotalRecaudadoPorAcontecimiento();
-    this.loadTotalRecaudadoPorProveedor();
-  }
+  constructor(
+    private http: HttpClient,
+    private proveedorService: ProveedorService,
+    private totalService: TotalService,
+    private acontecimientoService: AcontecimientoService
+  ) {}
 
   ngOnInit(): void {
     // Llamamos al servicio para obtener la lista de proveedores
     this.proveedorService.getListarProveedores().subscribe({
       next: (fetchedProveedores: Proveedor[]) => {
-        this.proveedor = fetchedProveedores;  // Asignamos la respuesta al array de proveedores
+        this.proveedor = fetchedProveedores;
       },
       error: (err: any) => {
-        console.error('Error fetching proveedores', err);  // Definir el tipo para err
+        console.error('Error fetching proveedores', err);
       }
     });
-  }
 
-  // Método para cargar el total de donaciones desde el backend
-  private loadTotalDonaciones() {
-    this.http.get<number>('http://localhost:8081/api/total/donaciones').subscribe(
-      (total) => {
-        this.totalDonaciones = total;
+    // Llamamos al servicio para obtener el total de donaciones
+    this.totalService.getTotal().subscribe({
+      next: (total: any) => {
+        console.log('Respuesta del servicio de total donaciones:', total); // Imprime el valor de la respuesta
+        if (total && typeof total === 'number') {
+          this.totalDonaciones = total;
+        } else if (total && typeof total.totalDonaciones === 'number') {
+          this.totalDonaciones = total.totalDonaciones;
+        } else {
+          console.error('El valor de totalDonaciones no es un número válido');
+          this.totalDonaciones = 0;
+        }
       },
-      (error) => {
-        console.error('Error al cargar el total de donaciones:', error);
+      error: (err) => {
+        console.error('Error fetching total donaciones', err);
+        this.totalDonaciones = 0; // Asignamos 0 en caso de error
       }
-    );
+    });
+
+    // Llamamos al servicio para cargar los acontecimientos y proveedores
+    this.loadTotalRecaudadoPorAcontecimiento();
+    this.loadTotalRecaudadoPorProveedor();
   }
 
-  // Método para cargar el total recaudado por cada acontecimiento desde el backend
+  // Metodo para cargar el total recaudado por cada acontecimiento desde el backend
   private loadTotalRecaudadoPorAcontecimiento() {
     this.http
-      .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/api/acontecimientos/total')
+      .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/acontecimiento/total')
       .subscribe(
         (data) => {
+          console.log('Datos de acontecimientos:', data);
           this.acontecimientos = data;
         },
         (error) => {
@@ -89,13 +101,16 @@ export class DonacionesComponent implements OnInit{
       );
   }
 
-  // Método para cargar el total recaudado por cada proveedor desde el backend
+  // Metodo para cargar el total recaudado por cada proveedor desde el backend
   private loadTotalRecaudadoPorProveedor() {
     this.http
-      .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/api/peticiones/proveedores')
+      .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/peticiones/proveedores')
       .subscribe(
         (data) => {
-          this.proveedores = data;
+          this.proveedores = data.map(proveedor => ({
+            nombre: proveedor.nombre.toLowerCase(),
+            totalRecaudado: proveedor.totalRecaudado
+          }));
         },
         (error) => {
           console.error('Error al cargar el total recaudado por proveedor:', error);
@@ -138,7 +153,8 @@ export class DonacionesComponent implements OnInit{
 
   getDonacionesAcontecimiento(): number {
     const acontecimiento = this.acontecimientos.find(a => a.nombre === this.selectedAcontecimiento);
-    return acontecimiento ? acontecimiento.totalRecaudado : 0;
+    // Aseguramos que el valor devuelto sea un número
+    return acontecimiento ? Number(acontecimiento.totalRecaudado) || 0 : 0;
   }
 
   getImagenProveedor(): string {
@@ -146,9 +162,10 @@ export class DonacionesComponent implements OnInit{
   }
 
   getDonacionesProveedor(): number {
-    const proveedor = this.proveedores.find(p => p.nombre === this.selectedProveedor);
+    const proveedor = this.proveedores.find(p => p.nombre === this.selectedProveedor.toLowerCase());
     return proveedor ? proveedor.totalRecaudado : 0;
   }
 
   protected readonly Object = Object;
+  protected readonly isNaN = isNaN;
 }

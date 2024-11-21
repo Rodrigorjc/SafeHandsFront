@@ -17,7 +17,8 @@
 <div class="segundo-container">
   <strong>
     <p>Con tu ayuda hemos conseguido un total de</p>
-    <p class="total-amount">{{ totalDonaciones }}</p>
+    <!-- Muestra el total de donaciones -->
+    <p class="total-amount">{{ totalDonaciones | currency }}</p>  <!-- Mostramos la cantidad con el pipe de moneda -->
     <p>Muchas gracias por tu colaboración</p>
   </strong>
 </div>
@@ -35,7 +36,6 @@
 <br>
 <br>
 <br>
-
 
 <div class="arriba-container">
   <div class="text-arriba">
@@ -65,14 +65,14 @@
     <div class="container-cuatro">
       <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">
       <div class="text-cuarto">
-        <p><strong>En {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() }}€ donados entre todos.</strong></p>
+        <p><strong>En {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.</strong></p>
         <button class="h3lp-button">Ayuda aquí</button>
       </div>
     </div>
   </div>
 
-<br>
-<br>
+  <br>
+  <br>
 
   <div class="abajo-container">
     <div class="text-abajo">

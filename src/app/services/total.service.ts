@@ -4,15 +4,12 @@ import { tap } from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ProveedorService {
-  private apiUrl = 'http://localhost:8081/api/peticiones/proveedores';
+export class TotalService {
+  private authUrl = 'http://localhost:8080/total/donaciones';
 
   constructor(private http: HttpClient) {}
 
-  getListarProveedores(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getTotal(): Observable<any[]> {
+    return this.http.get<any[]>(this.authUrl);
   }
-
-
-
 }

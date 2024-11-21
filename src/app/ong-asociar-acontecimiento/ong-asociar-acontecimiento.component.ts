@@ -18,6 +18,9 @@ export class OngAsociarAcontecimientoComponent implements OnInit {
   ongs: any[] = [];
   ongId: string | null = null;
   asociarForm: FormGroup;
+  alertMessage: string | null = null;
+  successMessage: string | null = null
+
 
   constructor(
     private route: ActivatedRoute,
@@ -55,15 +58,29 @@ export class OngAsociarAcontecimientoComponent implements OnInit {
       return;
     }
 
-    const { acontecimientoId } = this.asociarForm.value;
+    const {acontecimientoId} = this.asociarForm.value;
     this.ongService.asociarAcontecimiento(acontecimientoId).subscribe(
       response => {
         console.log('Acontecimiento asociado:', response);
-        alert('Acontecimiento asociado exitosamente');
+        this.showSuccess('Acontecimiento asociado exitosamente');
       },
       error => {
         console.error('Error al asociar acontecimiento:', error);
-        alert('Error al asociar acontecimiento');
+        this.showAlert('Error al asociar acontecimiento, el evento está ya asociado a esta ong');
       }
     );
-  }}
+  }
+  private showAlert(message: string) {
+      this.alertMessage = message;
+      setTimeout(() => {
+        this.alertMessage = null;
+      }, 3000); // Clear the alert after 10 seconds
+    }
+
+  private showSuccess(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000); // Clear the success message after 10 seconds
+  }
+  }

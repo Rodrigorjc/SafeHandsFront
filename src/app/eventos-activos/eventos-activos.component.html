@@ -1,0 +1,33 @@
+<div class="relative w-full overflow-x-hidden overflow-y-visible  rounded-lg mt-5">
+  <!-- Contenedor principal del slider -->
+  <div
+    class="flex transition-transform duration-500 ease-in-out"
+    [style.transform]="'translateX(' + currentSlide * -100 + '%)'"
+  >
+    <div
+      *ngFor="let evento of acontecimientos"
+      class="w-1/5 p-5 flex-shrink-0 bg-lime-100 rounded-md text-center mx-3 shadow-lg"
+    >
+      <img
+        [src]="evento.img"
+        [alt]="evento.nombre"
+        class="h-40 w-full object-cover rounded-md mb-4"
+      />
+      <h3 class="text-lg font-bold text-gray-800">{{ evento.nombre }}</h3>
+    </div>
+  </div>
+
+  <!-- Botones de navegación -->
+  <button
+    (click)="prevSlide()"
+    class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 hover:bg-gray-800"
+  >
+    ‹
+  </button>
+  <button
+    (click)="nextSlide()"
+    class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 hover:bg-gray-800"
+  >
+    ›
+  </button>
+</div>

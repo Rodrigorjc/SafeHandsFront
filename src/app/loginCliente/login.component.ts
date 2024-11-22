@@ -56,7 +56,7 @@ export class LoginComponent implements  OnInit {
             localStorage.setItem('rol', role);
             localStorage.setItem('userId', userId);
             localStorage.setItem('username', this.username),
-              this.router.navigate(['homeProveedor']);
+              this.router.navigate(['homeProveedor/',userId]);
           } if (role === "CLIENTE") {
             console.log('User ID:', userId);
             console.log('Role:', role);

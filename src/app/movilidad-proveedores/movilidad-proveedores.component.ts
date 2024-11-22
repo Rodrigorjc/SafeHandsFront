@@ -26,22 +26,29 @@ const routes: Routes = [
   styleUrl: './movilidad-proveedores.component.css'
 })
 export class MovilidadProveedoresComponent implements OnInit {
-  proveedorId: string|null= null;
+  proveedorId: string | null = null;
+  proveedores: any[] = [];
+  proveedorDetalles: any = {};
 
-  constructor(private route: ActivatedRoute, private router:Router, private  proveedorService:ProveedorService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private proveedorService: ProveedorService) {}
 
   ngOnInit() {
-    // Obtiene el parámetro 'id' de la URL
     this.proveedorId = this.route.snapshot.paramMap.get('id');
     if (this.proveedorId) {
-      this.proveedorService.getProveedor(this.proveedorId).subscribe({
-        next: (data) => {
-          console.log('Proveedor:', data);
-        },
-        error: (error) => {
-          console.error('Error al obtener el proveedor:', error);
-        }
-      });
+      this.getProveedorDetalles(this.proveedorId);
+      console.log('Proveedor ID:', this.proveedorId);
     }
+  }
+
+  getProveedorDetalles(id: string): void {
+    this.proveedorService.getProveedor(id).subscribe({
+      next: (data) => {
+        this.proveedorDetalles = data;
+        console.log('Proveedor details:', data);
+      },
+      error: (err) => {
+        console.error('Error fetching proveedor details', err);
+      }
+    });
   }
 }

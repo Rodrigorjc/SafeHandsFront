@@ -1,10 +1,22 @@
-<nav>
-  <a [routerLink]="['/proveedor/productos/', proveedorId]" routerLinkActive="active">Pestaña 1</a>
-  <a routerLink="/tab2" routerLinkActive="active">Pestaña 2</a>
-</nav>
-<!-- src/app/movilidad-proveedores/movilidad-proveedores.component.html -->
-<div>
-  <p>ID del proveedor: {{ proveedorId }}</p>
+<div class="min-h-screen bg-[#f8f3e9] text-gray-900 font-sans">
+  <div class="p-6">
+    <div class="flex flex-col items-center md:flex-row md:justify-start gap-8">
+      <img [src]="proveedorDetalles?.img" alt="{{ proveedorDetalles?.username }} Logo" class="w-60 h-60">
+      <div class="text-center md:text-left">
+        <h2 class="text-4xl font-bold mb-4">Hola! {{ proveedorDetalles?.username }}</h2>
+        <div class="flex gap-8">
+          <div class="flex gap-1">
+            <p class="text-lg">Ubicación:</p>
+            <p class="text-lg font-bold">{{ proveedorDetalles?.ubicacion }}</p>
+          </div>
+          <div class="flex gap-1">
+            <p class="text-lg">Sede:</p>
+            <p class="text-lg font-bold">{{ proveedorDetalles?.sede }}</p>
+          </div>
+        </div>
+        <p class="text-lg">{{ proveedorDetalles?.descripcion }}</p>
+        <p class="mt-4 font-semibold">Número de Voluntarios: {{ proveedorDetalles?.numVoluntarios }}</p>
+        <button [routerLink]="['/proveedor/productos/', proveedorDetalles.idUsuario ]" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Ver productos</button>      </div>
+    </div>
+  </div>
 </div>
-<!-- Aquí se cargarán los componentes -->
-<router-outlet></router-outlet>

@@ -29,12 +29,13 @@ export const routes: Routes = [
   {path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
   {path:'ong/validar/proveedor', component:ValidarProveedorComponent},
   {path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},
-  { path: 'homeProveedor', component: HomeProveedorComponent},
+  { path: 'homeProveedor/:id', component: HomeProveedorComponent},
   { path: 'homeONG', component: HomeONGComponent},
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   {path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   {path:'ong/acontecimientos/:id  ', component:OngAsociarAcontecimientoComponent},
-  {path:'movilidad-proveedores', component:MovilidadProveedoresComponent},
+  {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
+  { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' } // Redirecciona rutas no encontradas al login
 
   //{ path: '**', redirectTo: '/loginCliente' }  // Redirecciona rutas no encontradas al loginCliente

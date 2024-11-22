@@ -24,16 +24,16 @@ export const routes: Routes = [
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
   {path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {path:'ong/detalles', component:OngDetallesComponent},
-  {path:'ong/detalles/:id', component:OngDetallesComponent},
+  {path:'ong/detalles', component:OngDetallesComponent},//para clientes
+  {path:'ong/detalles/:id', component:OngDetallesComponent},//para clientes
   {path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
-  {path:'ong/validar/proveedor', component:ValidarProveedorComponent},
-  {path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},
+  {path:'ong/validar/proveedor', component:ValidarProveedorComponent},//para ong
+  {path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},//para ong
   { path: 'homeProveedor/:id', component: HomeProveedorComponent},
-  { path: 'homeONG', component: HomeONGComponent},
+  { path: 'homeONG/:id', component: HomeONGComponent},//para ong
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   {path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
-  {path:'ong/acontecimientos/:id  ', component:OngAsociarAcontecimientoComponent},
+  {path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},//para ong
   {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' } // Redirecciona rutas no encontradas al login

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
 import {LineaPedidoService} from '../services/linea-pedido.service';
 import {Acontecimineto} from '../modelos/Acontecimineto';
@@ -8,18 +8,22 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
   selector: 'app-info-donaciones',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    CurrencyPipe
   ],
   templateUrl: './info-donaciones.component.html',
   styleUrl: './info-donaciones.component.css'
 })
 export class InfoDonacionesComponent implements OnInit{
   totalDonaciones: number = 0;
+  rankingProveedores: { nombreProveedor: string; totalDonaciones: number }[] = [];
+  maxDonaciones: number = 0;
 
-  constructor(private service: LineaPedidoService,private router: Router) {}
+  constructor(private service: LineaPedidoService, private router: Router) {}
 
   ngOnInit() {
     this.getTotal();
+    this.cargarRanking();
   }
 
   redireccion() {
@@ -35,6 +39,15 @@ export class InfoDonacionesComponent implements OnInit{
       error: (error) => {
         console.error('Error', error);
       }
+    });
+  }
+
+  cargarRanking(): void {
+    this.service.obtenerRankingProveedores().subscribe((data: any) => {
+      this.rankingProveedores = data;
+      this.maxDonaciones = Math.max(
+        ...this.rankingProveedores.map((p) => p.totalDonaciones)
+      );
     });
   }
 }

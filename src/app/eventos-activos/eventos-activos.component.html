@@ -1,4 +1,4 @@
-<div class="relative w-full overflow-x-hidden overflow-y-visible  rounded-lg mt-5">
+<div class="relative w-full overflow-visible rounded-lg mt-5">
   <!-- Contenedor principal del slider -->
   <div
     class="flex transition-transform duration-500 ease-in-out"
@@ -6,14 +6,15 @@
   >
     <div
       *ngFor="let evento of acontecimientos"
-      class="w-1/5 p-5 flex-shrink-0 bg-lime-100 rounded-md text-center mx-3 shadow-lg"
+      class="w-1/5 p-5 flex-shrink-0 bg-verdeClaro rounded-md text-center mx-3 shadow-lg"
+      style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
     >
       <img
         [src]="evento.img"
         [alt]="evento.nombre"
         class="h-40 w-full object-cover rounded-md mb-4"
       />
-        <h3 class="text-lg font-bold text-gray-800">{{ evento.nombre }}</h3>
+      <h3 class="text-lg font-bold text-gray-800">{{ evento.nombre }}</h3>
     </div>
   </div>
 

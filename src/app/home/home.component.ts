@@ -8,6 +8,7 @@ import {List} from 'postcss/lib/list';
 import {Router, Routes} from '@angular/router';
 import {EventosActivosComponent} from '../eventos-activos/eventos-activos.component';
 import { map } from 'rxjs';
+import {SliderproveedoresComponent} from '../sliderproveedores/sliderproveedores.component';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ import { map } from 'rxjs';
     DemoComponent,
     HeaderComponent,
     NgForOf,
-    EventosActivosComponent
+    EventosActivosComponent,
+    SliderproveedoresComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

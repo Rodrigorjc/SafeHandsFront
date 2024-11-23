@@ -13,12 +13,18 @@ import {
   VincularAcontecimientoProductosComponent
 } from './vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/ong-asociar-acontecimiento.component';
+import {ProductoComponent} from './producto/producto.component';
+import {ProductoListarComponent} from './producto-listar/producto-listar.component';
+import {NosotrosComponent} from './nosotros/nosotros.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
+  { path: 'producto', component: ProductoComponent },
+  { path: 'nosotros', component: NosotrosComponent },
+  { path: 'producto/listar', component: ProductoListarComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
   {path: 'proveedor/productos/:id', component:ProductosProveedorComponent},

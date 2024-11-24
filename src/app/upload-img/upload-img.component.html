@@ -1,8 +1,3 @@
 <div>
-  <h2>Sube tu imagen</h2>
   <input type="file" (change)="onFileSelected($event)" />
-  <div *ngIf="imageUrl">
-    <p>Imagen subida con éxito:</p>
-    <img [src]="imageUrl" alt="Imagen subida" width="300" />
-  </div>
 </div>

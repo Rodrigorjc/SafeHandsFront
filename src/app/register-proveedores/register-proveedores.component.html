@@ -52,6 +52,14 @@
       <form class="space-y-6" action="#" method="POST" (ngSubmit)="onRegister()">
         <div *ngIf="currentStep === 1" class="space-y-6">
           <div class="relative">
+            <input id="nombre" type="text"  [(ngModel)]="nombre" name="nombre" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Nombre">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-signature text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative">
             <input id="numVoluntarios" type="number"  [(ngModel)]="numVoluntarios" name="numVoluntarios" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Número de voluntarios">
@@ -81,6 +89,14 @@
                    placeholder="CIF">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-id-card text-gray-400"></i>
+            </div>
+          </div>
+          <div class="relative bg-white rounded-lg">
+            <div class="ms-10">
+              <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+            </div>
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-image text-gray-400"></i>
             </div>
           </div>
         </div>
@@ -135,7 +151,7 @@
             type="button"
             (click)="prevStep()"
             [disabled]="currentStep === 1"
-            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-500"
           >
             Anterior
           </button>
@@ -143,7 +159,7 @@
             type="button"
             (click)="nextStep()"
             [disabled]="currentStep === 3"
-            class="px-4 py-2 bg-verdeOscuro text-black rounded-lg hover:bg-indigo-600"
+            class="px-4 py-2 bg-verdeOscuro text-black rounded-lg hover:bg-jade"
           >
             Siguiente
           </button>

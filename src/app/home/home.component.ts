@@ -1,65 +1,89 @@
-import {Component, OnInit} from '@angular/core';
-import {DemoComponent} from '../demo/demo.component';
-import {HeaderComponent} from '../header/header.component';
-import {AcontecimientoService} from '../services/acontecimiento.service';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { AcontecimientoService } from '../services/acontecimiento.service';
+import { Acontecimineto } from '../modelos/Acontecimineto';
 import {NgForOf} from '@angular/common';
-import {Acontecimineto} from '../modelos/Acontecimineto';
-import {List} from 'postcss/lib/list';
-import {Router, Routes} from '@angular/router';
 import {EventosActivosComponent} from '../eventos-activos/eventos-activos.component';
-import { map } from 'rxjs';
 import {SliderproveedoresComponent} from '../sliderproveedores/sliderproveedores.component';
 
 @Component({
   selector: 'app-home',
+  templateUrl: './home.component.html',
   standalone: true,
   imports: [
-    DemoComponent,
-    HeaderComponent,
     NgForOf,
     EventosActivosComponent,
     SliderproveedoresComponent
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
-  currentSlide = 0;
+export class HomeComponent implements OnInit, AfterViewInit {
+  @ViewChild('slider', { static: true }) slider!: ElementRef;
   acontecimientos: Acontecimineto[] = [];
-  nombre?:string;
-  descripcion?:string;
-  img?:string;
-  ubicacion?:string;
+  currentSlide = 0;
+  slidesToShow = 1;
 
-  constructor(private service: AcontecimientoService, private router:Router) {
+  constructor(private service: AcontecimientoService) {}
+
+  ngOnInit(): void {
+    this.getAcontecimientos();
+    this.updateSlidesToShow();
   }
 
-  ngOnInit() {
-    this.getAcontecimientos();
+  ngAfterViewInit(): void {
+    this.updateSliderPosition();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateSlidesToShow();
+    this.updateSliderPosition();
+  }
+
+  updateSlidesToShow() {
+    const width = window.innerWidth;
+    if (width >= 1280) {
+      this.slidesToShow = 5;
+    } else if (width >= 1024) {
+      this.slidesToShow = 4;
+    } else if (width >= 768) {
+      this.slidesToShow = 3;
+    } else if (width >= 640) {
+      this.slidesToShow = 2;
+    } else {
+      this.slidesToShow = 1;
+    }
+  }
+
+  nextSlide() {
+    const maxSlide = this.acontecimientos.length - this.slidesToShow;
+    if (this.currentSlide < maxSlide) {
+      this.currentSlide++;
+      this.updateSliderPosition();
+    }
+  }
+
+  prevSlide() {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+      this.updateSliderPosition();
+    }
+  }
+
+  updateSliderPosition() {
+    const sliderElement = this.slider.nativeElement;
+    const slideWidth = sliderElement.offsetWidth / this.slidesToShow;
+    sliderElement.scrollLeft = this.currentSlide * slideWidth;
   }
 
   getAcontecimientos() {
-    return this.service.getAcontecimiento().pipe(
-      map((data: Acontecimineto[]) => data.slice(0, 3))
-    ).subscribe({
+    return this.service.getAcontecimiento().subscribe({
       next: (data: Acontecimineto[]) => {
         this.acontecimientos = data;
+        this.updateSlidesToShow();
       },
       error: (error) => {
         console.error('Error cambio de informacion', error);
       }
     });
-  }
-
-  // Cambia al siguiente slide
-  nextSlide() {
-    const totalSlides = this.acontecimientos.length; // Ajusta según el número de slides
-    this.currentSlide = (this.currentSlide + 1) % totalSlides;
-  }
-
-// Cambia al slide anterior
-  prevSlide() {
-    const totalSlides = this.acontecimientos.length; // Ajusta según el número de slides
-    this.currentSlide = (this.currentSlide - 1 + totalSlides) % totalSlides;
   }
 }

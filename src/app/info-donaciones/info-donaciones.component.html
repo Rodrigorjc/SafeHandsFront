@@ -1,4 +1,5 @@
 <div class="flex  flex-col justify-center items-center">
+<!--  Apartado sobre ayuda donaciones-->
   <div class="relative w-3/4 overflow-hidden bg-gray-100 rounded-lg shadow-lg mt-10 items-center">
       <div   class="w-full flex-shrink-0 p-6 bg-verdeClaro flex items-center">
         <img src="/VoluntariosAyudando.svg" alt="Voluntarios ayudando" class="w-1/3 rounded-md h-56">
@@ -9,14 +10,24 @@
           </button>
         </div>
       </div>
-    </div>
+  </div>
+<!--  Apartado sobre el total de donaciones-->
   <div class="flex mt-14 text-center items-center w-3/4">
     <h3 class="text-7xl w-1/2">Con tu ayuda hemos conseguido un total de </h3>
-    <p class="text-7xl w-1/2 text-verdeOscuro">{{totalDonaciones}}€</p>
+    <div class="flex flex-col w-1/2 justify-center items-center">
+      <p class="text-7xl text-verdeOscuro">{{totalDonaciones}}€</p>
+      <div class="w-1/2">
+        <div class="h-2 bg-verdeOscuro mt-2 mb-1"></div>
+        <div class="h-1 bg-verdeOscuro"></div>
+      </div>
+    </div>
+
   </div>
   <h3 class="text-7xl mt-10">Muchas gracias por tu colaboración </h3>
 </div>
-<div class="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
+
+<!--Apartado sobre el Ranking de proveedores-->
+<div class="p-6 mt-10 flex flex-col items-center">
   <h1 class="text-3xl font-bold text-gray-800 mb-8">Ranking de Proveedores</h1>
 
   <div class="w-full max-w-4xl">
@@ -55,5 +66,46 @@
     </div>
   </div>
 </div>
+
+
+<div class=" flex items-center justify-center mt-12">
+  <div class="p-4 w-3/4">
+    <h2 class="text-2xl font-semibold mb-2">Infórmate de lo donado por cada proveedor</h2>
+    <div class="mb-4 w-1/4 flex items-center">
+      <label for="proveedor" class="block text-gray-700 font-medium me-3 text-xl">Proveedor:</label>
+      <select
+        id="proveedor"
+        [(ngModel)]="proveedorSeleccionadoId"
+        (change)="seleccionarProveedor()"
+        class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      >
+        <option value="">Seleccione un proveedor</option>
+        <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+          {{ proveedor.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="proveedorSeleccionado" class="bg-verdeClaro p-4 rounded-lg flex items-center">
+      <img [src]="proveedorSeleccionado.img" alt="Logo del proveedor" class="h-40 w-64 rounded-lg mr-4">
+      <div>
+        <p class="text-xl font-bold">{{ proveedorSeleccionado.nombre }}</p>
+        <p class="text-gray-700">
+          Ha recaudado un total de
+          <b class="font-semibold text-green-600">
+            {{ proveedorSeleccionado.total | currency: 'EUR' }}
+          </b>
+        </p>
+        <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">
+          Consulta los productos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 

@@ -17,4 +17,8 @@ export class LineaPedidoService {
   obtenerRankingProveedores() {
     return this.http.get('/api/proveedor/ranking');
   }
+
+  obtenerInfoProveedores() {
+    return this.http.get('/api/proveedor/info/proveedores');
+  }
 }

@@ -104,6 +104,43 @@
   </div>
 </div>
 
+<div class=" flex items-center justify-center mt-12">
+  <div class="p-4 w-3/4">
+    <h2 class="text-2xl font-semibold mb-2">Infórmate de lo donado en cada acontecimiento</h2>
+    <div class="mb-4 w-1/4 flex items-center">
+      <label for="proveedor" class="block text-gray-700 font-medium me-3 text-xl">Acontecimiento:</label>
+      <select
+        id="acontecimineto"
+        [(ngModel)]="aconteciminetoSeleccionadoId"
+        (change)="seleccionarAcontecimiento()"
+        class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      >
+        <option value="">Seleccione un acontecimineto</option>
+        <option *ngFor="let acontecimineto of aconteciminetos" [value]="acontecimineto.id">
+          {{ acontecimineto.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="aconteciminetoSeleccionado" class="bg-verdeClaro p-4 rounded-lg flex items-center">
+      <img [src]="aconteciminetoSeleccionado.img" alt="Logo del proveedor" class="h-40 w-64 rounded-lg mr-4">
+      <div>
+        <p class="text-xl font-bold">{{ aconteciminetoSeleccionado.nombre }}</p>
+        <p class="text-gray-700">
+          Ha recaudado un total de
+          <b class="font-semibold text-green-600">
+            {{ aconteciminetoSeleccionado.total | currency: 'EUR' }}
+          </b>
+        </p>
+        <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">
+          Consulta los productos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 

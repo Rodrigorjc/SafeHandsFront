@@ -6,6 +6,7 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
 import {data} from 'autoprefixer';
 import {ProveedorInfo} from '../modelos/ProveedorInfo';
 import {FormsModule} from '@angular/forms';
+import {AconteciminetoInfo} from '../modelos/AconteciminetoInfo';
 
 @Component({
   selector: 'app-info-donaciones',
@@ -26,6 +27,9 @@ export class InfoDonacionesComponent implements OnInit{
   proveedores: ProveedorInfo[] = [];
   proveedorSeleccionadoId: string = '';
   proveedorSeleccionado: ProveedorInfo | null = null;
+  aconteciminetos: AconteciminetoInfo[] = [];
+  aconteciminetoSeleccionadoId: string = '';
+  aconteciminetoSeleccionado: AconteciminetoInfo | null = null;
 
   constructor(private service: LineaPedidoService, private router: Router) {}
 
@@ -33,6 +37,7 @@ export class InfoDonacionesComponent implements OnInit{
     this.getTotal();
     this.cargarRanking();
     this.cargarInfoProveedores();
+    this.cargarInfoAcontecimiento();
   }
 
   redireccion() {
@@ -64,7 +69,7 @@ export class InfoDonacionesComponent implements OnInit{
     this.service.obtenerInfoProveedores().subscribe((data: any) => {
       this.proveedores = data;
       console.log(this.proveedores);
-    })
+    });
   }
 
   seleccionarProveedor(): void {
@@ -76,6 +81,25 @@ export class InfoDonacionesComponent implements OnInit{
       console.log('Proveedor seleccionado:', this.proveedorSeleccionado); // Verifica el objeto seleccionado
     } else {
       this.proveedorSeleccionado = null;
+    }
+  }
+
+  cargarInfoAcontecimiento(): void {
+    this.service.obtenerInfoAcontecimineto().subscribe((data: any) => {
+      this.aconteciminetos = data;
+      console.log(this.aconteciminetos);
+    });
+  }
+
+  seleccionarAcontecimiento(): void {
+    console.log('ID seleccionado:', this.aconteciminetoSeleccionadoId); // Verifica el valor seleccionado
+    if (this.aconteciminetoSeleccionadoId !== '') {
+      this.aconteciminetoSeleccionado = this.aconteciminetos.find(
+        (p) => p.id === +this.aconteciminetoSeleccionadoId
+      ) || null;
+      console.log('Proveedor seleccionado:', this.aconteciminetoSeleccionado); // Verifica el objeto seleccionado
+    } else {
+      this.aconteciminetoSeleccionado = null;
     }
   }
 }

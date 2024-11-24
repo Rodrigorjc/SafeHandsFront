@@ -21,4 +21,8 @@ export class LineaPedidoService {
   obtenerInfoProveedores() {
     return this.http.get('/api/proveedor/info/proveedores');
   }
+
+  obtenerInfoAcontecimineto() {
+    return this.http.get('/api/acontecimiento/info');
+  }
 }

@@ -2,3 +2,26 @@
 <div id="demoResponse"></div>
 
 <button (click)="onGetRemainingTimeClick()">Get Remaining Time</button>
+
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <label for="name">Nombre:</label>
+  <input id="name" formControlName="name" type="text" />
+
+<!--  <label for="email">Email:</label>-->
+<!--  <input id="email" formControlName="email" type="email" />-->
+
+  <!-- Componente hijo para subida de imagen -->
+  <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+
+  <button type="submit" [disabled]="!myForm.valid || !imageUrl">Enviar</button>
+</form>
+
+<!-- Mostrar mensaje de éxito (opcional) -->
+<div *ngIf="imageUrl">
+  <h3>Vista previa:</h3>
+  <p>Nombre: {{ myForm.value.name }}</p>
+<!--  <p>Email: {{ myForm.value.email }}</p>-->
+  <img [src]="imageUrl" alt="Vista previa de imagen subida" width="150" />
+</div>
+

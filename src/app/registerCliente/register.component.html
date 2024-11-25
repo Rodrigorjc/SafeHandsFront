@@ -6,48 +6,60 @@
         <h2 class="text-center text-2xl/9 font-bold tracking-tight text-white text-stroke-1">Sign-up</h2>
       </div>
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST" (ngSubmit)="onRegister()">
+        <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onRegister()">
           <div class="relative">
-            <input id="email" type="email" autocomplete="email" [(ngModel)]="email" name="email" required
-                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
-                   placeholder="Email">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <i class="fas fa-envelope text-gray-400"></i>
-            </div>
-          </div>
-          <div class="relative">
-            <input id="username" type="text" autocomplete="username" [(ngModel)]="username" name="username"
-                   required
-                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
-                   placeholder="Username">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <i class="fa-solid fa-user text-gray-400"></i>
-            </div>
-          </div>
-          <div class="relative">
-            <input id="dni" type="text" autocomplete="dni" [(ngModel)]="dni" name="dni" required
+            <input id="dni" type="text" formControlName="dni" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="DNI">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-id-card text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('dni')?.invalid && registerForm.get('dni')?.touched" class="absolute text-red-500">
+              DNI inválido.
+            </div>
           </div>
           <div class="relative">
-            <input id="password" type="password" autocomplete="password" [(ngModel)]="password" name="password"
-                   required
+            <input id="email" type="email" formControlName="email" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Email">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fas fa-envelope text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="absolute text-red-500">
+              Email inválido.
+            </div>
+          </div>
+          <div class="relative">
+            <input id="username" type="text" formControlName="username" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Username">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-user text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="absolute text-red-500">
+              Nombre de usuario inválido.
+            </div>
+          </div>
+          <div class="relative">
+            <input id="password" type="password" formControlName="password" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Password">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-lock text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="absolute text-red-500">
+              Contraseña inválida.
+            </div>
           </div>
           <div class="relative">
-            <input id="repeatPassword" type="password" autocomplete="password"
-                   name="repeatPassword" required
-                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro   sm:text-sm/6"
+            <input id="repeatPassword" type="password" formControlName="repeatPassword" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Password again">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-lock text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('repeatPassword')?.touched" class="absolute text-red-500">
+              Las contraseñas no coinciden.
             </div>
           </div>
           <div>
@@ -65,7 +77,7 @@
       </div>
     </div>
     <!-- Segunda columna -->
-    <div class="flex flex-col  sm:w-96 flex-1 items-center justify-between p-5 linear sm:rounded-r-2xl">
+    <div class="flex flex-col sm:w-96 flex-1 items-center justify-between p-5 linear sm:rounded-r-2xl">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class="text-center text-2xl/9 font-bold tracking-tight text-black text-stroke-1">SafeHands</h2>
       </div>

@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import {ActualizarHeaderService} from '../services/actualizar-header.service';
 
 interface CustomJwtPayload {
   userId: string;
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit {
   isMenuVisible = false;
   img: Observable<any> = of('');
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private actualizar: ActualizarHeaderService) {}
 
   toggleUserMenu() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
@@ -41,6 +42,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshHeader();
+    this.actualizar.refreshHeader$.subscribe(() => {
+      this.refreshHeader();
+    });
+  }
+
+  refreshHeader() {
     let token = localStorage.getItem('token');
     let userId: string | null = localStorage.getItem('userId');
     if (token) {
@@ -70,7 +78,7 @@ export class HeaderComponent implements OnInit {
           }
         });
       } else {
-        //imagen por defecto
+        // Default image
         this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
       }
     } else {

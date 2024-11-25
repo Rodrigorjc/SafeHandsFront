@@ -1,9 +1,11 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AuthService} from '../services/auth.service';
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {UploadImgComponent} from '../upload-img/upload-img.component';
-import {NgIf} from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UploadImgComponent } from '../upload-img/upload-img.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { NotificacionService } from '../services/notificacion.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-demo',
@@ -11,38 +13,30 @@ import {NgIf} from '@angular/common';
   imports: [
     ReactiveFormsModule,
     UploadImgComponent,
-    NgIf
+    NgIf,
+    CommonModule
   ],
+  providers: [NotificacionService],
   templateUrl: './demo.component.html',
   styleUrl: './demo.component.css'
 })
 export class DemoComponent {
-
-
-  onDemoButtonClick() {
-    this.http.get('http://localhost:8081/demo').subscribe(
-      data => console.log('Data:', data),
-      error => console.error('Error:', error)
-    );
-  }
-
-  onGetRemainingTimeClick() {
-
-
-    this.http.get('http://localhost:8081/demo/remaining-time').subscribe(
-      (data: any) => console.log('Remaining Time:', data),
-      error => console.error('Error:', error)
-    );
-  }
-
   myForm: FormGroup;
   imageUrl: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private http: HttpClient,
+    private notificacion: NotificacionService
+  ) {
     this.myForm = this.fb.group({
       name: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
     });
+  }
+
+  showNotification() {
+    this.notificacion.showNotification('This is a demo notification!');
   }
 
   onImageUploaded(imageUrl: string) {
@@ -53,12 +47,24 @@ export class DemoComponent {
   onSubmit() {
     const formData = {
       ...this.myForm.value,
-      imageUrl: this.imageUrl, // Incluir la URL de la imagen
+      imageUrl: this.imageUrl,
     };
 
     console.log('Datos del formulario:', formData);
-
-    // Simula un mensaje de éxito
     alert('Formulario enviado con éxito. Revisa la consola para ver los datos.');
+  }
+
+  onDemoButtonClick() {
+    this.http.get('http://localhost:8081/demo').subscribe(
+      data => console.log('Data:', data),
+      error => console.error('Error:', error)
+    );
+  }
+
+  onGetRemainingTimeClick() {
+    this.http.get('http://localhost:8081/demo/remaining-time').subscribe(
+      (data: any) => console.log('Remaining Time:', data),
+      error => console.error('Error:', error)
+    );
   }
 }

@@ -49,46 +49,61 @@
         </div>
       </div>
       <!-- Formulario por pasos -->
-      <form class="space-y-6" action="#" method="POST" (ngSubmit)="onRegister()">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <div *ngIf="currentStep === 1" class="space-y-6">
           <div class="relative">
-            <input id="nombre" type="text"  [(ngModel)]="nombre" name="nombre" required
+            <input id="nombre" type="text" formControlName="nombre" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Nombre">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-signature text-gray-400"></i>
             </div>
-          </div>
-          <div class="relative">
-            <input id="numVoluntarios" type="number"  [(ngModel)]="numVoluntarios" name="numVoluntarios" required
-                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
-                   placeholder="Número de voluntarios">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <i class="fa-solid fa-handshake-angle text-gray-400"></i>
+            <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="text-red-500">
+              Nombre es requerido.
             </div>
           </div>
           <div class="relative">
-            <input id="sede" type="text" [(ngModel)]="sede" name="sede" required
+            <input id="numVoluntarios" type="number" formControlName="numVoluntarios" required
+                   class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
+                   placeholder="Número de voluntarios">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-arrow-up-9-1 text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.get('numVoluntarios')?.invalid && registerForm.get('numVoluntarios')?.touched" class="text-red-500">
+              Número de Voluntarios es requerido y debe ser mayor que 0.
+            </div>
+          </div>
+          <div class="relative">
+            <input id="sede" type="text" formControlName="sede" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Sede">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-house text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('sede')?.invalid && registerForm.get('sede')?.touched" class="text-red-500">
+              Sede es requerida.
+            </div>
           </div>
           <div class="relative">
-            <input id="ubicacion" type="text" [(ngModel)]="ubicacion" name="ubicacion" required
+            <input id="ubicacion" type="text" formControlName="ubicacion"  required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Ubicación">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-location-dot text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('ubicacion')?.invalid && registerForm.get('ubicacion')?.touched" class="text-red-500">
+              Ubicacion es rquerido.
+            </div>
           </div>
           <div class="relative">
-            <input id="cif" type="text" [(ngModel)]="cif" name="cif" required
+            <input id="cif" type="text" formControlName="cif"  required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="CIF">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-id-card text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.get('cif')?.invalid && registerForm.get('cif')?.touched" class="text-red-500">
+              CIF es requerido.
             </div>
           </div>
           <div class="relative bg-white rounded-lg">
@@ -98,76 +113,76 @@
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-image text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('img')?.invalid && registerForm.get('img')?.touched" class="text-red-500">
+              Imagen es requerida.
+            </div>
           </div>
         </div>
         <div *ngIf="currentStep === 2" class="space-y-6">
           <div class="relative">
-            <input id="username" type="text"  [(ngModel)]="username" name="username" required
+            <input id="username" type="text" formControlName="username" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Nombre de usuario">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-user text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-500">
+              Nombre de usuario es requerido.
+            </div>
           </div>
           <div class="relative">
-            <input id="email" type="text" [(ngModel)]="email" name="email" required
+            <input id="email" type="text" formControlName="email" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Correo electrónico">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-envelope text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500">
+              Correo electrónico es requerido y debe ser válido.
+            </div>
           </div>
           <div class="relative">
-            <input id="password" type="password" [(ngModel)]="password" name="password" required
+            <input id="password" type="password" formControlName="password" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Contraseña">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-lock text-gray-400"></i>
             </div>
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500">
+              Contraseña es requerida y debe tener al menos 6 caracteres.
+            </div>
           </div>
           <div class="relative">
-            <input id="password2" type="password" [(ngModel)]="password" name="password1" required
+            <input id="password2" type="password" formControlName="password2" required
                    class="block w-full pl-10 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6"
                    placeholder="Repite la contraseña">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <i class="fa-solid fa-lock text-gray-400"></i>
+            </div>
+            <div *ngIf="registerForm.get('password2')?.invalid && registerForm.get('password2')?.touched" class="text-red-500">
+              Repite la contraseña es requerida.
             </div>
           </div>
         </div>
         <div *ngIf="currentStep === 3">
           <p class="text-gray-600">Confirma los datos ingresados:</p>
           <ul class="mt-4 space-y-2 text-gray-800">
-            <li><strong>Nombre de usuario:</strong> {{ username }}</li>
-            <li><strong>Email:</strong> {{ email }}</li>
-            <li><strong>Ubicación:</strong> {{ ubicacion }}</li>
-            <li><strong>CIF:</strong> {{ cif }}</li>
-            <li><strong>Nº voluntarios:</strong> {{ numVoluntarios }}</li>
-            <li><strong>Sede:</strong> {{ sede }}</li>
+            <li><strong>Nombre de usuario:</strong> {{ registerForm.get('username')?.value }}</li>
+            <li><strong>Email:</strong> {{ registerForm.get('email')?.value }}</li>
+            <li><strong>Ubicación:</strong> {{ registerForm.get('ubicacion')?.value }}</li>
+            <li><strong>CIF:</strong> {{ registerForm.get('cif')?.value }}</li>
+            <li><strong>Nº voluntarios:</strong> {{ registerForm.get('numVoluntarios')?.value }}</li>
+            <li><strong>Sede:</strong> {{ registerForm.get('sede')?.value }}</li>
           </ul>
         </div>
-        <!-- Botones -->
         <div class="flex justify-between mt-6">
-          <button
-            type="button"
-            (click)="prevStep()"
-            [disabled]="currentStep === 1"
-            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-500"
-          >
+          <button type="button" (click)="prevStep()" [disabled]="currentStep === 1" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-500">
             Anterior
           </button>
-          <button
-            type="button"
-            (click)="nextStep()"
-            [disabled]="currentStep === 3"
-            class="px-4 py-2 bg-verdeOscuro text-black rounded-lg hover:bg-jade"
-          >
+          <button type="button" (click)="nextStep()" [disabled]="currentStep === 3" class="px-4 py-2 bg-verdeOscuro text-black rounded-lg hover:bg-jade">
             Siguiente
           </button>
-          <button
-            type="submit"
-            *ngIf="currentStep === 3"
-            class="px-4 py-2 bg-jade text-white rounded-lg hover:bg-green-600"
-          >
+          <button type="submit" *ngIf="currentStep === 3" class="px-4 py-2 bg-jade text-white rounded-lg hover:bg-green-600">
             Confirmar
           </button>
         </div>
@@ -176,7 +191,7 @@
         ¿Ya eres parte de SafeHands?
         <a href="/login" class="font-semibold text-jade hover:text-fondo">Inicia sesión aquí</a>
       </p>
-      <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="text-red-500" *ngIf="errorMessage">{{ errorMessage }}</p>
     </div>
   </div>
 </div>

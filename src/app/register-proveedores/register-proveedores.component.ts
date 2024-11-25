@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule, ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {NgClass, NgIf} from '@angular/common';
 import {RegistroProveedores} from '../modelos/RegistroProveedores';
 import {AuthService} from '../services/auth.service';
@@ -37,9 +45,16 @@ export class RegisterProveedoresComponent {
       img: [''],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
   }
+
+  passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const password2 = control.get('password2');
+    return password && password2 && password.value === password2.value ? null : { 'passwordMismatch': true };
+  };
 
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;

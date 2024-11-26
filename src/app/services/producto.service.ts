@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Producto} from '../modelos/Producto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,10 @@ export class ProductoService {
 
   vincularProductoAcontecimiento(productoId: number, acontecimientoId: number): Observable<any> {
     return this.http.post<any>(`${this.authUrl}/${productoId}/vincular/${acontecimientoId}`, {});
+  }
+
+  obtenerProductosAconteciminetoId(id:number): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`/api/producto/getProductosAcontecimiento/${id}`);
   }
 
 }

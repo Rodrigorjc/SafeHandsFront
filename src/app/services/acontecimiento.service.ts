@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Acontecimiento} from '../modelos/Acontecimiento';
+import {Proveedor} from '../modelos/Proveedor';
 
 @Injectable({ providedIn: 'root' })
 export class AcontecimientoService {
@@ -18,6 +19,13 @@ export class AcontecimientoService {
   getAcontecimiento(): Observable<Acontecimiento[]> {
     return this.http.get<Acontecimiento[]>(this.apiUrl);
   }
+
+  // Metodo para listar todos los acontecimientos
+  getListarAcontecimientos(): Observable<Acontecimiento[]> {
+    return this.http.get<Acontecimiento[]>(this.apiUrl);
+  }
+
+
 
   /**
    * metodo Rodrigo

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {map, tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Pago} from '../modelos/TotalResponse';
 
 @Injectable({ providedIn: 'root' })
 export class TotalService {
@@ -9,12 +9,7 @@ export class TotalService {
 
   constructor(private http: HttpClient) {}
 
-
-  getTotal(): Observable<number> {
-    return this.http.get<number>(this.apiUrl).pipe(
-      tap(response => {
-        console.log('Respuesta de la API:', response); // Aquí imprimimos la respuesta para verificar
-      })
-    );
+  getTotal(): Observable<Pago> {
+    return this.http.get<Pago>(this.apiUrl);
   }
 }

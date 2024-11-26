@@ -24,7 +24,7 @@
     <p>Con tu ayuda hemos conseguido un total de</p>
     <!-- Muestra el total de donaciones -->
     <p class="total-amount">
-      {{ totalDonaciones | currency }}
+      {{ totalDonaciones}}
     </p>
     <p>Muchas gracias por tu colaboración</p>
   </strong>
@@ -50,7 +50,7 @@
   </div>
 
   <div class="acontecimiento-container">
-    <p>Acontecimiento:</p>
+<!--    <p>Acontecimiento:</p>-->
     <div class="relative inline-block text-left">
       <button type="button" class="dropdown-button">
         {{ selectedAcontecimiento }}
@@ -60,10 +60,9 @@
       </button>
 
       <div class="dropdown-menu">
-        <button class="dropdown-item" (click)="selectAcontecimiento('Valencia')">Valencia</button>
-        <button class="dropdown-item" (click)="selectAcontecimiento('Florida')">Florida</button>
-        <button class="dropdown-item" (click)="selectAcontecimiento('Ucrania')">Ucrania</button>
-        <button class="dropdown-item" (click)="selectAcontecimiento('Hawaii')">Hawaii</button>
+
+        <button *ngFor="let acon of acontecimientos" class="dropdown-item" (click)="selectAcontecimiento(acon.nombre)">{{acon.nombre}}</button>
+
       </div>
     </div>
   </div>
@@ -72,7 +71,7 @@
     <div class="container-cuatro">
       <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">
       <div class="text-cuarto">
-        <p><strong>En {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.</strong></p>
+        <p><strong> {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.</strong></p>
         <button class="h3lp-button">Ayuda aquí</button>
       </div>
     </div>
@@ -87,7 +86,7 @@
     </div>
 
     <div class="proveedor-container">
-      <p>Proveedor:</p>
+<!--      <p>Proveedor:</p>-->
       <div class="relative inline-block text-left">
         <!-- Botón principal que muestra el proveedor seleccionado -->
         <button type="button" class="dropdown-button">
@@ -99,10 +98,10 @@
 
         <!-- Menú desplegable -->
         <div class="dropdown-menu">
-          <button class="dropdown-item" (click)="selectProveedor('MediaMarkt')">MediaMarkt</button>
-          <button class="dropdown-item" (click)="selectProveedor('Dia')">DIA</button>
-          <button class="dropdown-item" (click)="selectProveedor('El Corte Inglés')">El Corte Inglés</button>
-          <button class="dropdown-item" (click)="selectProveedor('Bricodepot')">Bricodepot</button>
+          <button *ngFor="let prov of proveedores" class="dropdown-item" (click)="selectProveedor(prov.nombre)">{{prov.nombre}}</button><!--          <button class="dropdown-item" (click)="selectProveedor('MediaMarkt')">MediaMarkt</button>-->
+<!--          <button class="dropdown-item" (click)="selectProveedor('Dia')">DIA</button>-->
+<!--          <button class="dropdown-item" (click)="selectProveedor('El Corte Inglés')">El Corte Inglés</button>-->
+<!--          <button class="dropdown-item" (click)="selectProveedor('Bricodepot')">Bricodepot</button>-->
         </div>
       </div>
     </div>

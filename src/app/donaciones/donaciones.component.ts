@@ -5,6 +5,8 @@ import { Proveedor } from '../modelos/Proveedor';
 import { ProveedorService } from '../services/proveedor.service';
 import { TotalService } from '../services/total.service';
 import { AcontecimientoService } from '../services/acontecimiento.service';
+import { Acontecimiento } from '../modelos/Acontecimiento';
+import { Pago } from '../modelos/TotalResponse';
 
 @Component({
   selector: 'app-donaciones',
@@ -14,34 +16,33 @@ import { AcontecimientoService } from '../services/acontecimiento.service';
   imports: [CommonModule]
 })
 export class DonacionesComponent implements OnInit {
-  // Variables para mostrar datos del backend
-  totalDonaciones: number = 0;
+  totalDonaciones: any = 0;
   acontecimientos: { nombre: string; totalRecaudado: number }[] = [];
   proveedores: { nombre: string; totalRecaudado: number }[] = [];
-  proveedor: Proveedor[] = [];  // Usa el tipo de datos 'Proveedor'
+  proveedor: Proveedor[] = [];
+  acontecimiento: Acontecimiento[] = [];
 
-  // Variables para controlar la visibilidad de menús y modal
   isUserMenuVisible = false;
   isAcontecimientoMenuVisible = false;
   isProveedorMenuVisible = false;
   isModalVisible: boolean = false;
 
   ranking: string[] = ['Proveedor 1', 'Proveedor 2', 'Proveedor 3'];
-  selectedAcontecimiento: string = 'Valencia';
-  selectedProveedor: string = 'MediaMarkt';
+  selectedAcontecimiento: string = 'Selecciona un acontecimiento';
+  selectedProveedor: string = 'Selecciona un proveedor';
 
   imagenesPorAcontecimiento: { [key: string]: string } = {
-    Valencia: '/image19.svg',
-    Florida: '/imagen22.jpg',
-    Ucrania: '/imagen23.jpg',
-    Hawaii: '/imagen24.jpg',
+    valencia: 'image19.svg',
+    florida: 'imagen22.jpg',
+    ucrania: 'imagen23.jpg',
+    hawaii: 'imagen24.jpg',
   };
 
   imagenesPorProveedor: { [key: string]: string } = {
-    MediaMarkt: 'mediamarkt.svg',
-    Dia: 'dia.jpg',
-    'El Corte Inglés': 'corteingles.jpg',
-    Bricodepot: 'brico.png',
+    mediamarkt: 'mediamarkt.svg',
+    dia: 'dia.jpg',
+    'el corte inglés': 'corteingles.jpg',
+    bricodepot: 'brico.png',
   };
 
   constructor(
@@ -52,7 +53,6 @@ export class DonacionesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Llamamos al servicio para obtener la lista de proveedores
     this.proveedorService.getListarProveedores().subscribe({
       next: (fetchedProveedores: Proveedor[]) => {
         this.proveedor = fetchedProveedores;
@@ -61,47 +61,45 @@ export class DonacionesComponent implements OnInit {
         console.error('Error fetching proveedores', err);
       }
     });
-
-    // Llamamos al servicio para obtener el total de donaciones
-    this.totalService.getTotal().subscribe({
-      next: (total: any) => {
-        console.log('Respuesta del servicio de total donaciones:', total); // Imprime el valor de la respuesta
-        if (total && typeof total === 'number') {
-          this.totalDonaciones = total;
-        } else if (total && typeof total.totalDonaciones === 'number') {
-          this.totalDonaciones = total.totalDonaciones;
-        } else {
-          console.error('El valor de totalDonaciones no es un número válido');
-          this.totalDonaciones = 0;
-        }
+    this.acontecimientoService.getListarAcontecimientos().subscribe({
+      next: (fetchedAcontecimiento: Acontecimiento[]) => {
+        this.acontecimiento = fetchedAcontecimiento;
       },
-      error: (err) => {
-        console.error('Error fetching total donaciones', err);
-        this.totalDonaciones = 0; // Asignamos 0 en caso de error
+      error: (err: any) => {
+        console.error('Error fetching acontecimiento', err);
       }
     });
 
-    // Llamamos al servicio para cargar los acontecimientos y proveedores
+    this.totalService.getTotal().subscribe({
+      next: (total: Pago) => {
+        this.totalDonaciones = total.totalDonaciones;
+      },
+      error: (err) => {
+        console.error('Error fetching total donaciones', err);
+        this.totalDonaciones = 0;
+      }
+    });
+
     this.loadTotalRecaudadoPorAcontecimiento();
     this.loadTotalRecaudadoPorProveedor();
   }
 
-  // Metodo para cargar el total recaudado por cada acontecimiento desde el backend
   private loadTotalRecaudadoPorAcontecimiento() {
     this.http
       .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/acontecimiento/total')
       .subscribe(
         (data) => {
-          console.log('Datos de acontecimientos:', data);
-          this.acontecimientos = data;
+          this.acontecimientos = data.map(acontecimiento => ({
+            nombre: acontecimiento.nombre.toLowerCase(),
+            totalRecaudado: acontecimiento.totalRecaudado
+          }));
         },
         (error) => {
           console.error('Error al cargar el total recaudado por acontecimiento:', error);
-        }
+        },
       );
   }
 
-  // Metodo para cargar el total recaudado por cada proveedor desde el backend
   private loadTotalRecaudadoPorProveedor() {
     this.http
       .get<{ nombre: string; totalRecaudado: number }[]>('http://localhost:8081/peticiones/proveedores')
@@ -118,7 +116,6 @@ export class DonacionesComponent implements OnInit {
       );
   }
 
-  // Métodos de interacción con el menú
   toggleUserMenu() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
   }
@@ -131,10 +128,14 @@ export class DonacionesComponent implements OnInit {
     this.isProveedorMenuVisible = !this.isProveedorMenuVisible;
   }
 
-  // Métodos para seleccionar un acontecimiento o proveedor
   selectAcontecimiento(acontecimiento: string) {
-    this.selectedAcontecimiento = acontecimiento;
-    this.isModalVisible = true;
+    const existe = this.acontecimientos.some(a => a.nombre === acontecimiento.toLowerCase());
+    if (existe) {
+      this.selectedAcontecimiento = acontecimiento;
+      this.isAcontecimientoMenuVisible = false;
+    } else {
+      console.error('Acontecimiento no válido:', acontecimiento);
+    }
   }
 
   closeModal() {
@@ -142,30 +143,30 @@ export class DonacionesComponent implements OnInit {
   }
 
   selectProveedor(proveedor: string) {
-    this.selectedProveedor = proveedor;
-    this.isProveedorMenuVisible = false; // Ocultar el menú tras la selección
+    const existe = this.proveedores.some(p => p.nombre === proveedor.toLowerCase());
+    if (existe) {
+      this.selectedProveedor = proveedor;
+      this.isProveedorMenuVisible = false;
+    } else {
+      console.error('Proveedor no válido:', proveedor);
+    }
   }
 
-  // Métodos para obtener las imágenes y datos de donaciones
   getImagenAcontecimiento(): string {
-    return this.imagenesPorAcontecimiento[this.selectedAcontecimiento] || '';
+    return this.imagenesPorAcontecimiento[this.selectedAcontecimiento.toLowerCase()] || '';
   }
 
-  getDonacionesAcontecimiento(): number {
-    const acontecimiento = this.acontecimientos.find(a => a.nombre === this.selectedAcontecimiento);
-    // Aseguramos que el valor devuelto sea un número
-    return acontecimiento ? Number(acontecimiento.totalRecaudado) || 0 : 0;
+  getDonacionesAcontecimiento(): any {
+    const acontecimiento = this.acontecimientos.find(a => a.nombre === this.selectedAcontecimiento.toLowerCase());
+    return acontecimiento ? acontecimiento.totalRecaudado : 0;
   }
 
   getImagenProveedor(): string {
-    return this.imagenesPorProveedor[this.selectedProveedor] || '';
+    return this.imagenesPorProveedor[this.selectedProveedor.toLowerCase()] || '';
   }
 
   getDonacionesProveedor(): number {
     const proveedor = this.proveedores.find(p => p.nombre === this.selectedProveedor.toLowerCase());
     return proveedor ? proveedor.totalRecaudado : 0;
   }
-
-  protected readonly Object = Object;
-  protected readonly isNaN = isNaN;
 }

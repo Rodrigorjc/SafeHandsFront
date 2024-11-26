@@ -9,8 +9,9 @@ import {ActivatedRoute} from '@angular/router';
 import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
-
+import Swal from 'sweetalert2';
 interface Product {
+  id: number;
   nombre: string;
   url: string;
   precio: number;
@@ -106,6 +107,40 @@ export class ProductosProveedorComponent implements OnInit {
       }
     });
   }
+  confirmDelete(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteProduct(id);
+      } else {
+        this.showAlert('Eliminación cancelada');
+      }
+    });
+  }
+
+  deleteProduct(id: number){
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => {
+        this.products = this.products.filter(product => product.id !== id);
+        this.showSuccess('Producto eliminado exitosamente');
+      },
+      error: (err) => {
+        console.error('Error deleting product', err);
+        this.showAlert('Error eliminando producto');
+      }
+    });
+  }
+
+
+
   private showAlert(message: string) {
     this.alertMessage = message;
     setTimeout(() => {

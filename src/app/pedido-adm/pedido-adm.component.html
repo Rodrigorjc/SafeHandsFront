@@ -1,0 +1,83 @@
+<div class="min-h-screen flex items-center justify-center bg-[#F9F4E3] px-4 sm:px-6 lg:px-16 mt-10">
+  <!-- Contenedor principal -->
+  <div class="bg-[#D4DDB1] p-6 sm:p-8 lg:p-12 rounded-lg shadow-md w-full max-w-md sm:max-w-lg">
+    <!-- Título -->
+    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-10 text-center text-[#7A6448]">
+      Registro de Línea de Pedido
+    </h1>
+
+    <!-- Formulario -->
+    <form class="space-y-4">
+
+      <!-- Campo Cantidad -->
+      <div class="flex flex-col gap-2">
+        <label for="cantidad" class="text-[#7A6448] font-semibold text-sm sm:text-base">Cantidad</label>
+        <div class="flex items-center gap-3">
+          <i class="fas fa-sort-numeric-up text-lg sm:text-xl text-[#7A6448]"></i>
+          <input
+            id="cantidad"
+            type="number"
+            placeholder="Cantidad"
+            class="w-full p-3 rounded-full bg-[#F9F4E3] shadow-sm text-[#7A6448] border border-[#B1BA8E] focus:outline-none focus:ring-2 focus:ring-[#7A6448]"
+          />
+        </div>
+      </div>
+
+      <!-- Campo Precio Unitario -->
+      <div class="flex flex-col gap-2">
+        <label for="precio_unitario" class="text-[#7A6448] font-semibold text-sm sm:text-base">Precio Unitario</label>
+        <div class="flex items-center gap-3">
+          <i class="fas fa-dollar-sign text-lg sm:text-xl text-[#7A6448]"></i>
+          <input
+            id="precio_unitario"
+            type="number"
+            step="0.01"
+            placeholder="Precio Unitario"
+            class="w-full p-3 rounded-full bg-[#F9F4E3] shadow-sm text-[#7A6448] border border-[#B1BA8E] focus:outline-none focus:ring-2 focus:ring-[#7A6448]"
+          />
+        </div>
+      </div>
+
+      <!-- Campo Producto -->
+      <div class="flex flex-col gap-2">
+        <label for="producto" class="text-[#7A6448] font-semibold text-sm sm:text-base">Producto</label>
+        <select
+          id="producto"
+          class="w-full p-3 rounded-full bg-[#F9F4E3] shadow-sm text-[#7A6448] border border-[#B1BA8E] focus:outline-none focus:ring-2 focus:ring-[#7A6448]"
+        >
+          <option>Seleccionar producto</option>
+        </select>
+      </div>
+
+      <!-- Campo Pedido -->
+      <div class="flex flex-col gap-2">
+        <label for="pedido" class="text-[#7A6448] font-semibold text-sm sm:text-base">Pedido</label>
+        <select
+          id="pedido"
+          class="w-full p-3 rounded-full bg-[#F9F4E3] shadow-sm text-[#7A6448] border border-[#B1BA8E] focus:outline-none focus:ring-2 focus:ring-[#7A6448]"
+        >
+          <option>Seleccionar pedido</option>
+        </select>
+      </div>
+    </form>
+
+    <!-- Botones -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+      <button
+        class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#B1BA8E] transition-colors"
+      >
+        Guardar
+      </button>
+      <button
+        class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#B1BA8E] transition-colors"
+      >
+        Editar
+      </button>
+      <button
+        class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#7A6448] transition-colors"
+      >
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>

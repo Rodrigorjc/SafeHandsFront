@@ -15,12 +15,22 @@ import {
 import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/ong-asociar-acontecimiento.component';
 import {InfoDonacionesComponent} from './info-donaciones/info-donaciones.component';
 import {MovilidadProveedoresComponent} from './movilidad-proveedores/movilidad-proveedores.component';
+import {ProductoComponent} from './producto/producto.component';
+import {ProductoListarComponent} from './producto-listar/producto-listar.component';
+import {NosotrosComponent} from './nosotros/nosotros.component';
+import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
+import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
+  { path: 'producto', component: ProductoComponent },
+  { path: 'nosotros', component: NosotrosComponent },
+  { path: 'producto/listar', component: ProductoListarComponent },
+  { path: 'producto/adm', component: ProductoAdmComponent },
+  { path: 'pedido/adm', component: PedidoAdmComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
   { path: 'proveedor/productos/:id', component:ProductosProveedorComponent},

@@ -1,0 +1,25 @@
+.lista-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.producto {
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  background-color: #f9f4e3; /* Color del fondo */
+}
+
+.producto img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.producto h3 {
+  margin-top: 8px;
+  color: #7a6448; /* Marrón oscuro */
+}

@@ -1,0 +1,38 @@
+<div class="bg-fondo min-h-screen flex flex-col items-center px-4 py-6">
+  <!-- Header -->
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center mt-6 w-full max-w-7xl flex-grow">
+    <h1 class="text-4xl font-sans font-bold text-black mb-6">Lista de productos</h1>
+
+    <!-- Lista de productos -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+      <div
+        *ngFor="let producto of productos"
+        class="bg-verdeClaro rounded-lg shadow-lg p-6 flex flex-col items-center"
+      >
+        <img
+          [src]="producto.url"
+          alt="{{ producto.nombre }}"
+          class="h-36 w-36 object-cover mb-4 rounded-md"
+        />
+        <h2 class="text-lg font-bold text-black text-center">{{ producto.nombre }}</h2>
+      </div>
+    </div>
+  </main>
+
+  <!-- Botón para crear productos -->
+  <div class="w-full max-w-7xl mt-6 flex justify-end flex-shrink-0">
+    <button
+      class="px-8 py-4 bg-verdeOscuro text-white font-bold text-lg rounded-lg shadow-lg hover:bg-verdeClaro transition"
+      (click)="crearProducto()"
+    >
+      Crear Productos
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full mt-4 bg-gray-800 text-white text-sm py-4 text-center">
+    <p>© 2024 SafeHands - Todos los derechos reservados.</p>
+  </footer>
+</div>

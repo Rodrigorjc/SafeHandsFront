@@ -15,6 +15,10 @@ export class ProductoService {
     return this.http.post<any>(`${this.authUrl}/crear`, product);
   }
 
+  eliminarProducto(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.authUrl}/eliminar/${id}`);
+  }
+
 
   obtenerProductos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.authUrl}/listar`);

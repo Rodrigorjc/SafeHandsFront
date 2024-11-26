@@ -1,6 +1,14 @@
 <form [formGroup]="vincularForm" (ngSubmit)="vincularProducto()" class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-  <div *ngIf="alertMessage" class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-    {{ alertMessage }}
+  <div>
+    <div *ngIf="alertMessage" class="alert bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 mx-auto max-w-lg" role="alert">
+      <p class="font-bold">Alert</p>
+      <p>{{ alertMessage }}</p>
+    </div>
+
+    <div *ngIf="successMessage" class="alert bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 mx-auto max-w-lg" role="alert">
+      <p class="font-bold">Success</p>
+      <p>{{ successMessage }}</p>
+    </div>
   </div>
   <div class="mb-4">
     <label for="productoId" class="block text-gray-700 font-bold mb-2">Producto</label>
@@ -14,7 +22,7 @@
       <option *ngFor="let a of acontecimientos" [value]="a.id">{{ a.nombre }}</option>
     </select>
   </div>
-  <button type="submit" [disabled]="vincularForm.invalid" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+  <button type="submit" [disabled]="vincularForm.invalid" class="w-full bg-[#7A6448] hover:bg-[#CDB28A] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
     Vincular Producto
   </button>
 </form>

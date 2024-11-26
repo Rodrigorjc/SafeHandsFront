@@ -18,9 +18,7 @@ const routes: Routes = [
   selector: 'app-movilidad-proveedores',
   standalone: true,
   imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive
+    RouterLink
   ],
   templateUrl: './movilidad-proveedores.component.html',
   styleUrl: './movilidad-proveedores.component.css'

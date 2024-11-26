@@ -46,6 +46,5 @@ export const routes: Routes = [
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
-  { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

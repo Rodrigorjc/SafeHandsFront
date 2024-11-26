@@ -12,6 +12,13 @@ interface Product {
   precio: number;
 }
 
+interface proveedoresAccontecimiento{
+  id:number;
+  acontecimientoId:number;
+  productoId:number;
+  proveedorId:number;
+}
+
 @Component({
   selector: 'app-vincular-acontecimiento-productos',
   standalone: true,
@@ -29,6 +36,7 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
   proveedorId: string | null = null;
   alertMessage: string|null = null;
   successMessage: string|null = null;
+  proveedoresAcontecimiento: proveedoresAccontecimiento[] = [];
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute,private eventoService: AcontecimientoService) {
     this.vincularForm = this.fb.group({
@@ -64,9 +72,14 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
     }
 
     const { productoId, acontecimientoId } = this.vincularForm.value;
-    console.log('Producto ID:', productoId);
-    console.log('Acontecimiento ID:', acontecimientoId);
-    console.log('Proveedor ID:', this.proveedorId);
+
+    // Verificar si el producto ya está asociado al acontecimiento
+    const productoYaAsociado = this.proveedoresAcontecimiento.some(product => product.id === productoId && product.acontecimientoId === acontecimientoId);
+
+    // if (productoYaAsociado) {
+    //   this.showAlert('El producto ya está asociado a este acontecimiento');
+    //   return;
+    // }
 
     this.productoService.vincularProductoAcontecimiento(productoId, acontecimientoId).subscribe({
       next: (response) => {
@@ -75,7 +88,12 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error vinculando producto', err);
-        this.showAlert('Error vinculando producto');
+        if (productoYaAsociado) {
+          this.showAlert('El producto ya está asociado a este acontecimiento');
+          // return;
+        }else{
+          this.showAlert('Error vinculando producto');
+        }
       }
     });
   }

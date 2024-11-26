@@ -1,5 +1,13 @@
 <div class="container mx-auto p-4">
   <h2 class="text-3xl font-semibold mt-8 mb-7">Productos disponibles para {{ acontecimiento.nombre }}:</h2>
+  <div class="mb-4">
+    <label for="sort">Ordenar por:</label>
+    <select id="sort" [(ngModel)]="sortCriteria" (ngModelChange)="sortProducts()">
+      <option value="">Seleccionar</option>
+      <option value="price">Precio</option>
+    </select>
+    <button (click)="clearFilter()">Quitar Filtros</button>
+  </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     <div *ngFor="let producto of productos" class="bg-verdeClaro items-center flex flex-col justify-center text-center p-4 rounded-2xl shadow-md">
       <img class="w-80 h-40 rounded-2xl" src="{{ producto.url }}" alt="{{ producto.nombre }}">

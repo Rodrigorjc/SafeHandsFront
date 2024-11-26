@@ -2,6 +2,6 @@ export class Producto{
   id?:number;
   nombre?:string;
   descripcion?:string;
-  precio?:number;
+  precio?: number;
   url?:string;
 }

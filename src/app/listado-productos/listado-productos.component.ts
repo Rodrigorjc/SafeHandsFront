@@ -2,14 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
 import {Producto} from '../modelos/Producto';
 import {AcontecimientoService} from '../services/acontecimiento.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Acontecimineto} from '../modelos/Acontecimineto';
 import {ProductoService} from '../services/producto.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-listado-productos',
   imports: [
-    NgForOf
+    NgForOf,
+    FormsModule
   ],
   templateUrl: './listado-productos.component.html',
   standalone: true,
@@ -18,6 +20,8 @@ import {ProductoService} from '../services/producto.service';
 export class ListadoProductosComponent implements OnInit{
   productos: Producto [] = [];
   acontecimiento: Acontecimineto = {} as Acontecimineto;
+  sortCriteria: string = '';
+
 
   constructor( private service: AcontecimientoService, private producto: ProductoService , private route: ActivatedRoute) {}
 
@@ -50,5 +54,17 @@ export class ListadoProductosComponent implements OnInit{
         console.error('Error al obtener datos', error);
       }
     });
+  }
+  sortProducts() {
+    if (this.sortCriteria === 'price') {
+      this.productos.sort((a, b) => (a.precio ?? 0) - (b.precio ?? 0));
+    } else {
+      this.productos = [...this.productos];
+    }
+  }
+
+  clearFilter() {
+    this.sortCriteria = '';
+    this.sortProducts();
   }
 }

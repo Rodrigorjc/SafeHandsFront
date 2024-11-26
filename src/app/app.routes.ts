@@ -20,17 +20,19 @@ import {ProductoListarComponent} from './producto-listar/producto-listar.compone
 import {NosotrosComponent} from './nosotros/nosotros.component';
 import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
+import {ListAconteciminetosComponent} from './list-aconteciminetos/list-aconteciminetos.component';
+import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
-  { path: 'producto', component: ProductoComponent },
-  { path: 'nosotros', component: NosotrosComponent },
-  { path: 'producto/listar', component: ProductoListarComponent },
-  { path: 'producto/adm', component: ProductoAdmComponent },
-  { path: 'pedido/adm', component: PedidoAdmComponent },
+  // { path: 'producto', component: ProductoComponent },
+  // { path: 'nosotros', component: NosotrosComponent },
+  // { path: 'producto/listar', component: ProductoListarComponent },
+  // { path: 'producto/adm', component: ProductoAdmComponent },
+  // { path: 'pedido/adm', component: PedidoAdmComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
   { path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
@@ -45,6 +47,8 @@ export const routes: Routes = [
   { path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
-  {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
+  { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
+  { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},
+  { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

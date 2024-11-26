@@ -16,6 +16,7 @@ import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/on
 import {ProductoComponent} from './producto/producto.component';
 import {ProductoListarComponent} from './producto-listar/producto-listar.component';
 import {NosotrosComponent} from './nosotros/nosotros.component';
+import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'producto', component: ProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
   { path: 'producto/listar', component: ProductoListarComponent },
+  { path: 'producto/adm', component: ProductoAdmComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {path: 'proveedor/productos', component:ProductosProveedorComponent},
   {path: 'proveedor/productos/:id', component:ProductosProveedorComponent},

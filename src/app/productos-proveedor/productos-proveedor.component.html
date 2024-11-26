@@ -17,6 +17,7 @@
       <p class="text-lg font-medium">{{ product.nombre }}</p>
       <p class="text-sm text-gray-500">{{ product.descripcion }}</p>
       <p class="text-lg font-semibold mt-2">{{ product.precio | currency }}</p>
+      <button (click)="confirmDelete(product.id)" class="mt-4 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition">Eliminar</button>
     </div>
   </div>
   <!--alerta  -->

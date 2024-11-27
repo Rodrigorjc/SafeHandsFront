@@ -1,5 +1,4 @@
 <!-- Header -->
-<!-- Contenedor principal -->
 <body>
 
 <br>
@@ -18,13 +17,14 @@
     </div>
   </div>
 </div>
+
 <!-- Sección inferior -->
 <div class="segundo-container">
   <strong>
     <p>Con tu ayuda hemos conseguido un total de</p>
     <!-- Muestra el total de donaciones -->
     <p class="total-amount">
-      {{ totalDonaciones}}
+      {{ totalDonaciones }}
     </p>
     <p>Muchas gracias por tu colaboración</p>
   </strong>
@@ -50,24 +50,23 @@
   </div>
 
   <div class="acontecimiento-container">
-<!--    <p>Acontecimiento:</p>-->
     <div class="relative inline-block text-left">
       <button type="button" class="dropdown-button">
-        {{ selectedAcontecimiento }}
+        {{ selectedAcontecimiento || 'Selecciona un acontecimiento' }}
         <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
         </svg>
       </button>
 
       <div class="dropdown-menu">
-
-        <button *ngFor="let acon of acontecimientos" class="dropdown-item" (click)="selectAcontecimiento(acon.nombre)">{{acon.nombre}}</button>
-
+        <button *ngFor="let acon of acontecimientos" class="dropdown-item" (click)="selectAcontecimiento(acon.nombre)">
+          {{ acon.nombre }}
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="cuarto-container">
+  <div class="cuarto-container" *ngIf="getDonacionesAcontecimiento() > 0">
     <div class="container-cuatro">
       <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">
       <div class="text-cuarto">
@@ -75,6 +74,11 @@
         <button class="h3lp-button">Ayuda aquí</button>
       </div>
     </div>
+  </div>
+
+  <!-- Si no hay datos, mostrar un mensaje alternativo -->
+  <div *ngIf="getDonacionesAcontecimiento() === 0">
+<!--    <p>No hay datos disponibles para mostrar de este acontecimiento.</p>-->
   </div>
 
   <br>
@@ -86,11 +90,10 @@
     </div>
 
     <div class="proveedor-container">
-<!--      <p>Proveedor:</p>-->
       <div class="relative inline-block text-left">
         <!-- Botón principal que muestra el proveedor seleccionado -->
         <button type="button" class="dropdown-button">
-          {{ selectedProveedor }}
+          {{ selectedProveedor || 'Selecciona un proveedor' }}
           <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
           </svg>
@@ -98,15 +101,14 @@
 
         <!-- Menú desplegable -->
         <div class="dropdown-menu">
-          <button *ngFor="let prov of proveedores" class="dropdown-item" (click)="selectProveedor(prov.nombre)">{{prov.nombre}}</button><!--          <button class="dropdown-item" (click)="selectProveedor('MediaMarkt')">MediaMarkt</button>-->
-<!--          <button class="dropdown-item" (click)="selectProveedor('Dia')">DIA</button>-->
-<!--          <button class="dropdown-item" (click)="selectProveedor('El Corte Inglés')">El Corte Inglés</button>-->
-<!--          <button class="dropdown-item" (click)="selectProveedor('Bricodepot')">Bricodepot</button>-->
+          <button *ngFor="let prov of proveedores" class="dropdown-item" (click)="selectProveedor(prov.nombre)">
+            {{ prov.nombre }}
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="quinto-container">
+    <div class="quinto-container" *ngIf="getDonacionesProveedor() > 0">
       <div class="container-cinco">
         <!-- Imagen del proveedor seleccionado -->
         <img [src]="getImagenProveedor()" alt="Imagen del proveedor" class="image">
@@ -117,8 +119,12 @@
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- Si no hay datos, mostrar un mensaje alternativo -->
+    <div *ngIf="getDonacionesProveedor() === 0">
+<!--      <p>No hay datos disponibles para mostrar de este proveedor.</p>-->
+    </div>
+  </div>
 </div>
 
 </body>

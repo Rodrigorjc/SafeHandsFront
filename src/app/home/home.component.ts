@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AcontecimientoService } from '../services/acontecimiento.service';
 import { Acontecimineto } from '../modelos/Acontecimineto';
-import {NgForOf} from '@angular/common';
-import {EventosActivosComponent} from '../eventos-activos/eventos-activos.component';
-import {SliderproveedoresComponent} from '../sliderproveedores/sliderproveedores.component';
+import { NgForOf } from '@angular/common';
+import { EventosActivosComponent } from '../eventos-activos/eventos-activos.component';
+import { SliderproveedoresComponent } from '../sliderproveedores/sliderproveedores.component';
 
 @Component({
   selector: 'app-home',
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   nextSlide() {
-    const maxSlide = this.acontecimientos.length - this.slidesToShow;
+    const maxSlide = Math.max(0, this.acontecimientos.length - 1);
     if (this.currentSlide < maxSlide) {
       this.currentSlide++;
       this.updateSliderPosition();
@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       next: (data: Acontecimineto[]) => {
         this.acontecimientos = data;
         this.updateSlidesToShow();
+        this.updateSliderPosition(); // Ensure slider position is updated after data is loaded
       },
       error: (error) => {
         console.error('Error cambio de informacion', error);

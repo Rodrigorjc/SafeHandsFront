@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Acontecimineto} from '../modelos/Acontecimineto';
 import {ProductoService} from '../services/producto.service';
 import {FormsModule} from '@angular/forms';
+import {CarritoService} from '../services/carrito.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -23,7 +24,7 @@ export class ListadoProductosComponent implements OnInit{
   sortCriteria: string = '';
 
 
-  constructor( private service: AcontecimientoService, private producto: ProductoService , private route: ActivatedRoute) {}
+  constructor( private service: AcontecimientoService, private producto: ProductoService , private route: ActivatedRoute, private carritoService: CarritoService) {}
 
 
   ngOnInit() {
@@ -66,5 +67,9 @@ export class ListadoProductosComponent implements OnInit{
   clearFilter() {
     this.sortCriteria = '';
     this.sortProducts();
+  }
+
+  agregarAlCarrito(producto: Producto) {
+    this.carritoService.agregarProducto(producto);
   }
 }

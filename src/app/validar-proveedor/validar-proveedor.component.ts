@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OngService} from '../services/ong.service';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {ProveedorService} from '../services/proveedor.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import Swal from 'sweetalert2';
 export interface Proveedor {
   id: number;
@@ -16,7 +16,8 @@ export interface Proveedor {
   selector: 'app-validar-proveedor',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './validar-proveedor.component.html',
   styleUrl: './validar-proveedor.component.css'

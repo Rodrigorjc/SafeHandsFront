@@ -16,4 +16,9 @@ export class AcontecimientoService {
   getAcontecimientosByOngId(ongId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.authUrl}/ong/${ongId}/acontecimientos`);
   }
+
+  getAcontecimientoById(acontecimientoId: string): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/detalles/${acontecimientoId}`);
+  }
+
 }

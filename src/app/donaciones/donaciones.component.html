@@ -1,120 +1,116 @@
-<body>
+<body class="font-sans bg-[#F9F4E3] text-gray-800 flex flex-col justify-center items-center min-h-screen">
 
-<div class="container">
+<!-- Contenedor principal -->
+<div class="bg-[#D4DDB1] p-5 rounded-lg shadow-md w-full mx-4 mb-5 text-lg md:text-2xl">
   <!-- Sección superior -->
-  <div class="message-container">
-    <img src="/image18.svg" alt="Voluntarios trabajando" class="image">
-    <div class="text-primero">
-      <p>
-        <strong>Con tu apoyo, juntos nos volvemos más fuertes y capaces de lograr grandes cosas.</strong>
+  <div class="flex flex-col md:flex-row items-center gap-4">
+    <img src="/image18.svg" alt="Voluntarios trabajando" class="w-full md:w-auto max-w-[300px] max-h-[250px] rounded-lg object-cover">
+    <div class="text-white flex flex-col items-center text-center">
+      <p class="text-3xl md:text5xl font-bold text-center">
+        Con tu apoyo, juntos nos volvemos más fuertes y capaces de lograr grandes cosas.
       </p>
-      <button class="help-button">Ayuda aquí</button>
+      <div class="w-full flex justify-center">
+        <button class="bg-[#B1BA8E] text-white px-4 py-2 rounded-lg mt-3 font-bold text-base md:text-xl hover:bg-[#a9c3a0]">
+          Ayuda aquí
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Sección inferior -->
-<div class="segundo-container">
+<div class="bg-[#F9F4E3] p-5 rounded-lg mt-5 text-center text-2xl md:text-4xl mx-2 md:mx-4">
   <strong>
-    <p>Con tu ayuda hemos conseguido un total de</p>
-    <!-- Muestra el total de donaciones -->
-    <p class="total-amount">
-      {{ totalDonaciones }}
-    </p>
-    <p>Muchas gracias por tu colaboración</p>
+    <p class="mb-2">Con tu ayuda hemos conseguido un total de</p>
+    <p class="text-[#8aa580] font-bold text-3xl md:text-5xl underline">{{ totalDonaciones }}</p>
+    <p class="mt-2 text-lg md:text-2xl">Muchas gracias por tu colaboración</p>
   </strong>
 </div>
-
-<div class="tercer-container">
-  <div class="text-tercero">
-    <p>Ranking de proveedores </p>
-  </div>
-  <div class="imagen-ranking">
-    <img src="/image17.svg" alt="Imagen Ranking" class="image">
+<!-- Ranking de proveedores -->
+<div class="text-2xl md:text-4xl my-5">
+  <p class="mb-5 text-center">Ranking de proveedores</p>
+  <div class="flex justify-center">
+    <img src="/image17.svg" alt="Imagen Ranking" class="w-full md:w-auto max-w-[300px] max-h-[250px] rounded-lg object-cover">
   </div>
 </div>
 
-
-<div class="arriba-container">
-  <div class="text-arriba">
-    <p>Infórmate de lo donado en cada acontecimiento</p>
-  </div>
-
-  <div class="acontecimiento-container">
-    <div class="relative inline-block text-left">
-      <button type="button" class="dropdown-button">
-        {{ selectedAcontecimiento || 'Selecciona un acontecimiento' }}
-        <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-        </svg>
+<!-- Acontecimiento -->
+<div class="flex flex-col items-start gap-4 mb-5 w-full max-w-5xl">
+  <p class="text-lg md:text-2xl">Infórmate de lo donado en cada acontecimiento</p>
+  <div class="relative inline-block w-full md:w-auto">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full px-4 py-2 bg-gray-100 border rounded-lg text-gray-800 font-bold hover:bg-gray-200"
+      (click)="toggleAcontecimientoMenu()">
+      {{ selectedAcontecimiento }}
+      <svg class="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+    <div
+      class="absolute left-0 w-full md:w-auto mt-2 bg-white border rounded-lg shadow-md z-10"
+      [class.hidden]="!isAcontecimientoMenuVisible">
+      <button *ngFor="let acon of acontecimientos" class="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-100" (click)="selectAcontecimiento(acon.nombre)">
+        {{ acon.nombre }}
       </button>
-
-      <div class="dropdown-menu">
-        <button *ngFor="let acon of acontecimientos" class="dropdown-item" (click)="selectAcontecimiento(acon.nombre)">
-          {{ acon.nombre }}
-        </button>
-      </div>
     </div>
   </div>
 
-  <div class="cuarto-container" *ngIf="getDonacionesAcontecimiento() > 0">
-    <div class="container-cuatro">
-<!--      <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">-->
-      <div class="text-cuarto">
-        <p><strong> {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.</strong></p>
-        <button class="h3lp-button">Ayuda aquí</button>
-      </div>
+  <div *ngIf="getDonacionesAcontecimiento() > 0" class="bg-[#D4DDB1] p-5 rounded-lg shadow-md w-full">
+    <p class="text-white text-center text-lg md:text-3xl font-bold">
+      {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.
+    </p>
+    <button class="bg-[#B1BA8E] text-white px-4 py-2 rounded-lg mt-3 font-bold text-base md:text-xl hover:bg-[#9AB87A]">
+      Ayuda aquí
+    </button>
+  </div>
+
+  <div *ngIf="getDonacionesAcontecimiento() === 0" class="text-gray-500 mt-4 text-sm md:text-base">
+  </div>
+</div>
+
+<!-- Proveedores -->
+<div class="flex flex-col items-start gap-4 mb-5 w-full max-w-5xl">
+  <p class="text-lg md:text-2xl">Infórmate de lo donado por cada proveedor</p>
+  <div class="relative inline-block w-full md:w-auto">
+    <button
+      type="button"
+      class="flex items-center justify-between w-full px-4 py-2 bg-gray-100 border rounded-lg text-gray-800 font-bold hover:bg-gray-200"
+      (click)="toggleProveedorMenu()">
+      {{ selectedProveedor }}
+      <svg class="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+    <div
+      class="absolute left-0 w-full md:w-auto mt-2 bg-white border rounded-lg shadow-md z-10"
+      [class.hidden]="!isProveedorMenuVisible">
+      <button *ngFor="let prov of proveedores" class="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-100" (click)="selectProveedor(prov.nombre)">
+        {{ prov.nombre }}
+      </button>
     </div>
   </div>
 
-  <!-- Si no hay datos, mostrar un mensaje alternativo -->
-  <div *ngIf="getDonacionesAcontecimiento() === 0">
-<!--    <p>No hay datos disponibles para mostrar de este acontecimiento.</p>-->
+  <div *ngIf="getDonacionesProveedor() > 0" class="bg-[#D4DDB1] p-5 rounded-lg shadow-md w-full flex items-center gap-4">
+    <!-- Imagen del proveedor -->
+    <img
+      [src]="getImagenProveedor()"
+      alt="Imagen del proveedor"
+      class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain rounded-lg">
+
+    <!-- Contenido del texto -->
+    <div class="flex flex-col items-start">
+      <p class="text-white text-left text-lg md:text-3xl font-bold">
+        {{ selectedProveedor }} lleva un total de {{ getDonacionesProveedor() | currency }} recaudados.
+      </p>
+      <button
+        class="bg-[#B1BA8E] text-white px-4 py-2 rounded-lg mt-3 font-bold text-base md:text-xl hover:bg-[#9AB87A]">
+        Consulta los productos
+      </button>
+    </div>
   </div>
 
-  <br>
-  <br>
-
-  <div class="abajo-container">
-    <div class="text-abajo">
-      <p>Infórmate de lo donado por cada proveedor</p>
-    </div>
-
-    <div class="proveedor-container">
-      <div class="relative inline-block text-left">
-        <!-- Botón principal que muestra el proveedor seleccionado -->
-        <button type="button" class="dropdown-button">
-          {{ selectedProveedor || 'Selecciona un proveedor' }}
-          <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-          </svg>
-        </button>
-
-        <!-- Menú desplegable -->
-        <div class="dropdown-menu">
-          <button *ngFor="let prov of proveedores" class="dropdown-item" (click)="selectProveedor(prov.nombre)">
-            {{ prov.nombre }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="quinto-container" *ngIf="getDonacionesProveedor() > 0">
-      <div class="container-cinco">
-        <!-- Imagen del proveedor seleccionado -->
-        <img [src]="getImagenProveedor()" alt="Imagen del proveedor" class="image">
-        <div class="text-quinto">
-          <!-- Texto dinámico del proveedor seleccionado -->
-          <p><strong>{{ selectedProveedor }} lleva un total de {{ getDonacionesProveedor() | currency }} recaudados.</strong></p>
-          <button class="h3lp-butt0n">Consulta los productos</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Si no hay datos, mostrar un mensaje alternativo -->
-    <div *ngIf="getDonacionesProveedor() === 0">
-<!--      <p>No hay datos disponibles para mostrar de este proveedor.</p>-->
-    </div>
+  <div *ngIf="getDonacionesProveedor() === 0" class="text-gray-500 mt-4 text-sm md:text-base">
   </div>
 </div>
 </body>

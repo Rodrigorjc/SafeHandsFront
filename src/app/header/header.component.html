@@ -22,11 +22,11 @@
         <div class="hidden sm:ml-6 sm:block w-2/3">
           <div class="flex">
             <div class="flex space-x-4 items-center">
-              <button href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
+              <button class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
               <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
+                <a href="listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
+                <a href="/listado/proveedores" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
                 <a href="/informacion/donaciones" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Información sobre donaciones</a>
               </div>
             </div>
@@ -37,11 +37,28 @@
         </div>
       </div>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" class="relative rounded-full bg-gray-800 p-1.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-          <span class="absolute -inset-1.5"></span>
-          <span class="sr-only">View notifications</span>
+        <div class="relative">
+          <button type="button" class="relative rounded-full bg-gray-800 p-1.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" (click)="toggleCart()">
+            <span class="absolute -inset-1.5"></span>
+            <span class="sr-only">View notifications</span>
             <i class="fa-solid fa-cart-shopping"></i>
-        </button>
+          </button>
+
+          <div *ngIf="isCartVisible" class="fixed inset-0 flex justify-end z-50">
+            <div class="bg-white w-80 h-full shadow-lg p-4">
+              <h2 class="text-xl font-bold mb-4">Carrito de Compras</h2>
+              <ul>
+                <li *ngFor="let producto of productosEnCarrito" class="mb-2">
+                  <div class="flex justify-between items-center">
+                    <span>{{ producto.nombre }} ({{ producto.cantidad }})</span>
+                    <span>{{ producto.precio | currency }}</span>
+                  </div>
+                </li>
+              </ul>
+              <button class="mt-4 p-2 bg-red-500 text-white rounded" (click)="toggleCart()">Cerrar</button>
+            </div>
+          </div>
+        </div>
 
         <!-- Profile dropdown -->
         <div class="relative ml-3">
@@ -65,9 +82,9 @@
 
   <div *ngIf="isNavMenuVisible" class="sm:hidden md:hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
-      <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Aconteciminetos</a>
+      <a href="/listado/acontecimientos" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Aconteciminetos</a>
       <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">ONG</a>
-      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Proveedores</a>
+      <a href="/listado/proveedores" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Proveedores</a>
       <a href="/informacion/donaciones" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Información sobre donaciones</a>
     </div>
   </div>

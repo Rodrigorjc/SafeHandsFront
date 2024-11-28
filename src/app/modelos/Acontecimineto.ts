@@ -1,6 +1,8 @@
 export class Acontecimineto{
+  id?:number;
   nombre?:string;
   descripcion?:string;
-  img?:string;
   ubicacion?:string;
+  img?:string;
+  idONG?:number;
 }

@@ -4,33 +4,27 @@ import { tap } from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Acontecimiento} from '../modelos/Acontecimiento';
 import {Proveedor} from '../modelos/Proveedor';
+import {Acontecimineto} from '../modelos/Acontecimineto';
 
 @Injectable({ providedIn: 'root' })
 export class AcontecimientoService {
-  private authUrl = 'http://localhost:8081/acontecimientos';
-  private apiUrl = 'http://localhost:8081/acontecimiento/total';
-
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * metodo Cintia
-   */
-  getAcontecimiento(): Observable<Acontecimiento[]> {
-    return this.http.get<Acontecimiento[]>(this.apiUrl);
+  getAcontecimiento(): Observable<any[]> {
+    return this.http.get<any[]>("/api/acontecimiento/listar");
   }
 
   // Metodo para listar todos los acontecimientos
   getListarAcontecimientos(): Observable<Acontecimiento[]> {
-    return this.http.get<Acontecimiento[]>(this.apiUrl);
+    return this.http.get<Acontecimiento[]>('/api/aconecimiento/total-donaciones');
   }
 
-
-
-  /**
-   * metodo Rodrigo
-   */
   getAcontecimientosByOngId(ongId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.authUrl}/ong/${ongId}/acontecimientos`);
+    return this.http.get<any[]>(`/api/acontecimiento/ong/${ongId}/acontecimientos`);
+  }
+
+  getAcontecimientoById(id: number): Observable<Acontecimineto> {
+    return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
   }
 }

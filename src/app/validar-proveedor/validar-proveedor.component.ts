@@ -55,6 +55,22 @@ export class ValidarProveedorComponent implements OnInit {
       }
     });
   }
+  eliminarProveedor(proveedorId: number) {
+    if (!proveedorId) {
+      console.error('Proveedor ID is null or undefined');
+      return;
+    }
+
+    this.ongService.eliminarProveedor(proveedorId).subscribe({
+      next: (response) => {
+        console.log('Proveedor eliminado con exito', response);
+        this.proveedores = this.proveedores.filter(proveedor => proveedor.id !== proveedorId);
+      },
+      error: (err) => {
+        console.error('Error deleting proveedor', err);
+      }
+    });
+  }
 }
 // validarProveedor(proveedorId: string) {
 //   this.ongService.validarProveedor(proveedorId).subscribe({

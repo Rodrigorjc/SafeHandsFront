@@ -1,25 +1,32 @@
-
 <div class="flex justify-center items-center mt-12">
-  <div class="flex w-96  min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-verdeClaro rounded-2xl items-center">
+  <div class="flex w-96 min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-verdeClaro rounded-2xl items-center">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="text-center text-2xl/9 font-bold tracking-tight text-white text-stroke-1">LOGIN</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" #form="ngForm" method="POST" (ngSubmit)="onLogin()">
+      <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900" >Usuario</label>
+          <label for="username" class="block text-sm/6 font-medium text-gray-900">Usuario</label>
           <div class="mt-2">
-            <input id="email" [(ngModel)]="username" name="username" required type="text" autocomplete="username"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6">
+            <input id="username" formControlName="username" required type="text" autocomplete="username"
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6">
+            <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="text-red-500">
+              Nombre de usuario inválido.
+            </div>
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm/6 font-medium text-gray-900" >Contraseña</label>
+            <label for="password" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
           </div>
           <div class="mt-2">
-            <input id="password" type="password" autocomplete="current-password" [(ngModel)]="password" name="password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6">
+            <input id="password" type="password" formControlName="password" required autocomplete="current-password"
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verdeOscuro sm:text-sm/6">
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500">
+              Contraseña inválida.
+            </div>
           </div>
           <div class="text-sm mt-2">
             <a href="#" class="font-semibold text-jade hover:text-fondo">¿Has olvidado tu contraseña?</a>
@@ -27,7 +34,9 @@
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-verdeOscuro px-3 py-1.5 text-sm/6 font-semibold text-black shadow-sm hover:bg-fondo focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-verdeOscuro px-3 py-1.5 text-sm/6 font-semibold text-black shadow-sm hover:bg-fondo focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Sign in
+          </button>
         </div>
       </form>
 
@@ -39,4 +48,3 @@
     </div>
   </div>
 </div>
-

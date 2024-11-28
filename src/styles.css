@@ -7,3 +7,7 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
+.custom-snackbar {
+  background-color: #F9F4E3 !important; /* Nice background color */
+  color: #7A6448 !important; /* Text color */
+}

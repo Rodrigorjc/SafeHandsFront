@@ -6,12 +6,17 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class ProveedorService {
-  private authUrl = 'http://localhost:8081/proveedor';
 
   constructor(private http: HttpClient) {
   }
   getListarProveedores(): Observable<any> {
-    return this.http.get<any>(`${this.authUrl}/listar`);
+    return this.http.get<any>(`/api/proveedor/listar`);
+  }
+  getListadoProveedores(): Observable<any> {
+    return this.http.get<any>(`/api/proveedor/listado`);
+  }
+  getProveedor(id: string): Observable<any> {
+    return this.http.get<any>(`/api/obtenerId/${id}`);
   }
 
 }

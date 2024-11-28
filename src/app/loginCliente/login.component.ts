@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { jwtDecode } from 'jwt-decode';
 import {NgIf} from '@angular/common';
-import {AuthService} from '../services/auth.service';
-import {Router} from '@angular/router';
-import {Login} from '../modelos/Login';
-import {jwtDecode} from 'jwt-decode';
+import {ActualizarHeaderService} from '../services/actualizar-header.service';
 
 interface CustomJwtPayload {
   userId: string;
@@ -16,68 +16,54 @@ interface CustomJwtPayload {
   standalone: true,
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements  OnInit {
-  login: Login = new Login();
-  username: string = '';
-  password: string = '';
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
   errorMessage = '';
 
-
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-
-  ngOnInit(): void {
-    this.username='';
-    this.password='';
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private actualizar: ActualizarHeaderService) {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(4)]]
+    });
   }
 
-  onLogin() {
-    this.login.username = this.username;
-    this.login.password = this.password;
-    localStorage.clear();
-    this.authService.login(this.login).subscribe({
-      next: (respuesta) => {
-        console.log(respuesta);
-        if(respuesta.token != null){
-          let tokenUser = respuesta.token;
-          let decodeToken = jwtDecode<CustomJwtPayload>(tokenUser);
-          let userId = decodeToken.userId;
-          let role = decodeToken.rol;
-          if (role === "PROVEEDOR") {
-            console.log('User ID:', userId);
-            console.log('Role:', role);
-            localStorage.setItem('token' , respuesta.token);
-            localStorage.setItem('rol', role);
-            localStorage.setItem('userId', userId);
-            localStorage.setItem('username', this.username),
-              this.router.navigate(['homeProveedor']);
-          } if (role === "CLIENTE") {
-            console.log('User ID:', userId);
-            console.log('Role:', role);
-            localStorage.setItem('token' , respuesta.token);
-            localStorage.setItem('rol', role);
-            localStorage.setItem('userId', userId);
-            localStorage.setItem('username', this.username),
-              this.router.navigate(['home']);
-          } if (role === "ONG") {
-            console.log('User ID:', userId);
-            console.log('Role:', role);
-            localStorage.setItem('token' , respuesta.token);
-            localStorage.setItem('rol', role);
-            localStorage.setItem('userId', userId);
-            localStorage.setItem('username', this.username),
-              this.router.navigate(['homeONG']);
-          }
-        }
+  ngOnInit(): void {}
 
-      },
-      error: (e) => console.error(e),
-    });
+  onLogin() {
+    if (this.loginForm.valid) {
+      const loginData = this.loginForm.value;
+      localStorage.clear();
+      this.authService.login(loginData).subscribe({
+        next: (respuesta) => {
+          if (respuesta.token != null) {
+            const tokenUser = respuesta.token;
+            const decodeToken = jwtDecode<CustomJwtPayload>(tokenUser);
+            const userId = decodeToken.userId;
+            const role = decodeToken.rol;
+            localStorage.setItem('token', respuesta.token);
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('rol', role);
+            localStorage.setItem('username', loginData.username);
+            this.actualizar.triggerRefreshHeader();
+            if (role === "PROVEEDOR") {
+              this.router.navigate(['homeProveedor']);
+            } else if (role === "CLIENTE") {
+              this.router.navigate(['home']);
+            } else if (role === "ONG") {
+              this.router.navigate(['homeONG']);
+            }
+          }
+        },
+        error: (e) => console.error(e),
+      });
+    } else {
+      this.errorMessage = 'Please complete all required fields.';
+    }
   }
 }

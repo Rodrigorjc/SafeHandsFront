@@ -9,8 +9,9 @@ import {ActivatedRoute} from '@angular/router';
 import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
-
+import Swal from 'sweetalert2';
 interface Product {
+  id: number;
   nombre: string;
   url: string;
   precio: number;
@@ -33,11 +34,12 @@ interface Product {
 export class ProductosProveedorComponent implements OnInit {
   products: Product[] = [];
   showForm: boolean = false;
-  newProduct: Product = { nombre: '', url: '' , descripcion: '', precio: 0};
+  filterTerm: string = '';
+  sortOrder: string = 'desc';
   productForm: FormGroup;
   productoId: string | null = null;
   alertMessage: string | null = null;
-
+  successMessage: string | null = null
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.productForm = this.fb.group({
@@ -47,39 +49,109 @@ export class ProductosProveedorComponent implements OnInit {
       descripcion: ['', Validators.required]
     });
   }
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
     this.productoId = this.route.snapshot.paramMap.get('id');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {
-          console.log('Productos:', data);
           this.products = data;
         },
+
         error: (err) => console.error('Error fetching products', err)
       });
     }
   }
-    toggleForm(){
+
+  filteredProducts(): any[] {
+    let filtered = this.products;
+
+    if (this.filterTerm.trim() !== '') {
+      filtered = filtered.filter(product =>
+        product.nombre.toLowerCase().includes(this.filterTerm.toLowerCase())
+      );
+    }
+
+    return filtered.sort((a, b) => this.sortOrder === 'desc' ? b.precio - a.precio : a.precio - b.precio);
+  }
+  toggleSortOrder(): void {
+    this.sortOrder = this.sortOrder === 'desc' ? 'asc' : 'desc';
+  }
+  clearSearch(): void {
+    this.filterTerm = '';
+  }
+
+  toggleForm(){
       this.showForm = !this.showForm;
+  }
+
+  addProduct(){
+    if (this.productForm.invalid) {
+      return;
     }
 
-    addProduct(){
-      if (this.productForm.invalid) {
-        return;
+    this.productoService.crearProducto(this.productForm.value).subscribe({
+      next: (createdProduct) => {
+        this.products.push(createdProduct);
+        this.productForm.reset();
+        this.showForm = false;
+        this.showSuccess('Producto creado exitosamente') ;
+
+      },
+      error: (err) => {
+        console.error('Error creating product', err);
+        this.showAlert('Error creando producto');
       }
+    });
+  }
+  confirmDelete(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteProduct(id);
+      } else {
+        this.showAlert('Eliminación cancelada');
+      }
+    });
+  }
 
-      this.productoService.crearProducto(this.productForm.value).subscribe({
-        next: (createdProduct) => {
-          this.products.push(createdProduct);
-          this.productForm.reset();
-          this.showForm = false;
-          this.alertMessage = 'Producto creado exitosamente';
+  deleteProduct(id: number){
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => {
+        this.products = this.products.filter(product => product.id !== id);
+        this.showSuccess('Producto eliminado exitosamente');
+      },
+      error: (err) => {
+        console.error('Error deleting product', err);
+        this.showAlert('Error eliminando producto');
+      }
+    });
+  }
 
-        },
-        error: (err) => {
-          console.error('Error creating product', err);
-          this.alertMessage = 'Error creando producto';
-        }
-      });
-    }
+
+
+  private showAlert(message: string) {
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.alertMessage = null;
+    }, 3000); // Clear the alert after 10 seconds
+  }
+
+  private showSuccess(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000); // Clear the success message after 10 seconds
+}
 }

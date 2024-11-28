@@ -1,0 +1,34 @@
+<div class="relative w-full overflow-visible rounded-lg mt-5">
+  <!-- Contenedor principal del slider -->
+  <div
+    class="flex transition-transform duration-500 ease-in-out"
+    [style.transform]="'translateX(' + currentSlide * -100 + '%)'"
+  >
+    <div
+      *ngFor="let proveedor of proveedores"
+      class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-5 flex-shrink-0 bg-verdeClaro rounded-md text-center mx-3 shadow-lg"
+      style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+    >
+      <img
+        [src]="proveedor.img"
+        [alt]="proveedor.nombre"
+        class="h-40 w-full object-cover rounded-md mb-4"
+      />
+      <h3 class="text-lg font-bold text-gray-800">{{ proveedor.nombre }}</h3>
+    </div>
+  </div>
+
+  <!-- Botones de navegación -->
+  <button
+    (click)="prevSlide()"
+    class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 hover:bg-gray-800"
+  >
+    ‹
+  </button>
+  <button
+    (click)="nextSlide()"
+    class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 hover:bg-gray-800"
+  >
+    ›
+  </button>
+</div>

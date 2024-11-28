@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import {ActualizarHeaderService} from '../services/actualizar-header.service';
+import {CarritoService} from '../services/carrito.service';
+import { Producto } from '../modelos/Producto';
 
 interface CustomJwtPayload {
   userId: string;
@@ -15,7 +18,9 @@ interface CustomJwtPayload {
   standalone: true,
   imports: [
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    CurrencyPipe,
+    NgForOf
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -25,8 +30,14 @@ export class HeaderComponent implements OnInit {
   isNavMenuVisible = false;
   isMenuVisible = false;
   img: Observable<any> = of('');
+  isCartVisible = false;
+  productosEnCarrito: Producto[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private actualizar: ActualizarHeaderService, private carritoService: CarritoService) {
+    this.carritoService.carrito$.subscribe(productos => {
+      this.productosEnCarrito = productos;
+    });
+  }
 
   toggleUserMenu() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
@@ -41,6 +52,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshHeader();
+    this.actualizar.refreshHeader$.subscribe(() => {
+      this.refreshHeader();
+    });
+  }
+
+  refreshHeader() {
     let token = localStorage.getItem('token');
     let userId: string | null = localStorage.getItem('userId');
     if (token) {
@@ -70,11 +88,15 @@ export class HeaderComponent implements OnInit {
           }
         });
       } else {
-        //imagen por defecto
+        // Default image
         this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
       }
     } else {
       this.img = of("https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png");
     }
+  }
+
+  toggleCart() {
+    this.isCartVisible = !this.isCartVisible;
   }
 }

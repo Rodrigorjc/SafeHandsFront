@@ -1,1 +1,48 @@
-<p>home-ong works!</p>
+<main class="flex-grow container mx-auto py-8 px-4">
+  <h2 class="text-center text-2xl font-semibold mb-6">¡Bienvenido, {{ong?.username}}!</h2>
+  <p class="text-center text-lg mb-4">
+    Nos complace tenerte con nosotros. Aquí podrás gestionar tus eventos, ver tus donaciones y mucho más.
+  </p>
+  <p class="text-center text-lg mb-4">
+    Si necesitas ayuda, no dudes en contactarnos. ¡Estamos aquí para apoyarte en todo lo que necesites!
+  </p>
+
+  <!--carrousel de los eventos, estos salen de manera aleatorio y se actualizan cada 5 segundos-->
+  <h2 class="text-center text-xl font-semibold mb-6">Lista de tus eventos</h2>
+  <div class="relative"></div>
+  <div *ngIf="acontecimientos.length > 0" class="relative">
+    <div class="carousel-acontecimientos flex overflow-hidden">
+      <div *ngFor="let acontecimiento of acontecimientos" class="carousel-item flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
+        <div class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+          <img [src]="acontecimiento.img" alt="{{ acontecimiento.nombre }}" class="w-full h-60 object-cover rounded-md mb-4">
+          <p class="font-medium mb-2">{{ acontecimiento.ubicacion }}</p>
+          <p class="text-sm text-gray-500 mb-2">{{ acontecimiento.descripcion }}</p>
+          <p class="text-lg font-semibold mt-4">{{ acontecimiento.nombre }}</p>
+        </div>
+      </div>
+    </div>
+    <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" (click)="prevSlideAcontecimientos()">&#10094;</button>
+    <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" (click)="nextSlideAcontecimientos()">&#10095;</button>
+  </div>
+  <button (click)="navegarAsociarAcontecimientos()" class="my-3 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Asociar Acontecimientos</button>
+  <h2 class="my-4 text-center text-xl font-semibold mb-6">Lista de Proveedores que no estan validados</h2>
+  <div class="relative">
+    <div class="carousel-proveedores flex overflow-hidden">
+      <div *ngFor="let proveedor of proveedores" class="carousel-item flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
+        <div class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+          <img [src]="proveedor.username" alt="{{ proveedor.username }}" class="w-full h-24 object-cover rounded-md mb-2" />
+          <p class="text-lg font-medium">{{ proveedor.numVoluntarios }}</p>
+          <p class="text-sm text-gray-500">{{ proveedor.sede }}</p>
+          <p class="text-lg font-semibold mt-2">{{ proveedor.ubicacion}}</p>
+        </div>
+      </div>
+    </div>
+    <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" (click)="prevSlideProveedores()">&#10094;</button>
+    <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" (click)="nextSlideProveedores()">&#10095;</button>
+  </div>
+  <button (click)="navegarValidarProveedor()" class="my-4 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">
+    Ir a tus Eventos
+  </button>
+
+
+</main>

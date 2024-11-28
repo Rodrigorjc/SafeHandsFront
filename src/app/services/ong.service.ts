@@ -22,6 +22,10 @@ export class OngService {
     return this.http.post<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`,{});
   }
 
+  eliminarProveedor(proveedorId: number): Observable<any> {
+    return  this.http.delete<any>(`${this.authUrl}/eliminar/proveedor/${proveedorId}`);
+  }
+
   getOngs(): Observable<any> {
     return this.http.get(this.authUrl);
   }

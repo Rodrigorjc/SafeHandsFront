@@ -1,0 +1,130 @@
+<!-- Header -->
+<body>
+
+<br>
+<br>
+<br>
+
+<div class="container">
+  <!-- Sección superior -->
+  <div class="message-container">
+    <img src="/image18.svg" alt="Voluntarios trabajando" class="image">
+    <div class="text-primero">
+      <p>
+        <strong>Con tu apoyo, juntos nos volvemos más fuertes y capaces de lograr grandes cosas.</strong>
+      </p>
+      <button class="help-button">Ayuda aquí</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sección inferior -->
+<div class="segundo-container">
+  <strong>
+    <p>Con tu ayuda hemos conseguido un total de</p>
+    <!-- Muestra el total de donaciones -->
+    <p class="total-amount">
+      {{ totalDonaciones }}
+    </p>
+    <p>Muchas gracias por tu colaboración</p>
+  </strong>
+</div>
+
+<div class="tercer-container">
+  <div class="text-tercero">
+    <p>Ranking de proveedores </p>
+  </div>
+  <div class="imagen-ranking">
+    <img src="/image17.svg" alt="Imagen Ranking" class="image">
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="arriba-container">
+  <div class="text-arriba">
+    <p>Infórmate de lo donado en cada acontecimiento</p>
+  </div>
+
+  <div class="acontecimiento-container">
+    <div class="relative inline-block text-left">
+      <button type="button" class="dropdown-button">
+        {{ selectedAcontecimiento || 'Selecciona un acontecimiento' }}
+        <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <div class="dropdown-menu">
+        <button *ngFor="let acon of acontecimientos" class="dropdown-item" (click)="selectAcontecimiento(acon.nombre)">
+          {{ acon.nombre }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cuarto-container" *ngIf="getDonacionesAcontecimiento() > 0">
+    <div class="container-cuatro">
+      <img [src]="getImagenAcontecimiento()" alt="Imagen del acontecimiento" class="image">
+      <div class="text-cuarto">
+        <p><strong> {{ selectedAcontecimiento }} llevamos {{ getDonacionesAcontecimiento() | currency }}€ donados entre todos.</strong></p>
+        <button class="h3lp-button">Ayuda aquí</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Si no hay datos, mostrar un mensaje alternativo -->
+  <div *ngIf="getDonacionesAcontecimiento() === 0">
+<!--    <p>No hay datos disponibles para mostrar de este acontecimiento.</p>-->
+  </div>
+
+  <br>
+  <br>
+
+  <div class="abajo-container">
+    <div class="text-abajo">
+      <p>Infórmate de lo donado por cada proveedor</p>
+    </div>
+
+    <div class="proveedor-container">
+      <div class="relative inline-block text-left">
+        <!-- Botón principal que muestra el proveedor seleccionado -->
+        <button type="button" class="dropdown-button">
+          {{ selectedProveedor || 'Selecciona un proveedor' }}
+          <svg class="dropdown-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <!-- Menú desplegable -->
+        <div class="dropdown-menu">
+          <button *ngFor="let prov of proveedores" class="dropdown-item" (click)="selectProveedor(prov.nombre)">
+            {{ prov.nombre }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="quinto-container" *ngIf="getDonacionesProveedor() > 0">
+      <div class="container-cinco">
+        <!-- Imagen del proveedor seleccionado -->
+        <img [src]="getImagenProveedor()" alt="Imagen del proveedor" class="image">
+        <div class="text-quinto">
+          <!-- Texto dinámico del proveedor seleccionado -->
+          <p><strong>{{ selectedProveedor }} lleva un total de {{ getDonacionesProveedor() | currency }} recaudados.</strong></p>
+          <button class="h3lp-butt0n">Consulta los productos</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Si no hay datos, mostrar un mensaje alternativo -->
+    <div *ngIf="getDonacionesProveedor() === 0">
+<!--      <p>No hay datos disponibles para mostrar de este proveedor.</p>-->
+    </div>
+  </div>
+</div>
+
+</body>

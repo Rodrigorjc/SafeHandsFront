@@ -3,6 +3,7 @@ import { LoginComponent } from './loginCliente/login.component';
 import { RegisterComponent } from './registerCliente/register.component';
 import { HomeComponent } from './home/home.component';
 import {DemoComponent} from './demo/demo.component';
+import {DonacionesComponent} from './donaciones/donaciones.component';
 import {ProductosProveedorComponent} from './productos-proveedor/productos-proveedor.component';
 import {OngDetallesComponent} from './ong-detalles/ong-detalles.component';
 import {ValidarProveedorComponent} from './validar-proveedor/validar-proveedor.component';
@@ -26,11 +27,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
-  { path: 'producto', component: ProductoComponent },
-  { path: 'nosotros', component: NosotrosComponent },
-  { path: 'producto/listar', component: ProductoListarComponent },
-  { path: 'producto/adm', component: ProductoAdmComponent },
-  { path: 'pedido/adm', component: PedidoAdmComponent },
+  { path: 'informacion/donaciones', component: DonacionesComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
   { path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
@@ -44,7 +41,7 @@ export const routes: Routes = [
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   { path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
-  { path: 'informacion/donaciones', component: InfoDonacionesComponent},
+  // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

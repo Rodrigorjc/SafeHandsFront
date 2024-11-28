@@ -1,13 +1,44 @@
-<h2 class="text-center text-xl font-semibold mb-6">Proveedores no validados</h2>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  <div *ngFor="let proveedor of proveedores" class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md">
-    <img [src]="proveedor.username" alt="{{ proveedor.username }}" class="w-full h-24 object-cover rounded-md mb-2" />
-    <p class="text-lg font-medium">{{ proveedor.numVoluntarios }}</p>
-    <p class="text-sm text-gray-500">{{ proveedor.sede }}</p>
-    <p class="text-lg font-semibold mt-2">{{ proveedor.ubicacion}}</p>
-    <div class="space-x-10">
-      <button (click)="validarProveedor(proveedor.id)" class="mt-4 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Validar</button>
-      <button (click)="eliminarProveedor(proveedor.id)" class="mt-4 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Eliminar</button>
-    </div>
-    </div>
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white">
+    <thead>
+    <tr>
+      <th colspan="8" class="py-2 px-4 border-b text-center text-xl font-semibold">Proveedores no validados</th>
+    </tr>
+    <tr class="hidden md:table-row">
+      <th class="py-2 px-4 border-b text-center font-bold">Logo</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Username</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Nombre</th>
+      <th class="py-2 px-4 border-b text-center font-bold">CIF</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Num Voluntarios</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Sede</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Ubicación</th>
+      <th class="py-2 px-4 border-b text-center font-bold">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let proveedor of proveedores" class="text-center md:table-row flex flex-col md:flex-row">
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Logo</td>
+      <td class="py-2 px-4 border-b text-center">
+        <img [src]="proveedor.img" alt="{{ proveedor.img }}" class="w-16 h-16 object-cover rounded-full mx-auto mb-2" />
+      </td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Username</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.username }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Nombre</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.nombre }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">CIF</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.cif }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Num Voluntarios</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.numVoluntarios }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Sede</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.sede }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Ubicación</td>
+      <td class="py-2 px-4 border-b text-center">{{ proveedor.ubicacion }}</td>
+      <td class="py-2 px-4 border-b md:hidden text-center font-bold">Acciones</td>
+      <td class="py-2 px-4 border-b text-center space-x-2">
+        <img src="/confirmar-48.png" alt="Validar" (click)="confirmValidation(proveedor.id)" class="w-8 h-8 cursor-pointer inline-block" />
+        <img src="/eliminar-48.png" alt="Eliminar" (click)="confirmDelete(proveedor.id)" class="w-8 h-8 cursor-pointer inline-block" />
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

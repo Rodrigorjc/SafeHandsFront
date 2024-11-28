@@ -36,10 +36,16 @@
         <input type="text" id="ubicacion" formControlName="ubicacion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
         <div *ngIf="ongForm.get('ubicacion')?.invalid && ongForm.get('ubicacion')?.touched" class="text-red-500 text-sm">La ubicación es obligatoria</div>
       </div>
-      <div>
-        <label for="img" class="block text-sm font-medium text-gray-700">Imagen URL</label>
-        <input type="text" id="img" formControlName="img" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-        <div *ngIf="ongForm.get('img')?.invalid && ongForm.get('img')?.touched" class="text-red-500 text-sm">La imagen es obligatoria</div>
+      <div class="relative bg-white rounded-lg">
+        <div class="ms-10">
+          <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+        </div>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fa-solid fa-image text-gray-400"></i>
+        </div>
+        <div *ngIf="ongForm.get('img')?.invalid && ongForm.get('img')?.touched" class="absolute text-red-500 text-sm">
+          La imagen es obligatoria
+        </div>
       </div>
       <div>
         <label for="numVoluntarios" class="block text-sm font-medium text-gray-700">Número de Voluntarios</label>

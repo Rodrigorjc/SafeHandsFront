@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {AdminService} from '../services/admin.service';
 import Swal from 'sweetalert2';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {UploadImgComponent} from '../upload-img/upload-img.component';
 
 interface Ong {
   id: number;
@@ -21,7 +22,7 @@ interface Ong {
 @Component({
   selector: 'app-admin-ong',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, UploadImgComponent],
   templateUrl: './admin-ong.component.html',
   styleUrl: './admin-ong.component.css'
 })
@@ -30,6 +31,7 @@ export class AdminOngComponent implements OnInit {
   ongs: Ong[] = [];
   ongForm: FormGroup;
   showForm: boolean = false;
+  imageUrl: string | null = null;
 
 
 
@@ -37,12 +39,12 @@ export class AdminOngComponent implements OnInit {
     this.ongForm = this.fb.group({
       descripcion: ['', Validators.required],
       ubicacion: ['', Validators.required],
-      img: ['', Validators.required],
+      img: [''],
       numVoluntarios: ['', Validators.required],
       sede: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
   ngOnInit() {
@@ -75,6 +77,11 @@ export class AdminOngComponent implements OnInit {
         this.eliminarOng(id);
       }
     });
+  }
+
+  onImageUploaded(imageUrl: string) {
+    this.imageUrl = imageUrl;
+    console.log('URL de la imagen recibida:', imageUrl);
   }
 
 

@@ -21,6 +21,8 @@ import {ProductoListarComponent} from './producto-listar/producto-listar.compone
 import {NosotrosComponent} from './nosotros/nosotros.component';
 import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
+import {AcontecimientoDetallesComponent} from './acontecimiento-detalles/acontecimiento-detalles.component';
+import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalles.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,6 +51,8 @@ export const routes: Routes = [
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   {path:'admin/ong', component:AdminOngComponent},
+  {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
+  {path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
   { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

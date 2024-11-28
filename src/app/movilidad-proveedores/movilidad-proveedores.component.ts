@@ -39,7 +39,7 @@ export class MovilidadProveedoresComponent implements OnInit {
   }
 
   getProveedorDetalles(id: string): void {
-    this.proveedorService.getProveedor(id).subscribe({
+    this.proveedorService.getProveedorId(id).subscribe({
       next: (data) => {
         this.proveedorDetalles = data;
         console.log('Proveedor details:', data);

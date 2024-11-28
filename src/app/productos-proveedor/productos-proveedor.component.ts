@@ -10,7 +10,7 @@ import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import Swal from 'sweetalert2';
-interface Product {
+export interface Product {
   id: number;
   nombre: string;
   url: string;

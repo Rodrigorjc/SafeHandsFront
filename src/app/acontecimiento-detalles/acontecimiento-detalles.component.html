@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-[#f8f3e9] text-gray-900 font-sans">
+  <div class="p-6">
+    <div class="flex flex-col items-center md:flex-row md:justify-start gap-8">
+      <img [src]="acontecimiento?.img" alt="{{ acontecimiento?.nombre }} Logo" class="w-60 h-60">
+      <div class="text-center md:text-left">
+        <h2 class="text-4xl font-bold mb-4">{{ acontecimiento?.nombre }}</h2>
+        <div class="flex gap-8">
+          <div class="flex gap-1">
+            <p class="text-lg">Ubicación:</p>
+            <p class="text-lg font-bold">{{ acontecimiento?.ubicacion }}</p>
+          </div>
+        </div>
+        <p class="text-lg">{{ acontecimiento?.descripcion }}</p>
+      </div>
+    </div>
+</div>
+</div>

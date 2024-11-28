@@ -28,7 +28,7 @@ export class ValidarProveedorComponent implements OnInit {
   constructor(private proveedorService: ProveedorService, private ongService:OngService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.proveedorService.getListarProveedores().subscribe({
+    this.proveedorService.getListarProveedor().subscribe({
       next: (fetchedProveedores) => {
         this.proveedores = fetchedProveedores.filter((proveedor:any) => !proveedor.validado);
         console.log('Proveedores:', this.proveedores);

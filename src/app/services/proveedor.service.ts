@@ -24,4 +24,5 @@ export class ProveedorService {
     return this.http.get<Proveedor[]>("/api/peticiones/proveedores");
   }
 
+
 }

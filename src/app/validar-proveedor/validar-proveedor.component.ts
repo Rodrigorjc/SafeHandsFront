@@ -3,6 +3,7 @@ import {OngService} from '../services/ong.service';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {ProveedorService} from '../services/proveedor.service';
 import {ActivatedRoute} from '@angular/router';
+import Swal from 'sweetalert2';
 export interface Proveedor {
   id: number;
   nombre: string;
@@ -52,6 +53,44 @@ export class ValidarProveedorComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error validating proveedor', err);
+      }
+    });
+  }
+
+
+  confirmValidation(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro de validar a este proveedor?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.validarProveedor(id);
+      }
+
+    });
+
+  }
+
+
+  confirmDelete(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eliminarProveedor(id);
       }
     });
   }

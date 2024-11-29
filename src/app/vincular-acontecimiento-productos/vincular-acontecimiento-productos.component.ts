@@ -1,4 +1,3 @@
-// `src/app/vincular-acontecimiento-productos/vincular-acontecimiento-productos.component.ts`
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../services/producto.service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -12,11 +11,9 @@ interface Product {
   precio: number;
 }
 
-interface proveedoresAccontecimiento{
-  id:number;
-  acontecimientoId:number;
-  productoId:number;
-  proveedorId:number;
+interface ProveedoresAcontecimiento{
+  idAcontecimiento:number;
+  idProducto:number;
 }
 
 @Component({
@@ -36,7 +33,7 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
   proveedorId: string | null = null;
   alertMessage: string|null = null;
   successMessage: string|null = null;
-  proveedoresAcontecimiento: proveedoresAccontecimiento[] = [];
+  proveedoresAcontecimiento: ProveedoresAcontecimiento[] = [];
 
   constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute,private eventoService: AcontecimientoService) {
     this.vincularForm = this.fb.group({
@@ -74,12 +71,13 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
     const { productoId, acontecimientoId } = this.vincularForm.value;
 
     // Verificar si el producto ya está asociado al acontecimiento
-    const productoYaAsociado = this.proveedoresAcontecimiento.some(product => product.id === productoId && product.acontecimientoId === acontecimientoId);
+    const productoYaAsociado = this.proveedoresAcontecimiento.some(product => product.idProducto == productoId && product.idAcontecimiento == acontecimientoId);
 
-    // if (productoYaAsociado) {
-    //   this.showAlert('El producto ya está asociado a este acontecimiento');
-    //   return;
-    // }
+    if (productoYaAsociado) {
+      this.showAlert('El producto ya está asociado a este acontecimiento');
+      return;
+    }
+
 
     this.productoService.vincularProductoAcontecimiento(productoId, acontecimientoId).subscribe({
       next: (response) => {
@@ -88,13 +86,15 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error vinculando producto', err);
-        if (productoYaAsociado) {
-          this.showAlert('El producto ya está asociado a este acontecimiento');
-          // return;
-        }else{
+        console.info('productoYaAsociado', productoYaAsociado);
+
+        // if (productoYaAsociado) {
+        //   this.showAlert('El producto ya está asociado a este acontecimiento');
+        //   // return;
+        // }else{
           this.showAlert('Error vinculando producto');
         }
-      }
+      // }
     });
   }
   private showAlert(message: string) {

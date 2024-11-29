@@ -10,7 +10,7 @@ import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import Swal from 'sweetalert2';
-interface Product {
+export interface Product {
   id: number;
   nombre: string;
   url: string;
@@ -99,11 +99,14 @@ export class ProductosProveedorComponent implements OnInit {
         this.productForm.reset();
         this.showForm = false;
         this.showSuccess('Producto creado exitosamente') ;
+        Swal.fire('Éxito', 'Producto creado exitosamente', 'success');
+
 
       },
       error: (err) => {
         console.error('Error creating product', err);
         this.showAlert('Error creando producto');
+        Swal.fire('Error', 'Error creando producto', 'error');
       }
     });
   }

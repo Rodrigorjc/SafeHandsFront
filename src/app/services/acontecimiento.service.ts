@@ -20,4 +20,9 @@ export class AcontecimientoService {
   getAcontecimientoById(id: number): Observable<Acontecimineto> {
     return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
   }
+
+  getAcontecimientoById(acontecimientoId: string): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/detalles/${acontecimientoId}`);
+  }
+
 }

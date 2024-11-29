@@ -15,8 +15,8 @@ export class ProveedorService {
   getListadoProveedores(): Observable<any> {
     return this.http.get<any>(`/api/proveedor/listado`);
   }
-  getProveedor(id: string): Observable<any> {
-    return this.http.get<any>(`/api/obtenerId/${id}`);
+  getProveedorId(idProveedor: any): Observable<any> {
+    return this.http.get<any>(`http://localhost:8081/proveedor/detalles/${idProveedor}`);
   }
 
 }

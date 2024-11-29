@@ -25,6 +25,7 @@ import {ListAconteciminetosComponent} from './list-aconteciminetos/list-aconteci
 import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
 import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
 import {ListProveedoresComponent} from './list-proveedores/list-proveedores.component';
+import {AcontecimientoAdminComponent} from './acontecimiento-admin/acontecimiento-admin.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -58,5 +59,8 @@ export const routes: Routes = [
   { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},
   { path: 'donar/:id', component: ListadoProductosComponent},
   { path: 'listado/proveedores', component: ListProveedoresComponent},
+  { path: 'acontecimiento/admin', component: AcontecimientoAdminComponent},
+
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
+
 ];

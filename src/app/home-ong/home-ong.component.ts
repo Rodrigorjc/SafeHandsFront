@@ -56,7 +56,7 @@ export class HomeONGComponent implements OnInit {
           alert(`Error fetching acontecimientos: ${err.message}`);
         }
       });
-      this.proveedorService.getListarProveedores().subscribe({
+      this.proveedorService.getListarProveedor().subscribe({
         next: (data) => {
           this.proveedores = data;
           console.log('Proveedores:', data);

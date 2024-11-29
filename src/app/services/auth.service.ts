@@ -9,6 +9,7 @@ import {Login} from '../modelos/Login';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
+
   constructor(private http: HttpClient, private router: Router) {}
 
   login(credentials: Login) {
@@ -31,6 +32,8 @@ export class AuthService {
     // Add any additional logout logic here
     console.log('Logged out successfully');
   }
+
+
 
   autorizarPeticion(){
     const headers = new HttpHeaders({

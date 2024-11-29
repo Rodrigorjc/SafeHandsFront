@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {Acontecimiento} from '../modelos/Acontecimiento';
+import {Proveedor} from '../modelos/Proveedor';
 import {Acontecimineto} from '../modelos/Acontecimineto';
 
 @Injectable({ providedIn: 'root' })
@@ -11,6 +13,11 @@ export class AcontecimientoService {
 
   getAcontecimiento(): Observable<any[]> {
     return this.http.get<any[]>("/api/acontecimiento/listar");
+  }
+
+  // Metodo para listar todos los acontecimientos
+  getListarAcontecimientos(): Observable<Acontecimiento[]> {
+    return this.http.get<Acontecimiento[]>('/api/aconecimiento/total-donaciones');
   }
 
   getAcontecimientosByOngId(ongId: string): Observable<any[]> {

@@ -1,0 +1,32 @@
+.contenedor {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.producto {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.imagen-producto {
+  max-width: 150px;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+h2 {
+  margin: 0 0 10px 0;
+}
+
+p {
+  margin: 5px 0;
+}
+
+p strong {
+  font-weight: bold;
+}

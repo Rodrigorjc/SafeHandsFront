@@ -1,0 +1,16 @@
+<div class="contenedor p-6">
+  <h1 class="text-2xl font-bold mb-6">Productos del Acontecimiento</h1>
+
+  <div *ngIf="productos.length > 0; else noProductos">
+    <div class="producto mb-8 flex flex-col items-start space-y-4" *ngFor="let producto of productos">
+      <img [src]="producto.url" [alt]="producto.nombre" class="imagen-producto mb-4 w-full max-w-xs object-contain" />
+      <h2 class="text-xl font-semibold mb-2">{{ producto.nombre }}</h2>
+      <p class="text-base mb-2">{{ producto.descripcion }}</p>
+      <p class="font-bold text-lg mb-4"><strong>Precio:</strong> {{ producto.precio | currency }}</p>
+    </div>
+  </div>
+
+  <ng-template #noProductos>
+    <p class="text-lg">No hay productos asociados a este acontecimiento.</p>
+  </ng-template>
+</div>

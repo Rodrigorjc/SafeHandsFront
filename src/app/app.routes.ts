@@ -24,6 +24,7 @@ import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
 import {AcontecimientoDetallesComponent} from './acontecimiento-detalles/acontecimiento-detalles.component';
 import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalles.component';
 import {DonacionesComponent} from './donaciones/donaciones.component';
+import {AcontecimientoProductoComponent} from './acontecimiento-producto/acontecimiento-producto.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,12 +32,11 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
   { path: 'producto', component: ProductoComponent },
-  { path: 'nosotros', component: NosotrosComponent },
-  // { path: 'producto', component: ProductoComponent },
+  { path: 'acontecimiento/producto/:id', component: AcontecimientoProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
   // { path: 'producto/listar', component: ProductoListarComponent },
-  // { path: 'producto/adm', component: ProductoAdmComponent },
-  // { path: 'pedido/adm', component: PedidoAdmComponent },
+   { path: 'producto/adm', component: ProductoAdmComponent },
+   { path: 'pedido/adm', component: PedidoAdmComponent },
   { path: 'informacion/donaciones', component: DonacionesComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},

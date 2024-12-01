@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {ProveedorService} from '../services/proveedor.service';
+import {Proveedor} from '../modelos/Proveedor';
+import {ProductoService} from '../services/producto.service';
+import Swal from 'sweetalert2';
 
 interface Producto {
-  id: number;
+  id: number|null;
   nombre: string;
-  urlImagen: string;
+  url: string;
   precio: number;
   descripcion: string;
-  proveedor: string;
-  acontecimiento?: string;
+  idProveedores: number;
+
 }
 
 @Component({
@@ -20,64 +24,50 @@ interface Producto {
   styleUrls: ['./producto-adm.component.css']
 })
 export class ProductoAdmComponent {
-  productos: Producto[] = [];  // Lista de productos
   productoActual: Producto = this.crearProductoVacio();  // Producto que estamos editando
 
-  // Acontecimientos y proveedores simulados
-  acontecimientos: string[] = ['Evento 1', 'Evento 2', 'Evento 3'];
-  proveedores: string[] = ['Proveedor A', 'Proveedor B', 'Proveedor C'];
+  //  proveedores simulados
+  proveedores: Proveedor[] = [];
 
-  constructor() {}
+  constructor(private proveedorService:ProveedorService,private productoService: ProductoService) {}
+
+  ngOnInit(): void {
+    this.proveedorService.getProveedores().subscribe({
+      next: (proveedores) => {
+        this.proveedores = proveedores
+        console.log('Proveedores cargados', proveedores);
+      },
+      error: (err) => console.error('Error al cargar los proveedores', err),
+    });
+  }
+
 
   // Crear un producto vacío
   crearProductoVacio(): Producto {
     return {
-      id: 0,
+      id: null,
       nombre: '',
-      urlImagen: '',
+      url: '',
       precio: 0,
       descripcion: '',
-      proveedor: '',
-      acontecimiento: ''
+      idProveedores: 0
     };
   }
 
   // Guardar un nuevo producto
   guardarProducto(): void {
-    if (this.productoActual.id === 0) {
-      this.productoActual.id = Date.now();  // Simulamos un ID único para el producto nuevo
-      this.productos.push(this.productoActual);  // Añadir producto a la lista
-    }
-    this.limpiarFormulario();  // Limpiar formulario después de guardar
+    this.productoService.crearProducto(this.productoActual).subscribe({
+      next: (producto) => {
+        Swal.fire('Éxito', 'Producto creado exitosamente', 'success');
+
+      },
+      error: (err) => console.error('Error al guardar el producto', err),
+    });
+
   }
 
-  // Editar un producto existente
-  editarProducto(): void {
-    const index = this.productos.findIndex(p => p.id === this.productoActual.id);
-    if (index !== -1) {
-      this.productos[index] = this.productoActual;  // Actualizar producto
-    }
-    this.limpiarFormulario();  // Limpiar formulario después de editar
-  }
+  // editar un producto
 
-  // Eliminar un producto
-  eliminarProducto(): void {
-    this.productos = this.productos.filter(p => p.id !== this.productoActual.id);  // Eliminar producto de la lista
-    this.limpiarFormulario();  // Limpiar formulario después de eliminar
-  }
 
-  // Limpiar formulario
-  limpiarFormulario(): void {
-    this.productoActual = this.crearProductoVacio();
-  }
 
-  // Cargar un producto para editar
-  cargarProductoParaEdicion(producto: Producto): void {
-    this.productoActual = { ...producto };  // Copiar el producto para editar
-  }
-
-  // Cargar un producto para eliminar
-  cargarProductoParaEliminar(producto: Producto): void {
-    this.productoActual = { ...producto };  // Copiar el producto para eliminar
-  }
 }

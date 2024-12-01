@@ -22,7 +22,7 @@ export class ProductoComponent implements OnInit{
   cargarProductos(): void {
     this.productoService.obtenerProductos().subscribe({
       next: (productos) => (this.productos = productos),
-      error: (err) => console.error('Error al cargar los productos', err),
+      error: (err) => console.error('Error al cargar los productos', err)
     });
   }
 }

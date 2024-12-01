@@ -34,7 +34,7 @@ export const routes: Routes = [
   { path: 'producto', component: ProductoComponent },
   { path: 'acontecimiento/producto/:id', component: AcontecimientoProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
-  // { path: 'producto/listar', component: ProductoListarComponent },
+   { path: 'producto/listar', component: ProductoListarComponent },
    { path: 'producto/adm', component: ProductoAdmComponent },
    { path: 'pedido/adm', component: PedidoAdmComponent },
   { path: 'informacion/donaciones', component: DonacionesComponent},

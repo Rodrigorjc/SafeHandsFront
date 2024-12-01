@@ -5,4 +5,5 @@ export class Producto{
   precio?: number;
   url?:string;
   cantidad?: number; // Add this line
+  proveedor?:number;
 }

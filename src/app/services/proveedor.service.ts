@@ -24,5 +24,9 @@ export class ProveedorService {
     return this.http.get<Proveedor[]>("/api/peticiones/proveedores");
   }
 
+  getProveedores(): Observable<Proveedor[]> {
+    return this.http.get<Proveedor[]>("/api/proveedor/listarSelect");
+  }
+
 
 }

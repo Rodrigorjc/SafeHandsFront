@@ -11,7 +11,7 @@ export class LineaPedidoService {
   }
 
   getTotal(){
-    return this.http.get('/api/linea/total');
+    return this.http.get('/api/peticiones/total');
   }
 
   obtenerRankingProveedores() {

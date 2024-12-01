@@ -45,20 +45,45 @@
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
 
-          <div *ngIf="isCartVisible" class="fixed inset-0 flex justify-end z-50">
-            <div class="bg-white w-80 h-full shadow-lg p-4">
-              <h2 class="text-xl font-bold mb-4">Carrito de Compras</h2>
-              <ul>
-                <li *ngFor="let producto of productosEnCarrito" class="mb-2">
+          <div *ngIf="isCartVisible" class="fixed inset-0 flex justify-end z-50 bg-black/50">
+            <div class="bg-white w-96 h-full shadow-2xl p-6 flex flex-col">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800">Carrito de Compras</h2>
+                <button
+                  class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full text-gray-600"
+                  (click)="toggleCart()">
+                  ✕
+                </button>
+              </div>
+              <ul class="flex-1 overflow-y-auto">
+                <li *ngFor="let producto of productosEnCarrito" class="border-b py-4">
                   <div class="flex justify-between items-center">
-                    <span>{{ producto.nombre }} ({{ producto.cantidad }})</span>
-                    <span>{{ producto.precio | currency }}</span>
+                    <div>
+                      <h3 class="font-medium text-gray-700">{{ producto.nombre }}</h3>
+                      <p class="text-sm text-gray-500">Cantidad: {{ producto.cantidad }}</p>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-gray-800">{{ producto.precio | currency }}</p>
+                      <p class="text-sm text-gray-600">Total: {{ producto.total | currency }}</p>
+                    </div>
                   </div>
                 </li>
               </ul>
-              <button class="mt-4 p-2 bg-red-500 text-white rounded" (click)="toggleCart()">Cerrar</button>
+              <div class="mt-6 space-y-4">
+                <a
+                  href="/carrito/detalles"
+                  class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">
+                  Pagar
+                </a>
+                <button
+                  class="w-full text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded"
+                  (click)="toggleCart()">
+                  Cerrar
+                </button>
+              </div>
             </div>
           </div>
+
         </div>
 
         <!-- Profile dropdown -->

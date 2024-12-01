@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {ActualizarHeaderService} from '../services/actualizar-header.service';
 import {CarritoService} from '../services/carrito.service';
 import { Producto } from '../modelos/Producto';
 
-interface CustomJwtPayload {
-  userId: string;
-  rol: string;
-}
+
 
 @Component({
   selector: 'app-header',
@@ -33,7 +28,7 @@ export class HeaderComponent implements OnInit {
   isCartVisible = false;
   productosEnCarrito: Producto[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private actualizar: ActualizarHeaderService, private carritoService: CarritoService) {
+  constructor(private authService: AuthService,  private actualizar: ActualizarHeaderService, private carritoService: CarritoService) {
     this.carritoService.carrito$.subscribe(productos => {
       this.productosEnCarrito = productos;
     });
@@ -56,6 +51,10 @@ export class HeaderComponent implements OnInit {
     this.actualizar.refreshHeader$.subscribe(() => {
       this.refreshHeader();
     });
+  }
+
+  gettotal(){
+
   }
 
   refreshHeader() {

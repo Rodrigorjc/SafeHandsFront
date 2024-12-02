@@ -39,12 +39,12 @@ export class MovilidadProveedoresComponent implements OnInit {
   }
 
   getProveedorDetalles(id: string): void {
-    this.proveedorService.getProveedorId(id).subscribe({
+    this.proveedorService.getProveedor(id).subscribe({
       next: (data) => {
         this.proveedorDetalles = data;
         console.log('Proveedor details:', data);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching proveedor details', err);
       }
     });

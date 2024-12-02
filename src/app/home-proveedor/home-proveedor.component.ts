@@ -47,7 +47,9 @@ export class HomeProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    this.proveedorId = this.route.snapshot.paramMap.get('id');
+    // this.proveedorId = this.route.snapshot.paramMap.get('id');
+    let userId: string | null = localStorage.getItem('userId');
+    this.proveedorId = userId;
     if (this.proveedorId) {
       this.getProveedorDetalles(this.proveedorId);
       console.log('Proveedor ID:', this.proveedorId);
@@ -88,7 +90,7 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   getProveedorDetalles(id: string): void {
-    this.proveedorService.getProveedorId(id).subscribe({
+    this.proveedorService.getProveedor(id).subscribe({
       next: (data) => {
         this.proveedor = data;
         console.log('Proveedor details:', data);

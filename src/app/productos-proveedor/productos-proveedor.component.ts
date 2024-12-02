@@ -54,14 +54,14 @@ export class ProductosProveedorComponent implements OnInit {
   constructor(private productoService: ProductoService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.createProductForm = this.fb.group({
       nombre: ['', Validators.required],
-      url: [''],
+      url: this.imageUrl ?? '',
       precio: [0, [Validators.required, Validators.min(0.01)]],
       descripcion: ['', Validators.required]
     });
 
     this.editProductForm = this.fb.group({
       nombre: ['', Validators.required],
-      url: [''],
+      url: this.imageUrl ?? '',
       precio: [0, [Validators.required, Validators.min(0.01)]],
       descripcion: ['', Validators.required]
     });
@@ -126,7 +126,7 @@ export class ProductosProveedorComponent implements OnInit {
     if (!this.validateForm(this.createProductForm)) {
       return;
     }
-
+    this.createProductForm.patchValue({ url: this.imageUrl });
     this.productoService.crearProducto(this.createProductForm.value).subscribe({
       next: (createdProduct) => {
         this.products.push(createdProduct);
@@ -232,6 +232,12 @@ export class ProductosProveedorComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;
     console.log('URL de la imagen recibida:', imageUrl);
+
+    if (this.showCreateForm) {
+      this.createProductForm.patchValue({ url: imageUrl });
+    } else if (this.showEditForm) {
+      this.editProductForm.patchValue({ url: imageUrl });
+    }
   }
 
 

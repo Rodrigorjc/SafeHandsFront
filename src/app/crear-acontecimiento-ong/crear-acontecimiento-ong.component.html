@@ -17,6 +17,7 @@
       </td>
       <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"   class="py-3 px-4 border-b border-gray-300">{{ acontecimiento.nombre }}</td>
       <td class="py-3 px-4 border-b border-gray-300">
+        <img src="/editar-48.png" alt="Editar" (click)="editAcontecimiento(acontecimiento)" class="inline-block w-8 h-8 mr-2">
         <img src="/eliminar-48.png" alt="Eliminar" (click)="eliminarAcontecimiento(acontecimiento.id)" class="w-8 h-8 cursor-pointer inline-block">
       </td>
     </tr>
@@ -64,3 +65,41 @@
     </div>
   </form>
 </div>
+
+<div *ngIf="showEditForm" class="mt-8" #productFormElement>
+  <form [formGroup]="editProductForm" (ngSubmit)="updateAcontecimiento()" class="space-y-4">
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+      <input type="text" id="nombreE" formControlName="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+      <div *ngIf="editProductForm.get('nombre')?.invalid && editProductForm.get('nombre')?.touched" class="text-red-500 text-sm">El nombre es obligatorio</div>
+    </div>
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Imagen</label>
+      <div class="relative rounded-lg">
+        <div class="ms-10">
+          <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+        </div>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fa-solid fa-image text-gray-400"></i>
+        </div>
+        <div *ngIf="editProductForm.get('img')?.invalid && editProductForm.get('img')?.touched" class="absolute text-red-500 text-sm"></div>
+      </div>
+    </div>
+    <div>
+      <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
+      <input type="text" id="ubicacionE" formControlName="ubicacion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+      <div *ngIf="editProductForm.get('ubicacion')?.invalid && editProductForm.get('ubicacion')?.touched" class="text-red-500 text-sm">El precio es obligatorio y debe ser mayor o igual a 0</div>
+    </div>
+    <div>
+      <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+      <textarea id="descripcionE" formControlName="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"></textarea>
+      <div *ngIf="editProductForm.get('descripcion')?.invalid && editProductForm.get('descripcion')?.touched" class="text-red-500 text-sm">La descripción es obligatoria</div>
+    </div>
+    <div>
+      <button type="submit" class="bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition w-full mb-2 sm:w-auto md:ml-2">Actualizar Producto</button>
+      <button type="button" (click)="toggleEditForm()" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition w-full sm:w-auto md:mx-4">Cerrar</button>
+    </div>
+  </form>
+
+</div>
+

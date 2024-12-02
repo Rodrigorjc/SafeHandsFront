@@ -12,6 +12,7 @@ import {CurrencyPipe, NgForOf} from '@angular/common';
     NgForOf
   ],
   templateUrl: './proveedor-detalles.component.html',
+  standalone: true,
   styleUrl: './proveedor-detalles.component.css'
 })
 export class ProveedorDetallesComponent implements OnInit {
@@ -25,7 +26,7 @@ export class ProveedorDetallesComponent implements OnInit {
   ngOnInit(): void {
     this.proveedorId  = this.route.snapshot.paramMap.get('id');
     if (this.proveedorId) {
-      this.proveedorService.getProveedorId(this.proveedorId).subscribe({
+      this.proveedorService.getProveedor(this.proveedorId).subscribe({
         next: (data) => {
           this.proveedor = data;
           console.log('Proveedor details', data);

@@ -29,4 +29,8 @@ export class AcontecimientoService {
     return this.http.delete(`${this.authUrl}/eliminar/${acontecimientoId}`,{ responseType:'text'} );
   }
 
+  editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
+    return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);
+  }
+
 }

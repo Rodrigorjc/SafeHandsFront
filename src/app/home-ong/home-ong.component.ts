@@ -34,7 +34,7 @@ export class HomeONGComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ongId = this.route.snapshot.paramMap.get('id');
+    this.ongId = localStorage.getItem('userId');
     if (this.ongId) {
       this.ongService.getOngById(this.ongId).subscribe({
         next: (data) => {

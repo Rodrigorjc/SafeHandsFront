@@ -21,4 +21,12 @@ export class AcontecimientoService {
     return this.http.get<any>(`${this.authUrl}/detalles/${acontecimientoId}`);
   }
 
+  crearAcontecimientoOng(acontecimiento: any): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/crear/acontecimiento/admin/ong`, acontecimiento);
+  }
+
+  eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
+    return this.http.delete(`${this.authUrl}/eliminar/${acontecimientoId}`,{ responseType:'text'} );
+  }
+
 }

@@ -6,6 +6,7 @@ import {AcontecimientoService} from '../services/acontecimiento.service';
   selector: 'app-acontecimiento-detalles',
   imports: [],
   templateUrl: './acontecimiento-detalles.component.html',
+  standalone: true,
   styleUrl: './acontecimiento-detalles.component.css'
 })
 export class AcontecimientoDetallesComponent implements OnInit {
@@ -21,7 +22,7 @@ export class AcontecimientoDetallesComponent implements OnInit {
   ngOnInit(): void {
     this.acontecimientoId = this.route.snapshot.paramMap.get('id');
     if (this.acontecimientoId) {
-      this.acontecimientoService.getAcontecimientoById(this.acontecimientoId).subscribe({
+      this.acontecimientoService.getAcontecimientoByIdd(this.acontecimientoId).subscribe({
         next: (data) => {
           this.acontecimiento = data;
         },

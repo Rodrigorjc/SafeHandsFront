@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['login']);
     // Add any additional logout logic here
     console.log('Logged out successfully');

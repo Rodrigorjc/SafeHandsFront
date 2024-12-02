@@ -47,7 +47,7 @@ export class HomeProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    this.proveedorId = this.route.snapshot.paramMap.get('id');
+    this.proveedorId = localStorage.getItem('userId');
     if (this.proveedorId) {
       this.getProveedorDetalles(this.proveedorId);
       console.log('Proveedor ID:', this.proveedorId);
@@ -71,7 +71,7 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productoId = this.route.snapshot.paramMap.get('id');
+    this.productoId = localStorage.getItem('userId');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {

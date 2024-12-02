@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {OngService} from '../services/ong.service';
 import {NgForOf, NgIf} from '@angular/common';
@@ -10,7 +10,8 @@ import {ProveedorService} from '../services/proveedor.service';
   standalone: true,
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './home-ong.component.html',
   styleUrl: './home-ong.component.css'
@@ -34,7 +35,7 @@ export class HomeONGComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ongId = this.route.snapshot.paramMap.get('id');
+    this.ongId = localStorage.getItem('userId');
     if (this.ongId) {
       this.ongService.getOngById(this.ongId).subscribe({
         next: (data) => {

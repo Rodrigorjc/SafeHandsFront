@@ -5,6 +5,7 @@ import {AcontecimientoService} from '../services/acontecimiento.service';
 @Component({
   selector: 'app-acontecimiento-detalles',
   imports: [],
+  standalone: true,
   templateUrl: './acontecimiento-detalles.component.html',
   styleUrl: './acontecimiento-detalles.component.css'
 })

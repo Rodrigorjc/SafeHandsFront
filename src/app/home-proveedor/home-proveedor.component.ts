@@ -20,7 +20,8 @@ interface Product {
     CurrencyPipe,
     FormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './home-proveedor.component.html',
   styleUrl: './home-proveedor.component.css'

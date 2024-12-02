@@ -43,8 +43,6 @@ export const routes: Routes = [
   { path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
   { path:'ong/validar/proveedor', component:ValidarProveedorComponent},
   { path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},
-  { path: 'homeProveedor/:id', component: HomeProveedorComponent},
-  { path: 'homeONG/:id', component: HomeONGComponent},
   { path: 'homeProveedor', component: HomeProveedorComponent},
   { path: 'homeONG', component: HomeONGComponent},
   { path: 'register/proveedores', component: RegisterProveedoresComponent },

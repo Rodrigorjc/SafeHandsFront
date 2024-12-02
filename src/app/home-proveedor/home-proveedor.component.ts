@@ -73,7 +73,7 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productoId = this.route.snapshot.paramMap.get('id');
+    this.productoId = localStorage.getItem('userId');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {

@@ -54,6 +54,7 @@ export const routes: Routes = [
   { path: 'informacion/donacioness', component: InfoDonacionesComponent},
   {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
+  // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},
   { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},

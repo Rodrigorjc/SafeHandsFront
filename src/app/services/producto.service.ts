@@ -33,4 +33,8 @@ export class ProductoService {
     return this.http.post<any>(`${this.authUrl}/${productoId}/vincular/${acontecimientoId}`, {});
   }
 
+  editarProducto(product: any, productoId:any): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/editar/${productoId}`, product);
+  }
+
 }

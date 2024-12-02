@@ -23,6 +23,7 @@ import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
 import {AcontecimientoDetallesComponent} from './acontecimiento-detalles/acontecimiento-detalles.component';
 import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalles.component';
+import {CrearAcontecimientoOngComponent} from './crear-acontecimiento-ong/crear-acontecimiento-ong.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,6 +54,7 @@ export const routes: Routes = [
   {path:'admin/ong', component:AdminOngComponent},
   {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
   {path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
+  {path:'ong/crear/acontecimiento', component:CrearAcontecimientoOngComponent},
   { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

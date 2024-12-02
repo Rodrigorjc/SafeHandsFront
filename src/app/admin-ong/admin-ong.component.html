@@ -1,0 +1,73 @@
+<div class="container mx-auto p-4 text-center">
+  <h1 class="text-3xl font-bold">Administración de ONGs</h1>
+  <p class=" my-1 text-lg text-gray-500">Aquí puedes ver y eliminar las ONGs que has creado</p>
+<div class="my-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <div *ngFor="let ong of ongs" class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md">
+    <img [src]="ong.img" alt="{{ ong.username }}" class="w-20 h-15 object-cover rounded-md mb-2 mx-auto" />
+    <p class="text-lg font-medium">{{ ong.username }}</p>
+    <p class="text-sm text-gray-500">{{ ong.descripcion }}</p>
+    <p class="text-lg font-semibold mt-2">{{ ong.ubicacion }}</p>
+    <div class="space-x-10">
+      <button (click)="confirmDelete(ong.id)" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Form to create a new ONG -->
+<div class="mt-6">
+  <div class="ml-12">
+    <h2 class="text-2xl font-bold mb-4">Crear Nueva ONG</h2>
+    <button (click)="toggleForm()" class="mt-8 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Crear ONG</button>
+  </div>
+  <div *ngIf="showForm" class="ml-12 mt-8 mr-12">
+    <form [formGroup]="ongForm" (ngSubmit)="anyadirOng()" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" formControlName="username" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('username')?.invalid && ongForm.get('username')?.touched" class="text-red-500 text-sm">El username es obligatorio</div>
+      </div>
+      <div>
+        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+        <input type="text" id="descripcion" formControlName="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('descripcion')?.invalid && ongForm.get('descripcion')?.touched" class="text-red-500 text-sm">La descripción es obligatoria</div>
+      </div>
+      <div>
+        <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
+        <input type="text" id="ubicacion" formControlName="ubicacion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('ubicacion')?.invalid && ongForm.get('ubicacion')?.touched" class="text-red-500 text-sm">La ubicación es obligatoria</div>
+      </div>
+      <div class="relative bg-white rounded-lg">
+        <div class="ms-10">
+          <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+        </div>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fa-solid fa-image text-gray-400"></i>
+        </div>
+        <div *ngIf="ongForm.get('img')?.invalid && ongForm.get('img')?.touched" class="absolute text-red-500 text-sm">
+          La imagen es obligatoria
+        </div>
+      </div>
+      <div>
+        <label for="numVoluntarios" class="block text-sm font-medium text-gray-700">Número de Voluntarios</label>
+        <input type="number" id="numVoluntarios" formControlName="numVoluntarios" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('numVoluntarios')?.invalid && ongForm.get('numVoluntarios')?.touched" class="text-red-500 text-sm">El número de voluntarios es obligatorio</div>
+      </div>
+      <div>
+        <label for="sede" class="block text-sm font-medium text-gray-700">Sede</label>
+        <input type="text" id="sede" formControlName="sede" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('sede')?.invalid && ongForm.get('sede')?.touched" class="text-red-500 text-sm">La sede es obligatoria</div>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" formControlName="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('email')?.invalid && ongForm.get('email')?.touched" class="text-red-500 text-sm">El email es obligatorio</div>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" formControlName="password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+        <div *ngIf="ongForm.get('password')?.invalid && ongForm.get('password')?.touched" class="text-red-500 text-sm">El password es obligatorio</div>
+      </div>
+      <button type="submit" class="bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition" [disabled]="ongForm.invalid">Crear ONG</button>
+    </form>
+  </div>
+</div>

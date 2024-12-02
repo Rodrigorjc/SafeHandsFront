@@ -1,0 +1,32 @@
+<div class="min-h-screen bg-[#f8f3e9] text-gray-900 font-sans">
+  <div class="p-6">
+    <div class="flex flex-col items-center md:flex-row md:justify-start gap-8">
+      <img [src]="proveedor?.img" alt="{{ proveedor?.username }} Logo" class="w-60 h-60">
+      <div class="text-center md:text-left">
+        <h2 class="text-4xl font-bold mb-4">Nombre: {{ proveedor?.nombre }}</h2>
+        <div class="flex gap-8">
+          <div class="flex gap-1">
+            <p class="text-lg ">Ubicación:</p>
+            <p class="text-lg font-bold">{{ proveedor?.ubicacion }}</p>
+          </div>
+          <div class="flex gap-1">
+            <p class="text-lg">Sede:</p>
+            <p class="text-lg font-bold">{{ proveedor?.sede }}</p>
+          </div>
+        </div>
+        <p class="text-lg">{{ proveedor?.descripcion }}</p>
+        <p class="mt-4 font-semibold">Número de voluntarios: {{ proveedor?.numVoluntarios }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let product of products" class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+      <img [src]="product.url" alt="{{ product.nombre }}" class="w-full h-24 object-cover rounded-md mb-2" />
+      <p class="text-lg font-medium">{{ product.nombre }}</p>
+      <p class="text-sm text-gray-500">{{ product.descripcion }}</p>
+      <p class="text-lg font-semibold mt-2">{{ product.precio | currency }}</p>
+    </div>
+  </div>
+
+</div>

@@ -16,6 +16,7 @@ import {
 import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/ong-asociar-acontecimiento.component';
 import {InfoDonacionesComponent} from './info-donaciones/info-donaciones.component';
 import {MovilidadProveedoresComponent} from './movilidad-proveedores/movilidad-proveedores.component';
+import {AdminOngComponent} from './admin-ong/admin-ong.component';
 import {ProductoComponent} from './producto/producto.component';
 import {ProductoListarComponent} from './producto-listar/producto-listar.component';
 import {NosotrosComponent} from './nosotros/nosotros.component';
@@ -26,6 +27,9 @@ import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimi
 import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
 import {ListProveedoresComponent} from './list-proveedores/list-proveedores.component';
 import {DetalleCarritoComponent} from './detalle-carrito/detalle-carrito.component';
+import {AcontecimientoDetallesComponent} from './acontecimiento-detalles/acontecimiento-detalles.component';
+import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalles.component';
+import {CrearAcontecimientoOngComponent} from './crear-acontecimiento-ong/crear-acontecimiento-ong.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -46,6 +50,8 @@ export const routes: Routes = [
   { path:'acontecimiento/ong/:id/acontecimientos', component:OngDetallesComponent},
   { path:'ong/validar/proveedor', component:ValidarProveedorComponent},
   { path:'ong/validar/proveedor/:id', component:ValidarProveedorComponent},
+  { path: 'homeProveedor/:id', component: HomeProveedorComponent},
+  { path: 'homeONG/:id', component: HomeONGComponent},
   { path: 'homeProveedor', component: HomeProveedorComponent},
   { path: 'homeONG', component: HomeONGComponent},
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
@@ -54,6 +60,11 @@ export const routes: Routes = [
   { path: 'informacion/donacioness', component: InfoDonacionesComponent},
   {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
+  {path:'admin/ong', component:AdminOngComponent},
+  {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
+  {path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
+  {path:'ong/crear/acontecimiento', component:CrearAcontecimientoOngComponent},
+  { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
   // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},

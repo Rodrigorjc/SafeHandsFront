@@ -27,4 +27,17 @@ export class AcontecimientoService {
   getAcontecimientoById(id: number): Observable<Acontecimineto> {
     return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
   }
+
+  getAcontecimientoById(acontecimientoId: string): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/detalles/${acontecimientoId}`);
+  }
+
+  crearAcontecimientoOng(acontecimiento: any): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/crear/acontecimiento/admin/ong`, acontecimiento);
+  }
+
+  eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
+    return this.http.delete(`${this.authUrl}/eliminar/${acontecimientoId}`,{ responseType:'text'} );
+  }
+
 }

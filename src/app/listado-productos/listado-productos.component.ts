@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 import {Producto} from '../modelos/Producto';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {ActivatedRoute} from '@angular/router';
@@ -7,12 +7,14 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
 import {ProductoService} from '../services/producto.service';
 import {FormsModule} from '@angular/forms';
 import {CarritoService} from '../services/carrito.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-productos',
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    CurrencyPipe
   ],
   templateUrl: './listado-productos.component.html',
   standalone: true,
@@ -20,6 +22,7 @@ import {CarritoService} from '../services/carrito.service';
 })
 export class ListadoProductosComponent implements OnInit{
   productos: Producto [] = [];
+  originalProductos: Producto[] = [];
   acontecimiento: Acontecimineto = {} as Acontecimineto;
   sortCriteria: string = '';
 
@@ -50,6 +53,7 @@ export class ListadoProductosComponent implements OnInit{
     this.producto.obtenerProductosAconteciminetoId(id).subscribe({
       next:(data: Producto[]) => {
         this.productos = data;
+        this.originalProductos = [...data];
       },
       error: (error) => {
         console.error('Error al obtener datos', error);
@@ -60,7 +64,7 @@ export class ListadoProductosComponent implements OnInit{
     if (this.sortCriteria === 'price') {
       this.productos.sort((a, b) => (a.precio ?? 0) - (b.precio ?? 0));
     } else {
-      this.productos = [...this.productos];
+      this.productos = [...this.originalProductos];
     }
   }
 
@@ -70,6 +74,33 @@ export class ListadoProductosComponent implements OnInit{
   }
 
   agregarAlCarrito(producto: Producto) {
-    this.carritoService.agregarProducto(producto);
+    Swal.fire({
+      title: 'Ingrese la cantidad',
+      input: 'number',
+      inputAttributes: {
+        min: '1',
+        max: '10',
+        step: '1'
+      },
+      inputValue: 1,
+      showCancelButton: true,
+      confirmButtonText: 'Agregar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const cantidad = parseInt(result.value, 10);
+        if (cantidad > 0 && cantidad <= 10) {
+          for (let i = 0; i < cantidad; i++) {
+            this.carritoService.agregarProducto(producto);
+          }
+          Swal.fire({
+            title: 'Producto agregado',
+            text: 'El producto ha sido agregado al carrito correctamente.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+    });
   }
 }

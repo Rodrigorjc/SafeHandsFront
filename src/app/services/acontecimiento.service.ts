@@ -65,8 +65,8 @@ export class AcontecimientoService {
   }
 
   eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
-    return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`,{ responseType:'text'} );
-    }
+    return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`, {responseType: 'text'});
+  }
   // crearAcontecimiento(acontecimiento: any): Observable<any> {
   //   return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
   // }

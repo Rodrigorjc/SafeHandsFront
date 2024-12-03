@@ -2,16 +2,22 @@
   <h2 class="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-verdeOscuro pb-4">Detalle del Carrito</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- Productos en el carrito -->
+    <div *ngIf="productosEnCarrito.length === 0" class="text-center text-xl text-gray-500">
+      No tienes productos en el carrito.
+    </div>
     <div *ngFor="let producto of productosEnCarrito" class="bg-fondo rounded-lg shadow-md p-4 flex flex-col items-center space-y-4">
       <img [src]="producto.url" alt="{{ producto.nombre }}" class="h-24 w-24 rounded object-cover">
       <h3 class="font-medium text-gray-700 text-center">{{ producto.nombre }}</h3>
       <p class="text-sm text-gray-500">Cantidad: <span class="font-semibold">{{ producto.cantidad }}</span></p>
       <p class="text-sm text-gray-500">Precio: <span class="font-semibold">{{ producto.precio | currency }}</span></p>
       <p class="text-sm text-gray-500">Total: <span class="font-semibold">{{ producto.total | currency }}</span></p>
+      <div class="flex items-center space-x-0.5">
+        <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.disminuirCantidad(producto)">-</button>
+        <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.aumentarCantidad(producto)">+</button>
+      </div>
     </div>
   </div>
 
-  <!-- Resumen del carrito -->
   <!-- Resumen del carrito -->
   <div class="mt-8 bg-white rounded-lg shadow-md p-6">
     <div class="flex justify-between items-center">

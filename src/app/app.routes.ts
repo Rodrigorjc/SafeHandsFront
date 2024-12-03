@@ -23,7 +23,6 @@ import {NosotrosComponent} from './nosotros/nosotros.component';
 import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
 import {ListAconteciminetosComponent} from './list-aconteciminetos/list-aconteciminetos.component';
-// import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
 import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
 import {ListProveedoresComponent} from './list-proveedores/list-proveedores.component';
 import {AcontecimientoAdminComponent} from './acontecimiento-admin/acontecimiento-admin.component';
@@ -70,7 +69,7 @@ export const routes: Routes = [
   // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},
-  { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},
+  // { path: 'informacion/acontecimiento/:id', component: Info},
   { path: 'donar/:id', component: ListadoProductosComponent},
   { path: 'listado/proveedores', component: ListProveedoresComponent},
   { path: 'acontecimiento/admin', component: AcontecimientoAdminComponent},

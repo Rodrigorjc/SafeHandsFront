@@ -43,7 +43,7 @@ export class VincularAcontecimientoProductosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.proveedorId = this.route.snapshot.paramMap.get('id'); // Replace with actual provider ID
+    this.proveedorId = localStorage.getItem('userId'); // Replace with actual provider ID
     if (this.proveedorId) {
       this.productoService.obtenerProductoId(this.proveedorId).subscribe({
         next: (data) => {

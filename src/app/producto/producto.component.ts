@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ProductoService} from '../services/producto.service';
+import {Producto} from '../modelos/Producto';
 
 @Component({
   selector: 'app-producto',
@@ -8,27 +10,20 @@ import {CommonModule} from '@angular/common';
   templateUrl: './producto.component.html',
   styleUrl: './producto.component.css'
 })
-export class ProductoComponent {
+export class ProductoComponent implements OnInit{
+  productos: Producto[] = []; // Array para almacenar los productos
 
-  productos = [
-    { nombre: 'Arroz', url: '/arroz.svg' },
-    { nombre: 'Pala', url: '/pala.svg' },
-    { nombre: 'Papel Higienico', url: '/papel.svg' },
-    { nombre: 'Agua', url: '/agua.svg' },
-    { nombre: 'Leche', url: '/leche.svg' },
-    { nombre: 'Gel', url: '/gel.svg' },
-    { nombre: 'Botas de agua', url: '/bota.svg' },
-    { nombre: 'Cubos', url: '/cubo.svg' },
-  ];
-
-  constructor() {}
+  constructor(private productoService: ProductoService) {}
 
   ngOnInit(): void {
-
+    this.cargarProductos();
   }
 
-  crearProducto() {
-
+  cargarProductos(): void {
+    this.productoService.obtenerProductos().subscribe({
+      next: (productos) => (this.productos = productos),
+      error: (err) => console.error('Error al cargar los productos', err)
+    });
   }
 }
 

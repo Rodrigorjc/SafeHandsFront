@@ -32,4 +32,9 @@ export class ProveedorService {
   }
 
 
+  getProveedores(): Observable<Proveedor[]> {
+    return this.http.get<Proveedor[]>("/api/proveedor/listarSelect");
+  }
+
+
 }

@@ -1,38 +1,38 @@
-<div class="bg-fondo min-h-screen flex flex-col items-center px-4 py-6">
-  <!-- Header -->
+<div class="w-full max-w-7xl mx-auto px-4 py-6">
+  <!-- Título -->
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Lista de Productos</h2>
 
-  <!-- Main Content -->
-  <main class="flex flex-col items-center mt-6 w-full max-w-7xl flex-grow">
-    <h1 class="text-4xl font-sans font-bold text-black mb-6">Lista de productos</h1>
-
-    <!-- Lista de productos -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
-      <div
-        *ngFor="let producto of productos"
-        class="bg-verdeClaro rounded-lg shadow-lg p-6 flex flex-col items-center"
-      >
-        <img
-          [src]="producto.url"
-          alt="{{ producto.nombre }}"
-          class="h-36 w-36 object-cover mb-4 rounded-md"
-        />
-        <h2 class="text-lg font-bold text-black text-center">{{ producto.nombre }}</h2>
-      </div>
-    </div>
-  </main>
-
-  <!-- Botón para crear productos -->
-  <div class="w-full max-w-7xl mt-6 flex justify-end flex-shrink-0">
-    <button
-      class="px-8 py-4 bg-verdeOscuro text-white font-bold text-lg rounded-lg shadow-lg hover:bg-verdeClaro transition"
-      (click)="crearProducto()"
-    >
-      Crear Productos
-    </button>
+  <!-- Mensaje de lista vacía -->
+  <div
+    *ngIf="productos.length === 0"
+    class="text-center text-gray-500 bg-gray-100 py-4 rounded-lg">
+    No hay productos disponibles.
   </div>
 
-  <!-- Footer -->
-  <footer class="w-full mt-4 bg-gray-800 text-white text-sm py-4 text-center">
-    <p>© 2024 SafeHands - Todos los derechos reservados.</p>
-  </footer>
+  <!-- Grilla de productos -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+    <div
+      *ngFor="let producto of productos"
+      class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300"
+    >
+      <!-- Imagen del producto -->
+      <img
+        [src]="producto.url"
+        [alt]="producto.nombre"
+        class="h-36 w-36 object-cover rounded-lg mb-4 border border-gray-200"
+      />
+
+      <!-- Nombre del producto -->
+      <h3 class="text-lg font-semibold text-gray-800">{{ producto.nombre }}</h3>
+
+      <!-- Descripción -->
+      <p class="text-sm text-gray-600 mt-2">{{ producto.descripcion }}</p>
+
+      <!-- Precio -->
+      <span class="text-md font-bold text-green-600 mt-4">
+        {{ producto.precio | currency: 'EUR' }}
+      </span>
+    </div>
+  </div>
 </div>

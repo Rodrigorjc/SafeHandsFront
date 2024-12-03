@@ -31,6 +31,8 @@ export class AcontecimientoDetallesComponent implements OnInit {
           alert(`Error fetching acontecimiento details: ${err.message}`);
         }
       });
+    } else {
+      console.error('Invalid acontecimientoId:', this.acontecimientoId);
     }
   }
 

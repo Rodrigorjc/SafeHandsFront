@@ -5,13 +5,14 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { catchError, Observable, throwError, tap } from 'rxjs';
 import {NotificacionService} from '../services/notificacion.service';
 import Swal from 'sweetalert2';
+import {ActualizarHeaderService} from '../services/actualizar-header.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor(private authService: AuthService, private router: Router, private notificacion: NotificacionService) {}
+  constructor(private authService: AuthService, private router: Router, private notificacion: NotificacionService, private actualizar: ActualizarHeaderService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken(); // Assuming getToken() returns the token
@@ -46,6 +47,7 @@ export class InterceptorService implements HttpInterceptor {
               text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.',
               confirmButtonText: 'Cerrar'
             });
+            this.actualizar.triggerRefreshHeader();
             break;
           case 403:
             console.log("Fallo");

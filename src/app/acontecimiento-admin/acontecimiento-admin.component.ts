@@ -1,49 +1,73 @@
 import { Component } from '@angular/core';
-import {Acontecimineto} from '../modelos/Acontecimineto';
 import {AcontecimientoService} from '../services/acontecimiento.service';
-import {Router} from '@angular/router';
-import {NgForOf} from '@angular/common';
+import {CommonModule, NgForOf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {OngService} from '../services/ong.service';
+import Swal from 'sweetalert2';
+import {Ong} from '../modelos/Ong';
+
+interface Acontecimiento{
+  id: number|null;
+  nombre: string;
+  descripcion: string;
+  ubicacion: string;
+  img: string;
+
+  idOng: number;
+}
 
 @Component({
   selector: 'app-acontecimiento-admin',
   imports: [
-    NgForOf
+    NgForOf, CommonModule, FormsModule
   ],
   templateUrl: './acontecimiento-admin.component.html',
   standalone: true,
   styleUrl: './acontecimiento-admin.component.css'
 })
 export class AcontecimientoAdminComponent {
-  acontecimientos: Acontecimineto[] = [];
+    acontecimientoActual: Acontecimiento = this.crearAcontecimientoVacio();
+    //Acontecimiento que estamos editando
 
-  constructor(private service: AcontecimientoService, private router: Router) {}
+    //Ongs simulados
+    ongs: Ong[] = [];
 
-  ngOnInit() {
-    this.listado();
-  }
+    constructor(private acontecimientoService: AcontecimientoService,
+                private ongService: OngService) {}
 
-  listado() {
-    this.service.getAcontecimiento().subscribe({
-      next: (data: Acontecimineto[]) => {
-        this.acontecimientos = data;
+  ngOnInit(): void {
+    this.acontecimientoService.getAcontecimiento().subscribe({
+      next: (acontecimientos) => {
+        this.ongs = this.ongs
+        console.log('Acontecimientos cargados', acontecimientos);
       },
-      error: (error) => {
-        console.error('Error al obtener datos', error);
-      }
+      error: (err) => console.error('Error al cargar los acontecimientos', err),
     });
   }
 
-  editarAcontecimiento(id: number) {
-    this.router.navigate([`/admin/editar/${id}`]);
+  // Crear un acontecimiento vacío
+  crearAcontecimientoVacio(): Acontecimiento {
+    return {
+      id: null,
+      nombre: '',
+      descripcion: '',
+      ubicacion: '',
+      img: '',
+      idOng: 0
+    };
   }
 
-  // eliminarAcontecimiento(id: number) {
-  //   this.service.eliminarAcontecimiento(id).subscribe(() => {
-  //     this.listado();
-  //   });
-  // }
+  // Guardar un nuevo acontecimiento
+  guardarAcontecimiento(): void {
+    this.acontecimientoService.crearAcontecimiento(this.acontecimientoActual).subscribe({
+      next: (acontecimiento) => {
+        Swal.fire('Éxito', 'Acontecimiento creado exitosamente', 'success');
 
-  crearAcontecimiento() {
-    this.router.navigate(['/admin/crear']);
+      },
+      error: (err) => console.error('Error al guardar el acontecimiento', err),
+    });
+
   }
+
+  // editar un acontecimiento
 }

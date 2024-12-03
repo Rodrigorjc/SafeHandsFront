@@ -10,6 +10,8 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
 export class AcontecimientoService {
 
   constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:8081/acontecimiento';
+
 
   getAcontecimiento(): Observable<any[]> {
     return this.http.get<any[]>("/acontecimiento/listar");
@@ -23,7 +25,7 @@ export class AcontecimientoService {
   getAcontecimientosByOngId(ongId: string): Observable<any[]> {
     return this.http.get<any[]>(`/api/acontecimiento/ong/${ongId}/acontecimientos`);
   }
-}
+
 
 
 // getAcontecimientoById(id: number): Observable<Acontecimineto> {
@@ -33,25 +35,8 @@ export class AcontecimientoService {
 
 
   // Acontecimientos ADMIN
-//   private apiUrl = 'http://localhost:8081/acontecimiento';
-//
-//   getAcontecimientos(): Observable<Acontecimiento[]> {
-//     return this.http.get<Acontecimiento[]>(`${this.apiUrl}`);
-//   }
-//
-//   getAcontecimientoById(id: number): Observable<Acontecimiento> {
-//     return this.http.get<Acontecimiento>(`${this.apiUrl}/${id}`);
-//   }
-//
-//   crearAcontecimiento(acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-//     return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);
-//   }
-//
-//   editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-//     return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
-//   }
-//
-//   eliminarAcontecimiento(id: number): Observable<void> {
-//     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-//   }
-// }
+  crearAcontecimiento(acontecimiento: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
+  }
+
+}

@@ -1,3 +1,4 @@
 <div>
-  <input type="file" (change)="onFileSelected($event)" />
+  <button type="button" (click)="fileInput.click()">Selecciona una imagen</button>
+  <input type="file" #fileInput (change)="onFileSelected($event)" class="hidden"/>
 </div>

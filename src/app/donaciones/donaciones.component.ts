@@ -7,6 +7,10 @@ import { TotalService } from '../services/total.service';
 import { AcontecimientoService } from '../services/acontecimiento.service';
 import { Acontecimiento } from '../modelos/Acontecimiento';
 import { Pago } from '../modelos/TotalResponse';
+import {ProveedorInfo} from '../modelos/ProveedorInfo';
+import {AconteciminetoInfo} from '../modelos/AconteciminetoInfo';
+import {LineaPedidoService} from '../services/linea-pedido.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-donaciones',
@@ -22,12 +26,22 @@ export class DonacionesComponent implements OnInit {
   proveedor: Proveedor[] = [];
   acontecimiento: Acontecimiento[] = [];
 
+  rankingProveedores: { nombreProveedor: string; totalDonaciones: number }[] = [];
+  maxDonaciones: number = 0;
+  proveedoresRanking: ProveedorInfo[] = [];
+  proveedorSeleccionadoId: string = '';
+  proveedorSeleccionado: ProveedorInfo | null = null;
+  aconteciminetos: AconteciminetoInfo[] = [];
+  aconteciminetoSeleccionadoId: string = '';
+  aconteciminetoSeleccionado: AconteciminetoInfo | null = null;
+
+
+
   isUserMenuVisible = false;
   isAcontecimientoMenuVisible = false;
   isProveedorMenuVisible = false;
   isModalVisible: boolean = false;
 
-  ranking: string[] = ['Proveedor 1', 'Proveedor 2', 'Proveedor 3'];
   selectedAcontecimiento: string = 'Selecciona un acontecimiento';
   selectedProveedor: string = 'Selecciona un proveedor';
 
@@ -49,7 +63,8 @@ export class DonacionesComponent implements OnInit {
     private http: HttpClient,
     private proveedorService: ProveedorService,
     private totalService: TotalService,
-    private acontecimientoService: AcontecimientoService
+    private acontecimientoService: AcontecimientoService,
+    private service: LineaPedidoService, private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -80,8 +95,13 @@ export class DonacionesComponent implements OnInit {
       }
     });
 
+
     this.loadTotalRecaudadoPorAcontecimiento();
     this.loadTotalRecaudadoPorProveedor();
+    this.getTotal();
+    this.cargarRanking();
+    this.cargarInfoProveedores();
+    this.cargarInfoAcontecimiento();
   }
 
   private loadTotalRecaudadoPorAcontecimiento() {
@@ -138,11 +158,24 @@ export class DonacionesComponent implements OnInit {
     }
   }
 
+  seleccionarAcontecimiento(): void {
+    console.log('ID seleccionado:', this.aconteciminetoSeleccionadoId); // Verifica el valor seleccionado
+    if (this.aconteciminetoSeleccionadoId !== '') {
+      this.aconteciminetoSeleccionado = this.aconteciminetos.find(
+        (p) => p.id === +this.aconteciminetoSeleccionadoId
+      ) || null;
+      console.log('Proveedor seleccionado:', this.aconteciminetoSeleccionado); // Verifica el objeto seleccionado
+    } else {
+      this.aconteciminetoSeleccionado = null;
+    }
+  }
+
   closeModal() {
     this.isModalVisible = false;
   }
 
   selectProveedor(proveedor: string) {
+
     const existe = this.proveedores.some(p => p.nombre === proveedor.toLowerCase());
     if (existe) {
       this.selectedProveedor = proveedor;
@@ -151,6 +184,25 @@ export class DonacionesComponent implements OnInit {
       console.error('Proveedor no válido:', proveedor);
     }
   }
+
+
+  seleccionarProveedor(nombreProveedor: string): void {
+    const proveedor = this.proveedores.find(
+      (p) => p.nombre.toLowerCase() === nombreProveedor.toLowerCase()
+    );
+
+    if (proveedor) {
+      this.proveedorSeleccionado = proveedor;
+      console.log('Proveedor seleccionado:', this.proveedorSeleccionado);
+
+      // Opcional: llama a la otra función si necesitas
+      this.selectProveedor(nombreProveedor);
+    } else {
+      console.error('Nombre de proveedor no válido:', nombreProveedor);
+      this.proveedorSeleccionado = null;
+    }
+  }
+
 
   getImagenAcontecimiento(): string {
     return this.imagenesPorAcontecimiento[this.selectedAcontecimiento.toLowerCase()] || '';
@@ -169,4 +221,44 @@ export class DonacionesComponent implements OnInit {
     const proveedor = this.proveedores.find(p => p.nombre === this.selectedProveedor.toLowerCase());
     return proveedor ? proveedor.totalRecaudado : 0;
   }
+
+  redireccion() {
+    this.router.navigate(['/listado/aconteciminetos']);
+  }
+
+  getTotal(){
+    return this.service.getTotal().subscribe({
+      next: (response: any) => {
+        this.totalDonaciones = response.total;
+        console.log('Total:', response.total);
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+  }
+
+  cargarRanking(): void {
+    this.service.obtenerRankingProveedores().subscribe((data: any) => {
+      this.rankingProveedores = data;
+      this.maxDonaciones = Math.max(
+        ...this.rankingProveedores.map((p) => p.totalDonaciones)
+      );
+    });
+  }
+
+  cargarInfoProveedores(): void {
+    this.service.obtenerInfoProveedores().subscribe((data: any) => {
+      this.proveedores = data;
+      console.log(this.proveedores);
+    });
+  }
+
+  cargarInfoAcontecimiento(): void {
+    this.service.obtenerInfoAcontecimineto().subscribe((data: any) => {
+      this.aconteciminetos = data;
+      console.log(this.aconteciminetos);
+    });
+  }
+
 }

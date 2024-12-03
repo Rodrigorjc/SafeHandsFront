@@ -37,11 +37,11 @@ export class AcontecimientoAdminComponent {
     this.router.navigate([`/admin/editar/${id}`]);
   }
 
-  eliminarAcontecimiento(id: number) {
-    this.service.eliminarAcontecimiento(id).subscribe(() => {
-      this.listado();
-    });
-  }
+  // eliminarAcontecimiento(id: number) {
+  //   this.service.eliminarAcontecimiento(id).subscribe(() => {
+  //     this.listado();
+  //   });
+  // }
 
   crearAcontecimiento() {
     this.router.navigate(['/admin/crear']);

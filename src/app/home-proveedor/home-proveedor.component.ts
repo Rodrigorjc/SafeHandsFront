@@ -101,13 +101,13 @@ export class HomeProveedorComponent implements OnInit {
 
 
   prevSlideProducts() {
-    const totalSlides = this.getRandomProducts().length;
+    const totalSlides = this.products.length;
     this.currentSlideProducts = (this.currentSlideProducts === 0) ? totalSlides - 1 : this.currentSlideProducts - 1;
     this.updateCarousel('.carousel-products', this.currentSlideProducts);
   }
 
   nextSlideProducts() {
-    const totalSlides = this.getRandomProducts().length;
+    const totalSlides = this.products.length;
     this.currentSlideProducts = (this.currentSlideProducts === totalSlides - 1) ? 0 : this.currentSlideProducts + 1;
     this.updateCarousel('.carousel-products', this.currentSlideProducts);
   }

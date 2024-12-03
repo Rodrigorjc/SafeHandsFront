@@ -12,7 +12,7 @@
     <div *ngFor="let producto of productos" class="bg-verdeClaro items-center flex flex-col justify-center text-center p-4 rounded-2xl shadow-md">
       <img class="w-80 h-40 rounded-2xl" src="{{ producto.url }}" alt="{{ producto.nombre }}">
       <h3 class="text-xl font-bold mb-2 mt-1">{{ producto.nombre }}</h3>
-      <p class="text-gray-700">{{ producto.precio }}</p>
+      <p class="text-gray-700">{{ producto.precio | currency }}</p>
       <div class="w-full">
         <button (click)="agregarAlCarrito(producto)" class="p-2 bg-jade rounded-2xl  w-full hover:bg-marronClaro hover:border-2 hover:border-jade">Agregar al Carrito</button>
       </div>

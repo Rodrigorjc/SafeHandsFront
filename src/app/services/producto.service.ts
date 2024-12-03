@@ -39,7 +39,7 @@ export class ProductoService {
   }
 
   editarProducto(product: any, productoId:any): Observable<any> {
-    return this.http.put<any>(`${this.authUrl}/editar/${productoId}`, product);
+    return this.http.put<any>(`/api/producto/editar/${productoId}`, product);
   }
 
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import { NgForOf, NgIf} from '@angular/common';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import {ProductoService} from '../services/producto.service';
 import {ProveedorService} from '../services/proveedor.service';
 import {AcontecimientoService} from '../services/acontecimiento.service';
@@ -17,7 +17,6 @@ interface Product {
   selector: 'app-home-proveedor',
   standalone: true,
   imports: [
-    CurrencyPipe,
     FormsModule,
     NgForOf,
     NgIf,
@@ -38,7 +37,6 @@ export class HomeProveedorComponent implements OnInit {
 
   constructor(
     private productoService: ProductoService,
-    private fb: FormBuilder,
     private route: ActivatedRoute,
     private proveedorService: ProveedorService,
     private router: Router,
@@ -66,7 +64,7 @@ export class HomeProveedorComponent implements OnInit {
       setInterval(() => {
         this.nextSlideProducts();
         this.nextSlideAcontecimientos();
-      }, 5000);
+      }, 25000);
     }
   }
 

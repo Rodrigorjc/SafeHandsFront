@@ -71,7 +71,7 @@ export class HomeONGComponent implements OnInit {
         setInterval(() => {
           this.nextSlideAcontecimientos();
           this.nextSlideProveedores();
-        }, 5000);
+        }, 25000);
       }
     }
   }

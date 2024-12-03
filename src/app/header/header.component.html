@@ -15,24 +15,38 @@
       </div>
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex shrink-0 items-center">
-          <a href="/home">
+          <a *ngIf="userRole == 'ONG'" href="/homeONG">
+            <img class="h-8 w-auto rounded-full" src="/safehandslogo.svg" alt="SafeHands">
+          </a>
+          <a *ngIf="userRole == 'PROVEEDOR'" href="/homeProveedor">
+            <img class="h-8 w-auto rounded-full" src="/safehandslogo.svg" alt="SafeHands">
+          </a>
+          <a *ngIf="userRole == 'CLIENTE'" href="/home">
             <img class="h-8 w-auto rounded-full" src="/safehandslogo.svg" alt="SafeHands">
           </a>
         </div>
         <div class="hidden sm:ml-6 sm:block w-2/3">
           <div class="flex">
             <div class="flex space-x-4 items-center">
-              <button class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
-              <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <a href="listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
-                <a href="/listado/proveedores" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
+              <button href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
+              <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
                 <a href="/informacion/donaciones" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Información sobre donaciones</a>
-                <a href="/nosotros" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-4">Sobre Nosotros</a>
+                <div *ngIf="userRole === 'ONG'">
+                  <a href="/ong/crear/acontecimiento" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-4">Crear Acontecimientos</a>
+                  <a href="/ong/validar/proveedor" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-5">Validar Proveedores</a>
+                  <a href="/ong/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-6">Asociarse a Acontecimiento</a>
+                </div>
+                <div *ngIf="userRole === 'PROVEEDOR'">
+                  <a href="/proveedor/productos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-7">Mis Productos</a>
+                </div>
               </div>
             </div>
             <div class="flex  justify-end w-9/12 ">
-              <a href="/home" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
+              <a  *ngIf="userRole === 'ONG'" href="/homeONG" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
+              <a  *ngIf="userRole === 'PROVEEDOR'" href="/homeProveedor" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
             </div>
           </div>
         </div>
@@ -101,11 +115,18 @@
 
   <div *ngIf="isNavMenuVisible" class="sm:hidden md:hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
-      <a href="/listado/acontecimientos" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Aconteciminetos</a>
-      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">ONG</a>
-      <a href="/listado/proveedores" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Proveedores</a>
+      <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Aconteciminetos</a>
+      <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">ONG</a>
+      <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Proveedores</a>
       <a href="/informacion/donaciones" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Información sobre donaciones</a>
-      <a href="/nosotros" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sobre Nosotros</a>
+      <div *ngIf="userRole == 'ONG'">
+        <a href="/ong/crear/acontecimiento" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="page">Crear Acontecimientos</a>
+        <a href="/ong/validar/proveedor" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="page">Validar Proveedores</a>
+        <a href="/ong/reportes" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="page">Asociarse a Acontecimiento</a>
+      </div>
+      <div *ngIf="userRole === 'PROVEEDOR'">
+        <a href="/proveedor/productos" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Mis Productos</a>
+      </div>
     </div>
   </div>
 </nav>

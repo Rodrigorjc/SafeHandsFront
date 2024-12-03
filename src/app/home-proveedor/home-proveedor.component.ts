@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import { NgForOf, NgIf} from '@angular/common';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import {ProductoService} from '../services/producto.service';
 import {ProveedorService} from '../services/proveedor.service';
 import {AcontecimientoService} from '../services/acontecimiento.service';
@@ -17,7 +17,6 @@ interface Product {
   selector: 'app-home-proveedor',
   standalone: true,
   imports: [
-    CurrencyPipe,
     FormsModule,
     NgForOf,
     NgIf,
@@ -47,9 +46,7 @@ export class HomeProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    // this.proveedorId = this.route.snapshot.paramMap.get('id');
-    let userId: string | null = localStorage.getItem('userId');
-    this.proveedorId = userId;
+    this.proveedorId = localStorage.getItem('userId');
     if (this.proveedorId) {
       this.getProveedorDetalles(this.proveedorId);
       console.log('Proveedor ID:', this.proveedorId);
@@ -68,7 +65,7 @@ export class HomeProveedorComponent implements OnInit {
       setInterval(() => {
         this.nextSlideProducts();
         this.nextSlideAcontecimientos();
-      }, 5000);
+      }, 25000);
     }
   }
 
@@ -103,13 +100,13 @@ export class HomeProveedorComponent implements OnInit {
 
 
   prevSlideProducts() {
-    const totalSlides = this.getRandomProducts().length;
+    const totalSlides = this.products.length;
     this.currentSlideProducts = (this.currentSlideProducts === 0) ? totalSlides - 1 : this.currentSlideProducts - 1;
     this.updateCarousel('.carousel-products', this.currentSlideProducts);
   }
 
   nextSlideProducts() {
-    const totalSlides = this.getRandomProducts().length;
+    const totalSlides = this.products.length;
     this.currentSlideProducts = (this.currentSlideProducts === totalSlides - 1) ? 0 : this.currentSlideProducts + 1;
     this.updateCarousel('.carousel-products', this.currentSlideProducts);
   }
@@ -138,7 +135,7 @@ export class HomeProveedorComponent implements OnInit {
 
 
   navegarHaciaProductos() {
-    this.router.navigate(['/proveedor/productos', this.proveedor.idUsuario]);
+    this.router.navigate(['/proveedor/productos']);
   }
 
 

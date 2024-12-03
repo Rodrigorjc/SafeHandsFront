@@ -1,23 +1,30 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {AcontecimientoService} from '../services/acontecimiento.service';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-acontecimiento-detalles',
-  imports: [],
-  templateUrl: './acontecimiento-detalles.component.html',
+  imports: [
+    NgForOf,
+    NgIf,
+    RouterLink
+  ],
   standalone: true,
+  templateUrl: './acontecimiento-detalles.component.html',
   styleUrl: './acontecimiento-detalles.component.css'
 })
 export class AcontecimientoDetallesComponent implements OnInit {
 
   acontecimiento: any;
   acontecimientoId: string | null = null;
+  asociados: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private acontecimientoService: AcontecimientoService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.acontecimientoId = this.route.snapshot.paramMap.get('id');
@@ -31,9 +38,18 @@ export class AcontecimientoDetallesComponent implements OnInit {
           alert(`Error fetching acontecimiento details: ${err.message}`);
         }
       });
-    } else {
-      console.error('Invalid acontecimientoId:', this.acontecimientoId);
-    }
-  }
+      this.acontecimientoService.getOngPorAcontecimiento(this.acontecimientoId).subscribe({
+        next: (data) => {
+          this.asociados = data;
+          console.log('Asociados:', this.asociados);
+        },
+        error: (err) => {
+          console.error('Error fetching ONGs for acontecimiento', err);
+          alert(`Error fetching ONGs for acontecimiento: ${err.message}`);
+        }
+      });
 
+    }
+
+  }
 }

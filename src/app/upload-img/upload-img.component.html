@@ -1,4 +1,27 @@
-<div>
-  <button type="button" (click)="fileInput.click()">Selecciona una imagen</button>
-  <input type="file" #fileInput (change)="onFileSelected($event)" class="hidden"/>
-</div>
+<!--<div>-->
+<!--  <button type="button" (click)="fileInput.click()">Selecciona una imagen</button>-->
+<!--  <input type="file" #fileInput (change)="onFileSelected($event)" class="hidden"/>-->
+<!--</div>-->
+
+
+<form>
+  <input type="file" id="inputarchivo" (change)="onFileSelected($event)" style="display: none" required />
+  <button><label for="inputarchivo">Selecciona un archivo</label></button>
+  <div id="archivoseleccionado"></div>
+</form>
+
+
+<!--Se ha utilizado JavaScript para ocultar el texto predefinido del input type file ya que rompia el responsive de la pagina-->
+<script>
+  let inputArchivo = document.getElementById('inputarchivo');
+  inputArchivo.addEventListener("change", function() {
+    let nombreArchivo = this.files[0].name;
+    let archivoSeleccionado = document.getElementById('archivoseleccionado');
+    if (this.value != "") {
+      archivoSeleccionado.innerHTML = nombreArchivo
+    } else {
+      archivoSeleccionado.innerHTML = ''
+    }
+  });
+</script>
+

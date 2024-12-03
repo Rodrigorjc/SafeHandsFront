@@ -46,6 +46,10 @@ export class OngService {
     return this.http.delete<any>(`${this.authUrl}/eliminar/acontecimientosAsociados/${ongId}/${acontecimientoId}`, );
   }
 
+  getIdOngPorIdUsuario(idUsuario: number): Observable<any> {
+    return this.http.get<any>(`api/ong/usuario/${idUsuario}/ongId`);
+  }
+
 
 }
 

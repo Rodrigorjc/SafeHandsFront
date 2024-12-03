@@ -67,4 +67,12 @@ export class AcontecimientoService {
     return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`,{ responseType:'text'} );
   }
 
+  editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
+    return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);
+  }
+
+  getOngPorAcontecimiento(acontecimientoId: any): Observable<any> {
+    return this.http.get<any>(`api/acontecimiento/${acontecimientoId}/ongs`);
+  }
+
 }

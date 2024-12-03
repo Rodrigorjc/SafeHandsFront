@@ -25,20 +25,30 @@ export interface Proveedor {
 export class ValidarProveedorComponent implements OnInit {
 
   proveedores: any[] = [];
+  ongId: any | null = null;
+  userId: any | null = null;
 
 
   constructor(private proveedorService: ProveedorService, private ongService:OngService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.proveedorService.getListarProveedor().subscribe({
-      next: (fetchedProveedores) => {
-        this.proveedores = fetchedProveedores.filter((proveedor:any) => !proveedor.validado);
-        console.log('Proveedores:', this.proveedores);
-      },
-      error: (err) => console.error('Error fetching proveedores', err)
+    this.userId= localStorage.getItem('userId');
+    if(this.userId){
+      this.ongService.getIdOngPorIdUsuario(this.userId).subscribe({
+        next: (ongId) => {
+          this.ongId = ongId;
+          this.proveedorService.getListarProveedores().subscribe({
+            next: (fetchedProveedores) => {
+              this.proveedores = fetchedProveedores.filter((proveedor:any) => !proveedor.validado);
+              console.log('Proveedores:', this.proveedores);
+            },
+            error: (err) => console.error('Error fetching proveedores', err)
+          });
+        }
     });
-  }
 
+    }
+  }
   validarProveedor(proveedorId: number) {
     if (!proveedorId) {
       console.error('Proveedor ID is null or undefined');
@@ -51,9 +61,11 @@ export class ValidarProveedorComponent implements OnInit {
         this.proveedores = this.proveedores.map(proveedor =>
           proveedor.id === proveedorId ? { ...proveedor, validado: true } : proveedor
         );
+        this.showSuccess('Proveedor validado con exito');
       },
       error: (err) => {
         console.error('Error validating proveedor', err);
+        this.showAlert('Error validando proveedor');
       }
     });
   }
@@ -105,12 +117,31 @@ export class ValidarProveedorComponent implements OnInit {
       next: (response) => {
         console.log('Proveedor eliminado con exito', response);
         this.proveedores = this.proveedores.filter(proveedor => proveedor.id !== proveedorId);
+        this.showSuccess('Proveedor eliminado con exito');
       },
       error: (err) => {
         console.error('Error deleting proveedor', err);
+        this.showAlert('Error eliminando proveedor');
       }
     });
   }
+
+  private showAlert(message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: message,
+    });
+  }
+
+  private showSuccess(message: string) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Éxito',
+      text: message,
+    });
+  }
+
 }
 // validarProveedor(proveedorId: string) {
 //   this.ongService.validarProveedor(proveedorId).subscribe({

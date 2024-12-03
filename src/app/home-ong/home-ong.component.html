@@ -7,16 +7,16 @@
     Si necesitas ayuda, no dudes en contactarnos. ¡Estamos aquí para apoyarte en todo lo que necesites!
   </p>
 
-  <!--carrousel de los eventos, estos salen de manera aleatorio y se actualizan cada 5 segundos-->
+  <!--carrousel de los acontecimientos, estos salen de manera aleatorio y se actualizan cada 5 segundos-->
   <h2 class="text-center text-xl font-semibold mb-6">Lista de tus eventos</h2>
   <div class="relative"></div>
   <div *ngIf="acontecimientos.length > 0" class="relative">
     <div class="carousel-acontecimientos flex overflow-hidden">
       <div *ngFor="let acontecimiento of acontecimientos" class="carousel-item flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
-        <div class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
-          <img [src]="acontecimiento.img" alt="{{ acontecimiento.nombre }}" class="w-full h-60 object-cover rounded-md mb-4">
+        <div [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"  class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center h-full">
+          <img [src]="acontecimiento.img" alt="{{ acontecimiento.nombre }}" class="w-24 h-24 object-cover rounded-md mb-4">
           <p class="font-medium mb-2">{{ acontecimiento.ubicacion }}</p>
-          <p class="text-sm text-gray-500 mb-2">{{ acontecimiento.descripcion }}</p>
+<!--          <p class="text-sm text-gray-500 mb-2">{{ acontecimiento.descripcion }}</p>-->
           <p class="text-lg font-semibold mt-4">{{ acontecimiento.nombre }}</p>
         </div>
       </div>
@@ -25,6 +25,8 @@
     <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" (click)="nextSlideAcontecimientos()">&#10095;</button>
   </div>
   <button (click)="navegarAsociarAcontecimientos()" class="my-3 bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition">Asociar Acontecimientos</button>
+
+  <!--carrousel de los proveedores no validados, estos salen de manera aleatorio y se actualizan cada 5 segundos-->
   <h2 class="my-4 text-center text-xl font-semibold mb-6">Lista de Proveedores que no estan validados</h2>
   <div class="relative">
     <div class="carousel-proveedores flex overflow-hidden">

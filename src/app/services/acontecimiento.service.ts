@@ -45,9 +45,9 @@ export class AcontecimientoService {
     return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);
   }
 
-  editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-    return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
-  }
+  // editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
+  //   return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
+  // }
 
   eliminarAcontecimiento(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

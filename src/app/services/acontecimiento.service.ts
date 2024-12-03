@@ -11,6 +11,7 @@ export class AcontecimientoService {
 
   constructor(private http: HttpClient) {}
 
+
   getAcontecimiento(): Observable<any[]> {
     return this.http.get<any[]>("/api/acontecimiento/listar");
   }
@@ -65,7 +66,10 @@ export class AcontecimientoService {
 
   eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
     return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`,{ responseType:'text'} );
-  }
+    }
+  // crearAcontecimiento(acontecimiento: any): Observable<any> {
+  //   return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
+  // }
 
   editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
     return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);

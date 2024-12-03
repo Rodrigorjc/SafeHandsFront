@@ -142,7 +142,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
     if (!this.validateForm(this.editProductForm)) {
       return;
     }
-    this.editProductForm.patchValue({ url: this.imageUrl });
+      this.editProductForm.patchValue({ img: this.imageUrl });
     this.acontecimientoService.editarAcontecimiento(this.editProductForm.value, this.acontecimientoId).subscribe({
       next: (updatedProduct) => {
         const index = this.acontecimientos.findIndex(p => p.id === updatedProduct.id);

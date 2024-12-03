@@ -34,7 +34,7 @@ export class DetalleCarritoComponent implements OnInit{
     transferencia: { banco: '', cuenta: '' }
   };
 
-  constructor(private carritoService: CarritoService) { }
+  constructor(public carritoService: CarritoService) { }
 
   ngOnInit() {
     this.carritoService.carrito$.subscribe(productos => {
@@ -44,10 +44,19 @@ export class DetalleCarritoComponent implements OnInit{
   }
 
   toggleModal(): void {
-    this.isModalOpen = !this.isModalOpen;
-    if (!this.isModalOpen) {
-      this.pasoActual = 1; // Reinicia el formulario al cerrar
-      this.metodoPagoSeleccionado = null;
+    if (this.productosEnCarrito.length === 0) {
+      Swal.fire({
+        title: 'Carrito vacío',
+        text: 'No tienes productos en el carrito.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+    } else {
+      this.isModalOpen = !this.isModalOpen;
+      if (!this.isModalOpen) {
+        this.pasoActual = 1; // Reinicia el formulario al cerrar
+        this.metodoPagoSeleccionado = null;
+      }
     }
   }
 
@@ -97,8 +106,14 @@ export class DetalleCarritoComponent implements OnInit{
                 title: '¡Pago realizado con éxito!',
                 text: 'Gracias por su compra.',
                 confirmButtonText: 'Cerrar'
+              }).then(() => {
+                window.location.reload(); // Recarga la página
               });
-              this.toggleModal(); // Cierra el modal
+              this.toggleModal();
+              const carrito = localStorage.getItem('carrito');
+              if (carrito) {
+                localStorage.removeItem('carrito');
+              }
             } else {
               // Error en el pago
               Swal.fire({

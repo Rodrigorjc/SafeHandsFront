@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import {Acontecimineto} from '../modelos/Acontecimineto';
 import {AcontecimientoService} from '../services/acontecimiento.service';
 import {Router} from '@angular/router';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-acontecimiento-admin',
-  imports: [],
+  imports: [
+    NgForOf
+  ],
   templateUrl: './acontecimiento-admin.component.html',
   standalone: true,
   styleUrl: './acontecimiento-admin.component.css'

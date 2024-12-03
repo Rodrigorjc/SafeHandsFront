@@ -35,6 +35,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   acontecimientoId: string | null = null;
   showCreateForm: boolean = false;
   showEditForm: boolean = false;
+  userId: any | null = null;
 
 
 
@@ -59,17 +60,24 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ongId = localStorage.getItem('userId');
-    this.acontecimientoService.getAcontecimiento().subscribe({
-      next: (data) => {
-        this.acontecimientos = data;
-        console.log('Acontecimientos:', data);
-      },
-      error: (err) => {
-        console.error('Error fetching acontecimientos', err);
-        Swal.fire('Error', `Error fetching acontecimientos: ${err.message}`, 'error');
-      }
-    });
+    this.userId = localStorage.getItem('userId');
+    if(this.userId){
+      this.ongService.getIdOngPorIdUsuario(this.userId).subscribe({
+        next: (ongId) => {
+          this.ongId = ongId;
+          this.acontecimientoService.getAcontecimiento().subscribe({
+            next: (data) => {
+              this.acontecimientos = data;
+              console.log('Acontecimientos:', data);
+            },
+            error: (err) => {
+              console.error('Error fetching acontecimientos', err);
+              Swal.fire('Error', `Error fetching acontecimientos: ${err.message}`, 'error');
+            }
+          });
+        }});
+
+    }
   }
 
 
@@ -133,7 +141,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al eliminar acontecimiento:', err);
-        Swal.fire('Error', `Error al eliminar acontecimiento: ${err.message}`, 'error');
+        Swal.fire('Error', `Error al eliminar acontecimiento: Este acontecimiento esta asociada a una ONG`, 'error');
       }
     });
   }

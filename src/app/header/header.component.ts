@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit {
   isNavMenuVisible = false;
   isMenuVisible = false;
   img: Observable<any> = of('');
+  userRole: any | null = null;
+
 
   constructor(private authService: AuthService, private router: Router, private actualizar: ActualizarHeaderService) {}
 
@@ -46,6 +48,7 @@ export class HeaderComponent implements OnInit {
     this.actualizar.refreshHeader$.subscribe(() => {
       this.refreshHeader();
     });
+    this.userRole = localStorage.getItem('rol');
   }
 
   refreshHeader() {

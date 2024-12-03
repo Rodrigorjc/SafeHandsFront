@@ -24,9 +24,9 @@ export class AcontecimientoService {
     return this.http.get<any[]>(`/api/acontecimiento/ong/${ongId}/acontecimientos`);
   }
 
-  // getAcontecimientoById(id: number): Observable<Acontecimineto> {
-  //   return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
-  // }
+  getAcontecimientoById(id: number): Observable<Acontecimineto> {
+    return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
+  }
 
 
 
@@ -37,9 +37,9 @@ export class AcontecimientoService {
     return this.http.get<Acontecimiento[]>(`${this.apiUrl}`);
   }
 
-  getAcontecimientoById(id: number): Observable<Acontecimiento> {
-    return this.http.get<Acontecimiento>(`${this.apiUrl}/${id}`);
-  }
+  // getAcontecimientoById(id: number): Observable<Acontecimiento> {
+  //   return this.http.get<Acontecimiento>(`${this.apiUrl}/${id}`);
+  // }
 
   crearAcontecimiento(acontecimiento: Acontecimiento): Observable<Acontecimiento> {
     return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);

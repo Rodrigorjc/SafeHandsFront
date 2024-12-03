@@ -1,0 +1,123 @@
+<div class="max-w-7xl mt-10 mx-auto p-8 bg-verdeClaro shadow-lg rounded-lg">
+  <h2 class="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-verdeOscuro pb-4">Detalle del Carrito</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Productos en el carrito -->
+    <div *ngFor="let producto of productosEnCarrito" class="bg-fondo rounded-lg shadow-md p-4 flex flex-col items-center space-y-4">
+      <img [src]="producto.url" alt="{{ producto.nombre }}" class="h-24 w-24 rounded object-cover">
+      <h3 class="font-medium text-gray-700 text-center">{{ producto.nombre }}</h3>
+      <p class="text-sm text-gray-500">Cantidad: <span class="font-semibold">{{ producto.cantidad }}</span></p>
+      <p class="text-sm text-gray-500">Precio: <span class="font-semibold">{{ producto.precio | currency }}</span></p>
+      <p class="text-sm text-gray-500">Total: <span class="font-semibold">{{ producto.total | currency }}</span></p>
+    </div>
+  </div>
+
+  <!-- Resumen del carrito -->
+  <!-- Resumen del carrito -->
+  <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+    <div class="flex justify-between items-center">
+      <h3 class="text-xl font-bold text-gray-800">Total del Carrito</h3>
+      <p class="text-xl font-bold text-blue-600">{{ totalCarrito | currency }}</p>
+    </div>
+    <div class="mt-4 text-right">
+      <button
+        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow-md"
+        (click)="toggleModal()">
+        Tramitar Pedido
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">Tramitar Pedido</h3>
+
+      <!-- Paso 1: Seleccionar metodo de pago -->
+      <div *ngIf="pasoActual === 1">
+        <h4 class="text-lg font-semibold mb-4">Seleccionar Método de Pago</h4>
+        <div class="space-y-4">
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="metodoPago"
+              value="tarjeta"
+              (change)="metodoPagoSeleccionado = 'tarjeta'" />
+            <span>Tarjeta de Crédito/Débito</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="metodoPago"
+              value="paypal"
+              (change)="metodoPagoSeleccionado = 'paypal'" />
+            <span>PayPal</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="metodoPago"
+              value="transferencia"
+              (change)="metodoPagoSeleccionado = 'transferencia'" />
+            <span>Transferencia Bancaria</span>
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="pasoActual === 2">
+        <h4 class="text-lg font-semibold mb-4">Introducir Datos</h4>
+        <div *ngIf="metodoPagoSeleccionado === 'tarjeta'" class="space-y-4">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Tarjeta" [(ngModel)]="datosPago['tarjeta'].numero">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Titular" [(ngModel)]="datosPago['tarjeta'].titular">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Fecha de Expiración" [(ngModel)]="datosPago['tarjeta'].fecha">
+          <input type="text" class="w-full p-2 border rounded" placeholder="CVV" [(ngModel)]="datosPago['tarjeta'].cvv">
+        </div>
+        <div *ngIf="metodoPagoSeleccionado === 'paypal'" class="space-y-4">
+          <input type="email" class="w-full p-2 border rounded" placeholder="Correo de PayPal" [(ngModel)]="datosPago['paypal'].email">
+        </div>
+        <div *ngIf="metodoPagoSeleccionado === 'transferencia'" class="space-y-4">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Banco" [(ngModel)]="datosPago['transferencia'].banco">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Cuenta" [(ngModel)]="datosPago['transferencia'].cuenta">
+        </div>
+      </div>
+
+      <!-- Paso 3: Confirmar pago -->
+      <div *ngIf="pasoActual === 3">
+        <h4 class="text-lg font-semibold mb-4">Confirmación</h4>
+        <p class="mb-4"><strong>Método de Pago:</strong> {{ metodoPagoSeleccionado }}</p>
+        <div *ngIf="metodoPagoSeleccionado === 'tarjeta'" class="space-y-2">
+          <p><strong>Número de Tarjeta:</strong> {{ datosPago['tarjeta'].numero | slice: -4 }}</p>
+          <p><strong>Titular:</strong> {{ datosPago['tarjeta'].titular }}</p>
+          <p><strong>Fecha de Expiración:</strong> {{ datosPago['tarjeta'].fecha }}</p>
+        </div>
+        <div *ngIf="metodoPagoSeleccionado === 'paypal'" class="space-y-2">
+          <p><strong>Email de PayPal:</strong> {{ datosPago['paypal'].email }}</p>
+        </div>
+        <div *ngIf="metodoPagoSeleccionado === 'transferencia'" class="space-y-2">
+          <p><strong>Banco:</strong> {{ datosPago['transferencia'].banco }}</p>
+          <p><strong>Número de Cuenta:</strong> {{ datosPago['transferencia'].cuenta }}</p>
+        </div>
+        <p class="mt-4 text-lg font-semibold"><strong>Total a pagar:</strong> {{ totalCarrito | currency }}</p>
+      </div>
+
+      <!-- Botones de navegación -->
+      <div class="mt-6 flex justify-between">
+        <button
+          *ngIf="pasoActual > 1"
+          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+          (click)="pasoAnterior()">
+          Atrás
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded"
+          (click)="siguientePaso()">
+          {{ pasoActual < 3 ? 'Siguiente' : 'Pagar' }}
+        </button>
+        <button
+          class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded"
+          (click)="toggleModal()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

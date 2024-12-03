@@ -34,7 +34,17 @@ export class OngService {
     return this.http.post<any>(`${this.authUrl}/asociarAcontecimiento/${acontecimientoId}`,{});
   }
 
+  listarOngs(): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/listar`);
+  }
 
+  crearOng(ong: any): any {
+    return this.http.post<any>(`${this.authUrl}/crear`, ong);
+  }
+
+  eliminarAcontecimientoAsociado(ongId: number, acontecimientoId: number): Observable<any> {
+    return this.http.delete<any>(`${this.authUrl}/eliminar/acontecimientosAsociados/${ongId}/${acontecimientoId}`, );
+  }
 
 
 }

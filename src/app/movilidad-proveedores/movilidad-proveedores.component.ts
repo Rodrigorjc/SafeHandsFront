@@ -44,7 +44,7 @@ export class MovilidadProveedoresComponent implements OnInit {
         this.proveedorDetalles = data;
         console.log('Proveedor details:', data);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching proveedor details', err);
       }
     });

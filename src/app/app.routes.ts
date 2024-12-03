@@ -48,6 +48,7 @@ export const routes: Routes = [
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   { path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
+  { path:'ong/acontecimientos', component:OngAsociarAcontecimientoComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
   {path:'admin/ong', component:AdminOngComponent},
   {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},

@@ -47,6 +47,7 @@ export class ProductosProveedorComponent implements OnInit {
   alertMessage: string | null = null;
   successMessage: string | null = null
   imageUrl: string | null = null;
+  userId: any | null = null;
 
   @ViewChild('productFormElement') productFormElement!: ElementRef;
 
@@ -71,7 +72,7 @@ export class ProductosProveedorComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productoId = this.route.snapshot.paramMap.get('id');
+    this.productoId = localStorage.getItem('userId');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {

@@ -58,16 +58,16 @@ export class AcontecimientoAdminComponent {
   }
 
   // Guardar un nuevo acontecimiento
-  guardarAcontecimiento(): void {
-    this.acontecimientoService.crearAcontecimiento(this.acontecimientoActual).subscribe({
-      next: (acontecimiento) => {
-        Swal.fire('Éxito', 'Acontecimiento creado exitosamente', 'success');
-
-      },
-      error: (err) => console.error('Error al guardar el acontecimiento', err),
-    });
-
-  }
+  // guardarAcontecimiento(): void {
+  //   this.acontecimientoService.crearAcontecimiento(this.acontecimientoActual).subscribe({
+  //     next: (acontecimiento) => {
+  //       Swal.fire('Éxito', 'Acontecimiento creado exitosamente', 'success');
+  //
+  //     },
+  //     error: (err) => console.error('Error al guardar el acontecimiento', err),
+  //   });
+  //
+  // }
 
   // editar un acontecimiento
 }

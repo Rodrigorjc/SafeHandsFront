@@ -134,7 +134,7 @@ export class HomeProveedorComponent implements OnInit {
 
 
   navegarHaciaProductos() {
-    this.router.navigate(['/proveedor/productos', this.proveedor.idUsuario]);
+    this.router.navigate(['/proveedor/productos']);
   }
 
 

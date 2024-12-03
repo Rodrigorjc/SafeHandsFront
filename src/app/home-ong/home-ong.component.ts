@@ -104,11 +104,11 @@ export class HomeONGComponent implements OnInit {
   }
 
   navegarAsociarAcontecimientos() {
-    this.router.navigate(['/ong/acontecimientos/', this.ong.id]);
+    this.router.navigate(['/ong/acontecimientos/']);
   }
 
   navegarValidarProveedor() {
-    this.router.navigate(['/ong/validar/proveedor/', this.ong.id]);
+    this.router.navigate(['/ong/validar/proveedor/']);
   }
 
   prevSlideProveedores() {

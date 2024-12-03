@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   isCartVisible = false;
   productosEnCarrito: Producto[] = [];
 
-  constructor(private authService: AuthService,  private actualizar: ActualizarHeaderService, private carritoService: CarritoService) {
+  constructor(private authService: AuthService,  private actualizar: ActualizarHeaderService, public carritoService: CarritoService) {
     this.carritoService.carrito$.subscribe(productos => {
       this.productosEnCarrito = productos;
     });
@@ -97,5 +97,9 @@ export class HeaderComponent implements OnInit {
 
   toggleCart() {
     this.isCartVisible = !this.isCartVisible;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -200,9 +200,12 @@ export class ProductosProveedorComponent implements OnInit {
       next: () => {
         this.products = this.products.filter(product => product.id !== id);
         this.showSuccess('Producto eliminado exitosamente');
+        Swal.fire('Éxito', 'Producto eliminado correctamente', 'success');
+
       },
       error: (err) => {
         console.error('Error deleting product', err);
+        Swal.fire('Error', 'Error eliminando producto', 'error');
         this.showAlert('Error eliminando producto');
       }
     });

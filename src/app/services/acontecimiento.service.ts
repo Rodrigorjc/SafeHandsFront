@@ -9,7 +9,8 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
 @Injectable({ providedIn: 'root' })
 export class AcontecimientoService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
   getAcontecimiento(): Observable<any[]> {
@@ -28,7 +29,6 @@ export class AcontecimientoService {
   getAcontecimientoById(id: number): Observable<Acontecimineto> {
     return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
   }
-
 
 
   // Acontecimientos ADMIN
@@ -59,24 +59,23 @@ export class AcontecimientoService {
   }
 
 
-
   crearAcontecimientoOng(acontecimiento: any): Observable<any> {
     return this.http.post<any>(`/api/acontecimiento/crear/acontecimiento/admin/ong`, acontecimiento);
   }
 
   eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
-    return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`, {responseType: 'text'});
+    return this.http.delete(`/api/acontecimiento/eliminar/${acontecimientoId}`, {responseType: 'text'});
   }
+
   // crearAcontecimiento(acontecimiento: any): Observable<any> {
   //   return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
   // }
 
-  editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
+  editarAcontecimiento(acontecimiento: any, acontecimientoId: any): Observable<any> {
     return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);
   }
 
   getOngPorAcontecimiento(acontecimientoId: any): Observable<any> {
     return this.http.get<any>(`api/acontecimiento/${acontecimientoId}/ongs`);
   }
-
 }

@@ -14,36 +14,36 @@ export class OngService {
   }
 
   getOngById(ongId: string): Observable<any> {
-    return this.http.get<any>(`${this.authUrl}/detalles/${ongId}`);
+    return this.http.get<any>(`api/ong/detalles/${ongId}`);
   }
 
 
   validarProveedor(proveedorId: number): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/validar/proveedor/${proveedorId}`,{});
+    return this.http.post<any>(`api/ong/validar/proveedor/${proveedorId}`,{});
   }
 
   eliminarProveedor(proveedorId: number): Observable<any> {
-    return  this.http.delete<any>(`${this.authUrl}/eliminar/proveedor/${proveedorId}`);
+    return  this.http.delete<any>(`api/ong/eliminar/proveedor/${proveedorId}`);
   }
 
-  getOngs(): Observable<any> {
-    return this.http.get(this.authUrl);
-  }
+  // getOngs(): Observable<any> {
+  //   return this.http.get(this.authUrl);
+  // }
 
   asociarAcontecimiento(acontecimientoId: number): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/asociarAcontecimiento/${acontecimientoId}`,{});
+    return this.http.post<any>(`api/ong/asociarAcontecimiento/${acontecimientoId}`,{});
   }
 
   listarOngs(): Observable<any> {
-    return this.http.get<any>(`${this.authUrl}/listar`);
+    return this.http.get<any>(`api/ong/listar`);
   }
 
   crearOng(ong: any): any {
-    return this.http.post<any>(`${this.authUrl}/crear`, ong);
+    return this.http.post<any>(`api/ong/crear`, ong);
   }
 
   eliminarAcontecimientoAsociado(ongId: number, acontecimientoId: number): Observable<any> {
-    return this.http.delete<any>(`${this.authUrl}/eliminar/acontecimientosAsociados/${ongId}/${acontecimientoId}`, );
+    return this.http.delete<any>(`api/ong/eliminar/acontecimientosAsociados/${ongId}/${acontecimientoId}`, );
   }
 
   getIdOngPorIdUsuario(idUsuario: number): Observable<any> {

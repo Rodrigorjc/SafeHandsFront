@@ -37,7 +37,7 @@ export class ValidarProveedorComponent implements OnInit {
       this.ongService.getIdOngPorIdUsuario(this.userId).subscribe({
         next: (ongId) => {
           this.ongId = ongId;
-          this.proveedorService.getListarProveedores().subscribe({
+          this.proveedorService.getListarProveedor().subscribe({
             next: (fetchedProveedores) => {
               this.proveedores = fetchedProveedores.filter((proveedor:any) => !proveedor.validado);
               console.log('Proveedores:', this.proveedores);

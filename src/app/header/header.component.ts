@@ -51,10 +51,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.refreshHeader();
+    this.userRole = localStorage.getItem('rol');
     this.actualizar.refreshHeader$.subscribe(() => {
       this.refreshHeader();
     });
-    this.userRole = localStorage.getItem('rol');
   }
 
   refreshHeader() {

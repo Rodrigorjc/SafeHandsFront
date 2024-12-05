@@ -222,9 +222,7 @@ export class DonacionesComponent implements OnInit {
     return proveedor ? proveedor.totalRecaudado : 0;
   }
 
-  redireccion() {
-    this.router.navigate(['/listado/aconteciminetos']);
-  }
+
 
   getTotal(){
     return this.service.getTotal().subscribe({

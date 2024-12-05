@@ -9,8 +9,7 @@ import {Acontecimineto} from '../modelos/Acontecimineto';
 @Injectable({ providedIn: 'root' })
 export class AcontecimientoService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
 
   getAcontecimiento(): Observable<any[]> {

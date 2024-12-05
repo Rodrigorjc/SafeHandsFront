@@ -22,9 +22,7 @@ export class ProveedorService {
   getProveedor(id: string): Observable<any> {
     return this.http.get<any>(`api/proveedor/detalles/${id}`);
   }
-  getProveedorId(id: number): Observable<any> {
-    return this.http.get<any>(`api/proveedor/obtenerId/${id}`);
-  }
+
   getProveedorIdByUsuarioId(id: number): Observable<number> {
     return this.http.get<any>(`api/proveedor/id/proveedor/${id}`);
   }

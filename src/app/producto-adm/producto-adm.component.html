@@ -1,3 +1,43 @@
+<div class="w-full max-w-7xl mx-auto px-4 py-6">
+  <!-- Título -->
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Lista de Productos</h2>
+
+  <!-- Mensaje de lista vacía -->
+  <div *ngIf="productos.length === 0" class="text-center text-gray-500 bg-gray-100 py-4 rounded-lg">
+    No hay productos disponibles.
+  </div>
+
+  <!-- Grilla de productos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+    <div *ngFor="let producto of productos" class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+      <!-- Imagen del producto -->
+      <img [src]="producto.url" [alt]="producto.nombre" class="h-36 w-36 object-cover rounded-lg mb-4 border border-gray-200" />
+
+      <!-- Nombre del producto -->
+      <h3 class="text-lg font-semibold text-gray-800">{{ producto.nombre }}</h3>
+
+      <!-- Descripción -->
+      <p class="text-sm text-gray-600 mt-2">{{ producto.descripcion }}</p>
+
+      <!-- Precio -->
+      <span class="text-md font-bold text-green-600 mt-4">{{ producto.precio | currency: 'EUR' }}</span>
+
+      <!-- Proveedor -->
+      <span class="text-sm text-gray-500 mt-2">{{producto.nombreProveedor }}</span>
+
+      <!-- Botones de acción -->
+      <div class="flex gap-2 mt-4">
+        <button (click)="editarProducto(producto)" class="bg-blue-500 text-white px-3 py-1 rounded-full shadow-md hover:bg-blue-700 transition-colors">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button (click)="eliminarProducto(producto.id)" class="bg-red-500 text-white px-3 py-1 rounded-full shadow-md hover:bg-red-700 transition-colors">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="min-h-screen flex items-center justify-center bg-[#F9F4E3] px-4 sm:px-6 lg:px-16 mt-10">
   <!-- Contenedor principal -->
   <div class="bg-[#D4DDB1] p-6 sm:p-8 lg:p-12 rounded-lg shadow-md w-full max-w-md sm:max-w-lg">
@@ -90,17 +130,6 @@
         class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#B1BA8E] transition-colors"
       >
         Guardar
-      </button>
-      <button
-
-        class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#B1BA8E] transition-colors"
-      >
-        Editar
-      </button>
-      <button
-        class="w-full sm:w-auto bg-[#7A6448] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#B1BA8E] transition-colors"
-      >
-        Eliminar
       </button>
     </div>
   </div>

@@ -4,6 +4,7 @@ import {AuthService} from '../services/auth.service';
 import {Cliente} from '../modelos/Cliente';
 import {UploadImgComponent} from '../upload-img/upload-img.component';
 import {FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { OngService } from '../services/ong.service';
 
 @Component({
   selector: 'app-perfil',
@@ -24,19 +25,33 @@ export class PerfilComponent implements OnInit{
   numberId: number = Number(this.userID)
   cliente: Cliente | null = null;
   perfilForm!: FormGroup;
+  perfilFormOng!: FormGroup;
+  ong: any|null = null;
 
-  constructor(private service: AuthService, private fb: FormBuilder) {
+  constructor(private service: AuthService, private fb: FormBuilder, private ongService: OngService) {
   }
 
   ngOnInit(): void {
     this.getRol();
-    this.getCliente(this.numberId);
+    if(this.rol === 'CLIENTE'){
+    this.getCliente(this.numberId);}
     this.perfilForm = this.fb.group({
       dni: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required]
     });
-  }
+    if (this.rol === 'ONG') {
+    this.getOng(this.numberId);}
+    this.perfilFormOng = this.fb.group({
+      sede: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      ubicacion: ['', Validators.required],
+      img: [''],
+      numVoluntarios: ['', Validators.required]
+    });
+    }
 
   getRol() {
     this.rol = localStorage.getItem('rol');
@@ -47,7 +62,7 @@ export class PerfilComponent implements OnInit{
       next: (data) => {
         this.cliente = data;
         this.perfilForm.patchValue({
-          dni: this.cliente.dni,
+          dni: this.ong.dni,
           email: this.cliente.email,
           username: this.cliente.username
         });
@@ -59,6 +74,29 @@ export class PerfilComponent implements OnInit{
     });
   }
 
+  getOng(id: number) {
+    this.ongService.getIdOngPorIdUsuario(id).subscribe({
+      next: (data) => {
+        this.ong = data;
+        this.perfilFormOng.patchValue({
+          sede: this.ong.sede,
+          email: this.ong.email,
+          username: this.ong.username,
+          descripcion: this.ong.descripcion,
+          ubicacion: this.ong.ubicacion,
+          img: this.ong.img,
+          numVoluntarios: this.ong.numVoluntarios
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching ong details', err);
+        alert(`Error fetching ong details: ${err.message}`);
+      }
+    });
+  }
+
+
+
   onImageUploaded(imageUrl: string) {
     if (this.cliente) {
       this.cliente.img = imageUrl;
@@ -68,6 +106,9 @@ export class PerfilComponent implements OnInit{
   onSubmit(): void {
     if (this.perfilForm.valid) {
       console.log(this.perfilForm.value);
+    }
+    if (this.perfilFormOng.valid) {
+      console.log(this.perfilFormOng.value);
     }
   }
 }

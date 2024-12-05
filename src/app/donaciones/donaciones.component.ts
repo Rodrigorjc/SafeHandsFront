@@ -12,6 +12,11 @@ import {AconteciminetoInfo} from '../modelos/AconteciminetoInfo';
 import {LineaPedidoService} from '../services/linea-pedido.service';
 import {Router} from '@angular/router';
 
+/**
+ * Componente para gestionar las donaciones.
+ * Este componente se encarga de mostrar y gestionar la información relacionada con las donaciones,
+ * incluyendo los proveedores, acontecimientos y el total de donaciones.
+ */
 @Component({
   selector: 'app-donaciones',
   standalone: true,
@@ -20,29 +25,89 @@ import {Router} from '@angular/router';
   imports: [CommonModule]
 })
 export class DonacionesComponent implements OnInit {
+  /**
+   * Total de donaciones.
+   */
   totalDonaciones: any = 0;
+  /**
+   * Lista de acontecimientos con su total recaudado.
+   */
   acontecimientos: { nombre: string; totalRecaudado: number }[] = [];
+  /**
+   * Lista de proveedores con su total recaudado.
+   */
   proveedores: { nombre: string; totalRecaudado: number }[] = [];
+  /**
+   * Lista de proveedores.
+   */
   proveedor: Proveedor[] = [];
+  /**
+   * Lista de acontecimientos.
+   */
   acontecimiento: Acontecimiento[] = [];
 
+
+
+  /**
+   * Ranking de proveedores basado en el total de donaciones.
+   */
   rankingProveedores: { nombreProveedor: string; totalDonaciones: number }[] = [];
+
+  /**
+   * Máximo de donaciones entre los proveedores.
+   */
   maxDonaciones: number = 0;
+  /**
+   * Información de los proveedores para el ranking.
+   */
   proveedoresRanking: ProveedorInfo[] = [];
+  /**
+   * ID del proveedor seleccionado.
+   */
   proveedorSeleccionadoId: string = '';
+  /**
+   * Proveedor seleccionado.
+   */
   proveedorSeleccionado: ProveedorInfo | null = null;
+  /**
+   * Lista de información de acontecimientos.
+   */
   aconteciminetos: AconteciminetoInfo[] = [];
+  /**
+   * ID del acontecimiento seleccionado.
+   */
   aconteciminetoSeleccionadoId: string = '';
+  /**
+   * Acontecimiento seleccionado.
+   */
   aconteciminetoSeleccionado: AconteciminetoInfo | null = null;
 
 
-
+  /**
+   * Visibilidad del menú de usuario.
+   */
   isUserMenuVisible = false;
+  /**
+   * Visibilidad del menú de acontecimientos.
+   */
   isAcontecimientoMenuVisible = false;
+  /**
+   * Visibilidad del menú de proveedores.
+   */
   isProveedorMenuVisible = false;
+  /**
+   * Visibilidad del modal.
+   */
   isModalVisible: boolean = false;
 
+
+  /**
+   * Acontecimiento seleccionado en el menú.
+   */
   selectedAcontecimiento: string = 'Selecciona un acontecimiento';
+  /**
+   * Proveedor seleccionado en el menú.
+   */
   selectedProveedor: string = 'Selecciona un proveedor';
 
   imagenesPorAcontecimiento: { [key: string]: string } = {

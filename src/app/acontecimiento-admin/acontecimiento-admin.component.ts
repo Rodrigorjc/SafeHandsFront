@@ -26,15 +26,32 @@ interface Acontecimiento{
   styleUrl: './acontecimiento-admin.component.css'
 })
 export class AcontecimientoAdminComponent {
+  /**
+   * Acontecimiento que estamos editando.
+   * Inicializado con un objeto vacío utilizando el método `crearAcontecimientoVacio`.
+   */
     acontecimientoActual: Acontecimiento = this.crearAcontecimientoVacio();
-    //Acontecimiento que estamos editando
 
-    //Ongs simulados
+
+  /**
+   * Array para almacenar la lista de Ongs simuladas.
+   */
     ongs: Ong[] = [];
 
+  /**
+   * Constructor para AcontecimientoAdminComponent.
+   *
+   * @param {AcontecimientoService} acontecimientoService - El servicio para interactuar con la API de Acontecimiento.
+   * @param {OngService} ongService - El servicio para interactuar con la API de Ong.
+   */
     constructor(private acontecimientoService: AcontecimientoService,
                 private ongService: OngService) {}
 
+  /**
+   * Hook del ciclo de vida que se llama después de que las propiedades enlazadas a datos de una directiva se inicializan.
+   * Se suscribe al AcontecimientoService para obtener los datos de los acontecimientos y asignarlos al array de ongs.
+   * Registra un mensaje de error si la obtención de datos falla.
+   */
   ngOnInit(): void {
     this.acontecimientoService.getAcontecimiento().subscribe({
       next: (acontecimientos) => {
@@ -45,7 +62,20 @@ export class AcontecimientoAdminComponent {
     });
   }
 
-  // Crear un acontecimiento vacío
+  /**
+   * Crea un objeto Acontecimiento vacío.
+   *
+   * Este método inicializa un nuevo objeto Acontecimiento con valores predeterminados.
+   * Es útil para inicializar formularios o restablecer el estado del componente.
+   *
+   * @returns {Acontecimiento} Un objeto Acontecimiento vacío con los siguientes valores:
+   * - id: null
+   * - nombre: una cadena vacía
+   * - descripcion: una cadena vacía
+   * - ubicacion: una cadena vacía
+   * - img: una cadena vacía
+   * - idOng: 0
+   */
   crearAcontecimientoVacio(): Acontecimiento {
     return {
       id: null,

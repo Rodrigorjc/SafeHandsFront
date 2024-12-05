@@ -1,5 +1,5 @@
 <!--Cargar los datos de los acontecimientos-->
-<div *ngIf="noAsociados.length > 0" class="my-6 overflow-x-auto flex justify-center">
+<div *ngIf="noAsociados.length > 0" class="my-3 overflow-x-auto flex justify-center">
   <table class="min-w-full bg-white text-center shadow-lg rounded-lg">
     <thead>
     <tr>
@@ -8,6 +8,7 @@
     <tr class="bg-gray-100">
       <th class="py-3 px-4 border-b border-gray-300">Imagen</th>
       <th class="py-3 px-4 border-b border-gray-300">Nombre</th>
+      <th class="py-3 px-4 border-b border-gray-300 max-md:hidden">Ubicación</th>
       <th class="py-3 px-4 border-b border-gray-300">Acción</th>
     </tr>
     </thead>
@@ -17,6 +18,7 @@
         <img [src]="acontecimiento.img" alt="{{ acontecimiento.img }}" class="w-20 h-20 object-cover rounded-md mx-auto">
       </td>
       <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"   class="py-3 px-4 border-b border-gray-300">{{ acontecimiento.nombre }}</td>
+      <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"   class="py-3 px-4 border-b border-gray-300 max-md:hidden">{{ acontecimiento.ubicacion }}</td>
       <td class="py-3 px-4 border-b border-gray-300">
         <img src="/confirmar-48.png" alt="Eliminar" (click)="asociarAcontecimiento(acontecimiento.id)" class="w-8 h-8 cursor-pointer inline-block">
       </td>
@@ -26,7 +28,7 @@
 </div>
 
 <!-- Tabla separada para los acontecimientos asociados -->
-<div *ngIf="asociados.length > 0" class="my-6 overflow-x-auto flex justify-center">
+<div *ngIf="asociados.length > 0" class="my-3 overflow-x-auto flex justify-center">
   <table class="min-w-full bg-white text-center shadow-lg rounded-lg">
     <thead>
     <tr>
@@ -35,6 +37,7 @@
     <tr class="bg-gray-100">
       <th class="py-3 px-4 border-b border-gray-300">Imagen</th>
       <th class="py-3 px-4 border-b border-gray-300">Nombre</th>
+      <th class="py-3 px-4 border-b border-gray-300 max-md:hidden">Ubicación</th>
       <th class="py-3 px-4 border-b border-gray-300">Acción</th>
     </tr>
     </thead>
@@ -44,6 +47,7 @@
         <img [routerLink]="['/acontecimientos/detalles', acontecimiento.id]" [src]="acontecimiento.img" alt="{{ acontecimiento.img }}" class="w-20 h-20 object-cover rounded-md mx-auto">
       </td>
       <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"  class="py-3 px-4 border-b border-gray-300">{{ acontecimiento.nombre }}</td>
+      <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"   class="py-3 px-4 border-b border-gray-300 max-md:hidden">{{ acontecimiento.ubicacion }}</td>
       <td class="py-3 px-4 border-b border-gray-300">
         <img src="/eliminar-48.png" alt="Eliminar" (click)="eliminarAcontecimientoAsociado(acontecimiento.id)" class="w-8 h-8 cursor-pointer inline-block">
       </td>

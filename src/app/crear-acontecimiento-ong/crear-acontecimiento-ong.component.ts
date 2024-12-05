@@ -93,6 +93,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
     return true;
   }
 
+
   crearAcontecimiento(): void {
     if (!this.validateForm(this.acontecimientoForm)) {
       return;
@@ -131,7 +132,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   }
 
   private confirmarEliminacion(acontecimientoId: number) {
-    this.acontecimientoService.eliminarAcontecimieto(acontecimientoId).subscribe({
+    this.acontecimientoService.eliminarAcontecimiento(acontecimientoId).subscribe({
       next: (response) => {
         this.acontecimientos = this.acontecimientos.filter(a => a.id !== acontecimientoId);
         console.log('Acontecimiento eliminado:', response);
@@ -189,6 +190,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;
     console.log('URL de la imagen recibida:', imageUrl);
+    Swal.fire('Imagen cargada', 'La imagen se ha cargado exitosamente', 'success');
   }
 
 }

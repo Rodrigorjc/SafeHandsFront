@@ -237,6 +237,7 @@ export class ProductosProveedorComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;
     console.log('URL de la imagen recibida:', imageUrl);
+    Swal.fire('Imagen cargada', 'La imagen se ha cargado exitosamente', 'success');
 
     if (this.showCreateForm) {
       this.createProductForm.patchValue({ url: imageUrl });

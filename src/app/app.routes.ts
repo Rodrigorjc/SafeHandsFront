@@ -10,9 +10,7 @@ import {ValidarProveedorComponent} from './validar-proveedor/validar-proveedor.c
 import {RegisterProveedoresComponent} from './register-proveedores/register-proveedores.component';
 import {HomeProveedorComponent} from './home-proveedor/home-proveedor.component';
 import {HomeONGComponent} from './home-ong/home-ong.component';
-import {
-  VincularAcontecimientoProductosComponent
-} from './vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
+import {VincularAcontecimientoProductosComponent} from './vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import {OngAsociarAcontecimientoComponent} from './ong-asociar-acontecimiento/ong-asociar-acontecimiento.component';
 import {InfoDonacionesComponent} from './info-donaciones/info-donaciones.component';
 import {MovilidadProveedoresComponent} from './movilidad-proveedores/movilidad-proveedores.component';
@@ -32,6 +30,7 @@ import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalle
 import {CrearAcontecimientoOngComponent} from './crear-acontecimiento-ong/crear-acontecimiento-ong.component';
 import {AcontecimientoProductoComponent} from './acontecimiento-producto/acontecimiento-producto.component';
 import {PerfilComponent} from './perfil/perfil.component';
+import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,7 +42,7 @@ export const routes: Routes = [
   // { path: 'producto/listar', component: ProductoListarComponent },
   // { path: 'producto/adm', component: ProductoAdmComponent },
   // { path: 'pedido/adm', component: PedidoAdmComponent },
-  { path: 'informacion/donaciones', component: DonacionesComponent},
+  // { path: 'informacion/donacioness', component: DonacionesComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
   { path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
@@ -57,19 +56,16 @@ export const routes: Routes = [
   { path: 'register/proveedores', component: RegisterProveedoresComponent },
   { path:'proveedor/vincular/acontecimiento/:id', component:VincularAcontecimientoProductosComponent},
   { path:'ong/acontecimientos/:id', component:OngAsociarAcontecimientoComponent},
-  { path: 'informacion/donacioness', component: InfoDonacionesComponent},
-  {path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
-  { path:'ong/acontecimientos', component:OngAsociarAcontecimientoComponent},
   { path: 'informacion/donaciones', component: InfoDonacionesComponent},
-  {path:'admin/ong', component:AdminOngComponent},
-  {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
-  {path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
-  {path:'ong/crear/acontecimiento', component:CrearAcontecimientoOngComponent},
-  { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
-  // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
+  { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
+  { path:'ong/acontecimientos', component:OngAsociarAcontecimientoComponent},
+  { path:'admin/ong', component:AdminOngComponent},
+  { path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
+  { path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
+  { path:'ong/crear/acontecimiento', component:CrearAcontecimientoOngComponent},
   { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
   { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},
-  // { path: 'informacion/acontecimiento/:id', component: Info},
+  { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},
   { path: 'donar/:id', component: ListadoProductosComponent},
   { path: 'listado/proveedores', component: ListProveedoresComponent},
   { path: 'acontecimiento/admin', component: AcontecimientoAdminComponent},

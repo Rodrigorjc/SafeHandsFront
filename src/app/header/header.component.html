@@ -21,7 +21,7 @@
           <a *ngIf="userRole == 'PROVEEDOR'" href="/homeProveedor">
             <img class="h-8 w-auto rounded-full" src="/safehandslogo.svg" alt="SafeHands">
           </a>
-          <a *ngIf="userRole == 'CLIENTE'" href="/home">
+          <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/home">
             <img class="h-8 w-auto rounded-full" src="/safehandslogo.svg" alt="SafeHands">
           </a>
         </div>
@@ -30,9 +30,10 @@
             <div class="flex space-x-4 items-center">
               <button href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
               <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
                 <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/listado/proveedores" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
+                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/nosotros" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-9">Sobre Nosotros</a>
                 <a href="/informacion/donaciones" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Información sobre donaciones</a>
                 <div *ngIf="userRole === 'ONG'">
                   <a href="/ong/crear/acontecimiento" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-4">Crear Acontecimientos</a>
@@ -46,8 +47,8 @@
             </div>
             <div class="flex  justify-end w-9/12 ">
               <a  *ngIf="userRole === 'ONG'" href="/homeONG" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
-              <a  *ngIf="userRole === 'CLIENTE'" href="/home" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
               <a  *ngIf="userRole === 'PROVEEDOR'" href="/homeProveedor" class="px-3 mx-1 py-2 font-bold text-3xl">SafeHands</a>
+              <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR' " class="px-3 mx-1 py-2 font-bold text-3xl" href="/home">SafeHands</a>
             </div>
           </div>
         </div>

@@ -1,0 +1,66 @@
+<div *ngIf="acontecimientos.length > 0" class="my-6 overflow-x-auto flex justify-center">
+  <table class="min-w-full bg-white text-center shadow-lg rounded-lg">
+    <thead>
+    <tr>
+      <th colspan="5" class="py-4 px-6 border-b text-center text-2xl md:text-xl font-bold bg-gray-200">Acontecimientos no asociados</th>
+    </tr>
+    <tr class="bg-gray-100">
+      <th class="py-3 px-4 border-b border-gray-300">Imagen</th>
+      <th class="py-3 px-4 border-b border-gray-300">Nombre</th>
+      <th class="py-3 px-4 border-b border-gray-300">Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let acontecimiento of acontecimientos" class="hover:bg-gray-50">
+      <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"  class="py-3 px-4 border-b border-gray-300">
+        <img [src]="acontecimiento.img" alt="{{ acontecimiento.img }}" class="w-20 h-20 object-cover rounded-md mx-auto">
+      </td>
+      <td [routerLink]="['/acontecimientos/detalles', acontecimiento.id]"   class="py-3 px-4 border-b border-gray-300">{{ acontecimiento.nombre }}</td>
+      <td class="py-3 px-4 border-b border-gray-300">
+        <img src="/eliminar-48.png" alt="Eliminar" (click)="eliminarAcontecimiento(acontecimiento.id)" class="w-8 h-8 cursor-pointer inline-block">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="max-w-lg mx-auto mt-8">
+
+  <div class="flex justify-center">
+    <button (click)="toggleForm()" class="bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition w-full sm:w-auto">
+      {{ showForm ? 'Ocultar Formulario' : 'Crear Acontecimiento' }}
+    </button>
+  </div>
+  <form *ngIf="showForm" [formGroup]="acontecimientoForm" (ngSubmit)="crearAcontecimiento()" class="space-y-4 mt-4">
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+      <input type="text" id="nombre" formControlName="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+      <div *ngIf="acontecimientoForm.get('nombre')?.invalid && acontecimientoForm.get('nombre')?.touched" class="text-red-500 text-sm">El nombre es obligatorio</div>
+    </div>
+    <div>
+      <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+      <textarea id="descripcion" formControlName="descripcion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"></textarea>
+      <div *ngIf="acontecimientoForm.get('descripcion')?.invalid && acontecimientoForm.get('descripcion')?.touched" class="text-red-500 text-sm">La descripción es obligatoria</div>
+    </div>
+    <div>
+      <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
+      <input type="text" id="ubicacion" formControlName="ubicacion" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+      <div *ngIf="acontecimientoForm.get('ubicacion')?.invalid && acontecimientoForm.get('ubicacion')?.touched" class="text-red-500 text-sm">La fecha es obligatoria</div>
+    </div>
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Imagen</label>
+      <div class="relative rounded-lg">
+        <div class="ms-10">
+          <app-upload-img (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+        </div>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fa-solid fa-image text-gray-400"></i>
+        </div>
+        <div *ngIf="acontecimientoForm.get('img')?.invalid && acontecimientoForm.get('img')?.touched" class="absolute text-red-500 text-sm"></div>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <button type="submit" class="bg-[#7A6448] text-white py-2 px-4 rounded-md hover:bg-[#CDB28A] transition w-full sm:w-auto">Crear Acontecimiento</button>
+    </div>
+  </form>
+</div>

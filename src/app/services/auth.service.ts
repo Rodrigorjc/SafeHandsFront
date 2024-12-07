@@ -5,12 +5,14 @@ import {Router} from '@angular/router';
 import {RegistroCliente} from '../modelos/RegistroCliente';
 import {catchError, Observable, throwError} from 'rxjs';
 import {Login} from '../modelos/Login';
+import Swal from 'sweetalert2';
+import {ActualizarHeaderService} from './actualizar-header.service';
+import {Cliente} from '../modelos/Cliente';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private actualizar: ActualizarHeaderService) {}
 
   login(credentials: Login) {
     localStorage.removeItem('token');
@@ -27,10 +29,15 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['login']);
-    // Add any additional logout logic here
-    console.log('Logged out successfully');
+    Swal.fire({
+      title: 'Sesión cerrada correctamente',
+      text: 'Se ha cerrado sesión correctamente. Vuelve cuando quieras.',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+    this.actualizar.triggerRefreshHeader();
   }
 
 
@@ -78,5 +85,9 @@ export class AuthService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+
+  obtenerCliente(id: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`api/cliente/getByUserID/${id}`);
   }
 }

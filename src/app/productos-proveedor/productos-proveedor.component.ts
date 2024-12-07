@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ProductoService } from '../services/producto.service';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, NgForm, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
 import Swal from 'sweetalert2';
+import {UploadImgComponent} from '../upload-img/upload-img.component';
 export interface Product {
   id: number;
   nombre: string;
@@ -26,7 +27,8 @@ export interface Product {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    VincularAcontecimientoProductosComponent
+    VincularAcontecimientoProductosComponent,
+    UploadImgComponent
   ],
   templateUrl: './productos-proveedor.component.html',
   styleUrl: './productos-proveedor.component.css'
@@ -34,17 +36,32 @@ export interface Product {
 export class ProductosProveedorComponent implements OnInit {
   products: Product[] = [];
   showForm: boolean = false;
+  showCreateForm: boolean = false;
+  showEditForm: boolean = false;
   filterTerm: string = '';
   sortOrder: string = 'desc';
-  productForm: FormGroup;
+  // productForm: FormGroup;
+  createProductForm: FormGroup;
+  editProductForm: FormGroup;
   productoId: string | null = null;
   alertMessage: string | null = null;
   successMessage: string | null = null
+  imageUrl: string | null = null;
 
-  constructor(private productoService: ProductoService, private fb: FormBuilder, private route: ActivatedRoute) {
-    this.productForm = this.fb.group({
+  @ViewChild('productFormElement') productFormElement!: ElementRef;
+
+
+  constructor(private productoService: ProductoService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+    this.createProductForm = this.fb.group({
       nombre: ['', Validators.required],
-      url: ['', Validators.required],
+      url: this.imageUrl ?? '',
+      precio: [0, [Validators.required, Validators.min(0.01)]],
+      descripcion: ['', Validators.required]
+    });
+
+    this.editProductForm = this.fb.group({
+      nombre: ['', Validators.required],
+      url: this.imageUrl ?? '',
       precio: [0, [Validators.required, Validators.min(0.01)]],
       descripcion: ['', Validators.required]
     });
@@ -87,21 +104,36 @@ export class ProductosProveedorComponent implements OnInit {
   toggleForm(){
       this.showForm = !this.showForm;
   }
+  // toggleCreateForm(): void {
+  //   this.showCreateForm = !this.showCreateForm;
+  //   this.showEditForm = false;
+  // }
+  //
+  toggleEditForm(): void {
+    this.showEditForm = !this.showEditForm;
+    this.showCreateForm = false;
+  }
 
-  addProduct(){
-    if (this.productForm.invalid) {
+  validateForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      Swal.fire('El formulario es inválido. Por favor, revisa los campos.', 'error');
+      return false;
+    }
+    return true;
+  }
+
+  createProduct(): void {
+    if (!this.validateForm(this.createProductForm)) {
       return;
     }
-
-    this.productoService.crearProducto(this.productForm.value).subscribe({
+    this.createProductForm.patchValue({ url: this.imageUrl });
+    this.productoService.crearProducto(this.createProductForm.value).subscribe({
       next: (createdProduct) => {
         this.products.push(createdProduct);
-        this.productForm.reset();
-        this.showForm = false;
-        this.showSuccess('Producto creado exitosamente') ;
+        this.createProductForm.reset();
+        this.showCreateForm = false;
+        this.showSuccess('Producto creado exitosamente');
         Swal.fire('Éxito', 'Producto creado exitosamente', 'success');
-
-
       },
       error: (err) => {
         console.error('Error creating product', err);
@@ -110,6 +142,32 @@ export class ProductosProveedorComponent implements OnInit {
       }
     });
   }
+
+  updateProduct(): void {
+    if (!this.validateForm(this.editProductForm)) {
+      return;
+    }
+
+    this.productoService.editarProducto(this.editProductForm.value, this.productoId).subscribe({
+      next: (updatedProduct) => {
+        const index = this.products.findIndex(p => p.id === updatedProduct.id);
+        if (index !== -1) {
+          this.products[index] = updatedProduct;
+        }
+        this.editProductForm.reset();
+        this.showEditForm = false;
+        this.productoId = null;
+        this.showSuccess('Producto actualizado exitosamente');
+        Swal.fire('Éxito', 'Producto actualizado exitosamente', 'success');
+      },
+      error: (err) => {
+        console.error('Error updating product', err);
+        this.showAlert('Error actualizando producto');
+        Swal.fire('Error', 'Error actualizando producto', 'error');
+      }
+    });
+  }
+
   confirmDelete(id: number): void {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -156,5 +214,31 @@ export class ProductosProveedorComponent implements OnInit {
     setTimeout(() => {
       this.successMessage = null;
     }, 3000); // Clear the success message after 10 seconds
-}
+  }
+
+  editProduct(product: Product) {
+    this.editProductForm.patchValue(product);
+    this.showEditForm = true;
+    this.productoId = product.id.toString();
+    this.scrollToForm();
+  }
+
+  private scrollToForm() {
+    setTimeout(() => {
+      this.productFormElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
+  }
+
+  onImageUploaded(imageUrl: string) {
+    this.imageUrl = imageUrl;
+    console.log('URL de la imagen recibida:', imageUrl);
+
+    if (this.showCreateForm) {
+      this.createProductForm.patchValue({ url: imageUrl });
+    } else if (this.showEditForm) {
+      this.editProductForm.patchValue({ url: imageUrl });
+    }
+  }
+
+
 }

@@ -4,8 +4,10 @@ import {AcontecimientoService} from '../services/acontecimiento.service';
 
 @Component({
   selector: 'app-acontecimiento-detalles',
+  imports: [],
   templateUrl: './acontecimiento-detalles.component.html',
-  styleUrls: ['./acontecimiento-detalles.component.css']
+  standalone: true,
+  styleUrl: './acontecimiento-detalles.component.css'
 })
 export class AcontecimientoDetallesComponent implements OnInit {
 
@@ -19,10 +21,8 @@ export class AcontecimientoDetallesComponent implements OnInit {
 
   ngOnInit(): void {
     this.acontecimientoId = this.route.snapshot.paramMap.get('id');
-    const idAsNumber = this.acontecimientoId ? Number(this.acontecimientoId) : null;
-
-    if (idAsNumber !== null && !isNaN(idAsNumber)) {
-      this.acontecimientoService.getAcontecimientoById(idAsNumber).subscribe({
+    if (this.acontecimientoId) {
+      this.acontecimientoService.getAcontecimientoByIdd(this.acontecimientoId).subscribe({
         next: (data) => {
           this.acontecimiento = data;
         },
@@ -33,7 +33,7 @@ export class AcontecimientoDetallesComponent implements OnInit {
       });
     } else {
       console.error('Invalid acontecimientoId:', this.acontecimientoId);
-      alert('Invalid acontecimiento ID provided.');
     }
   }
+
 }

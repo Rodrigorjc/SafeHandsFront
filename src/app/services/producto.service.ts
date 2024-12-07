@@ -42,4 +42,8 @@ export class ProductoService {
     return this.http.get<Producto[]>(`/api/producto/getProductosAcontecimiento/${id}`);
   }
 
+  editarProducto(product: any, productoId:any): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/editar/${productoId}`, product);
+  }
+
 }

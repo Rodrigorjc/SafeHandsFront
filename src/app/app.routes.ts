@@ -3,6 +3,7 @@ import { LoginComponent } from './loginCliente/login.component';
 import { RegisterComponent } from './registerCliente/register.component';
 import { HomeComponent } from './home/home.component';
 import {DemoComponent} from './demo/demo.component';
+import {DonacionesComponent} from './donaciones/donaciones.component';
 import {ProductosProveedorComponent} from './productos-proveedor/productos-proveedor.component';
 import {OngDetallesComponent} from './ong-detalles/ong-detalles.component';
 import {ValidarProveedorComponent} from './validar-proveedor/validar-proveedor.component';
@@ -21,10 +22,17 @@ import {ProductoListarComponent} from './producto-listar/producto-listar.compone
 import {NosotrosComponent} from './nosotros/nosotros.component';
 import {ProductoAdmComponent} from './producto-adm/producto-adm.component';
 import {PedidoAdmComponent} from './pedido-adm/pedido-adm.component';
+import {ListAconteciminetosComponent} from './list-aconteciminetos/list-aconteciminetos.component';
+import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
+import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
+import {ListProveedoresComponent} from './list-proveedores/list-proveedores.component';
+import {AcontecimientoAdminComponent} from './acontecimiento-admin/acontecimiento-admin.component';
+import {DetalleCarritoComponent} from './detalle-carrito/detalle-carrito.component';
 import {AcontecimientoDetallesComponent} from './acontecimiento-detalles/acontecimiento-detalles.component';
 import {ProveedorDetallesComponent} from './proveedor-detalles/proveedor-detalles.component';
-import {DonacionesComponent} from './donaciones/donaciones.component';
+import {CrearAcontecimientoOngComponent} from './crear-acontecimiento-ong/crear-acontecimiento-ong.component';
 import {AcontecimientoProductoComponent} from './acontecimiento-producto/acontecimiento-producto.component';
+import {PerfilComponent} from './perfil/perfil.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,11 +40,10 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'demo', component: DemoComponent},
   { path: 'producto', component: ProductoComponent },
-  { path: 'acontecimiento/producto/:id', component: AcontecimientoProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
-   { path: 'producto/listar', component: ProductoListarComponent },
-   { path: 'producto/adm', component: ProductoAdmComponent },
-   { path: 'pedido/adm', component: PedidoAdmComponent },
+  // { path: 'producto/listar', component: ProductoListarComponent },
+  // { path: 'producto/adm', component: ProductoAdmComponent },
+  // { path: 'pedido/adm', component: PedidoAdmComponent },
   { path: 'informacion/donaciones', component: DonacionesComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
@@ -59,6 +66,16 @@ export const routes: Routes = [
   {path:'admin/ong', component:AdminOngComponent},
   {path:'acontecimientos/detalles/:id', component:AcontecimientoDetallesComponent},
   {path:'proveedor/detalles/:id', component:ProveedorDetallesComponent},
+  {path:'ong/crear/acontecimiento', component:CrearAcontecimientoOngComponent},
   { path: '', redirectTo: 'movilidad-proveedores', pathMatch: 'full' },
+  // { path: 'informacion/donaciones', component: InfoDonacionesComponent},
+  { path:'movilidad-proveedores/:id', component:MovilidadProveedoresComponent},
+  { path: 'listado/acontecimientos', component: ListAconteciminetosComponent},
+  { path: 'informacion/acontecimiento/:id', component: InfoAcontecimientoComponent},
+  { path: 'donar/:id', component: ListadoProductosComponent},
+  { path: 'listado/proveedores', component: ListProveedoresComponent},
+  { path: 'acontecimiento/admin', component: AcontecimientoAdminComponent},
+  { path: 'carrito/detalles', component: DetalleCarritoComponent},
+  { path: 'perfil/usuario', component: PerfilComponent},
   { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
 ];

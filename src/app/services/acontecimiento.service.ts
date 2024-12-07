@@ -29,4 +29,42 @@ export class AcontecimientoService {
   }
 
 
+
+  // Acontecimientos ADMIN
+  private apiUrl = 'http://localhost:8081/acontecimiento';
+
+  getAcontecimientos(): Observable<Acontecimiento[]> {
+    return this.http.get<Acontecimiento[]>(`${this.apiUrl}`);
+  }
+
+  // getAcontecimientoById(id: number): Observable<Acontecimiento> {
+  //   return this.http.get<Acontecimiento>(`${this.apiUrl}/${id}`);
+  // }
+
+  crearAcontecimiento(acontecimiento: Acontecimiento): Observable<Acontecimiento> {
+    return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);
+  }
+
+  editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
+    return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
+  }
+
+  eliminarAcontecimiento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getAcontecimientoByIdd(id: string): Observable<Acontecimineto> {
+    return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
+  }
+
+
+
+  crearAcontecimientoOng(acontecimiento: any): Observable<any> {
+    return this.http.post<any>(`/api/acontecimiento/crear/acontecimiento/admin/ong`, acontecimiento);
+  }
+
+  eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
+    return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`,{ responseType:'text'} );
+  }
+
 }

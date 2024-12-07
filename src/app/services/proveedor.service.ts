@@ -17,12 +17,20 @@ export class ProveedorService {
     return this.http.get<any>(`/api/proveedor/listado`);
   }
 
-  getProveedorId(id: string): Observable<any> {
-    return this.http.get<any>(`/api/obtenerId/${id}`);
+  getProveedor(id: string): Observable<any> {
+    return this.http.get<any>(`/api/proveedor/detalles/${id}`);
   }
+  getProveedorId(id: number): Observable<any> {
+    return this.http.get<any>(`/api/proveedor/obtenerId/${id}`);
+  }
+  getProveedorIdByUsuarioId(id: number): Observable<number> {
+    return this.http.get<any>(`/api/proveedor/id/proveedor/${id}`);
+  }
+
   getListarProveedores(): Observable<Proveedor[]> {
-    return this.http.get<Proveedor[]>("/api/peticiones/proveedores");
+    return this.http.get<Proveedor[]>("/api/proveedor/peticiones/proveedores");
   }
+
 
   getProveedores(): Observable<Proveedor[]> {
     return this.http.get<Proveedor[]>("/api/proveedor/listarSelect");

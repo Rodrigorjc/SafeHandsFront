@@ -91,7 +91,10 @@ export class ListadoProductosComponent implements OnInit{
         const cantidad = parseInt(result.value, 10);
         if (cantidad > 0 && cantidad <= 10) {
           for (let i = 0; i < cantidad; i++) {
-            this.carritoService.agregarProducto(producto);
+            this.carritoService.agregarProducto({
+              ...producto,
+              idAcontecimiento: this.acontecimiento.id
+            });
           }
           Swal.fire({
             title: 'Producto agregado',

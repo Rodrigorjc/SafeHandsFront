@@ -1,11 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
 import { ProductoService } from '../services/producto.service';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
 import {
   VincularAcontecimientoProductosComponent
 } from '../vincular-acontecimiento-productos/vincular-acontecimiento-productos.component';
@@ -52,7 +49,7 @@ export class ProductosProveedorComponent implements OnInit {
   @ViewChild('productFormElement') productFormElement!: ElementRef;
 
 
-  constructor(private productoService: ProductoService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private productoService: ProductoService, private fb: FormBuilder,) {
     this.createProductForm = this.fb.group({
       nombre: ['', Validators.required],
       url: this.imageUrl ?? '',
@@ -234,7 +231,6 @@ export class ProductosProveedorComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;
     console.log('URL de la imagen recibida:', imageUrl);
-
     if (this.showCreateForm) {
       this.createProductForm.patchValue({ url: imageUrl });
     } else if (this.showEditForm) {

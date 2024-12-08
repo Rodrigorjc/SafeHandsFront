@@ -65,7 +65,8 @@ export class DetalleCarritoComponent implements OnInit{
       idProducto: producto.id,
       cantidad: producto.cantidad,
       precioUnitario: producto.precio,
-      total: producto.total
+      total: producto.total,
+      idAcontecimiento: producto.idAcontecimiento
     }));
   }
 

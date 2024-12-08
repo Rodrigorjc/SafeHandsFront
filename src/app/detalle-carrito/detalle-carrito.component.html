@@ -71,18 +71,39 @@
 
       <div *ngIf="pasoActual === 2">
         <h4 class="text-lg font-semibold mb-4">Introducir Datos</h4>
-        <div *ngIf="metodoPagoSeleccionado === 'tarjeta'" class="space-y-4">
-          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Tarjeta" [(ngModel)]="datosPago['tarjeta'].numero">
-          <input type="text" class="w-full p-2 border rounded" placeholder="Titular" [(ngModel)]="datosPago['tarjeta'].titular">
-          <input type="text" class="w-full p-2 border rounded" placeholder="Fecha de Expiración" [(ngModel)]="datosPago['tarjeta'].fecha">
-          <input type="text" class="w-full p-2 border rounded" placeholder="CVV" [(ngModel)]="datosPago['tarjeta'].cvv">
+        <div *ngIf="metodoPagoSeleccionado === 'tarjeta'" [formGroup]="getFormGroup('tarjeta')" class="space-y-4">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Tarjeta" formControlName="numero">
+          <div *ngIf="getFormGroup('tarjeta')?.get('numero')?.invalid && getFormGroup('tarjeta')?.get('numero')?.touched" class="text-red-500 text-sm">
+            Número de tarjeta inválido.
+          </div>
+          <input type="text" class="w-full p-2 border rounded" placeholder="Titular" formControlName="titular">
+          <div *ngIf="getFormGroup('tarjeta')?.get('titular')?.invalid && getFormGroup('tarjeta')?.get('titular')?.touched" class="text-red-500 text-sm">
+            Titular es requerido.
+          </div>
+          <input type="text" class="w-full p-2 border rounded" placeholder="Fecha de Expiración" formControlName="fecha">
+          <div *ngIf="getFormGroup('tarjeta')?.get('fecha')?.invalid && getFormGroup('tarjeta')?.get('fecha')?.touched" class="text-red-500 text-sm">
+            Fecha de expiración es requerida.
+          </div>
+          <input type="text" class="w-full p-2 border rounded" placeholder="CVV" formControlName="cvv">
+          <div *ngIf="getFormGroup('tarjeta')?.get('cvv')?.invalid && getFormGroup('tarjeta')?.get('cvv')?.touched" class="text-red-500 text-sm">
+            CVV inválido.
+          </div>
         </div>
-        <div *ngIf="metodoPagoSeleccionado === 'paypal'" class="space-y-4">
-          <input type="email" class="w-full p-2 border rounded" placeholder="Correo de PayPal" [(ngModel)]="datosPago['paypal'].email">
+        <div *ngIf="metodoPagoSeleccionado === 'paypal'" [formGroup]="getFormGroup('paypal')" class="space-y-4">
+          <input type="email" class="w-full p-2 border rounded" placeholder="Correo de PayPal" formControlName="email">
+          <div *ngIf="getFormGroup('paypal')?.get('email')?.invalid && getFormGroup('paypal')?.get('email')?.touched" class="text-red-500 text-sm">
+            Correo de PayPal inválido.
+          </div>
         </div>
-        <div *ngIf="metodoPagoSeleccionado === 'transferencia'" class="space-y-4">
-          <input type="text" class="w-full p-2 border rounded" placeholder="Banco" [(ngModel)]="datosPago['transferencia'].banco">
-          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Cuenta" [(ngModel)]="datosPago['transferencia'].cuenta">
+        <div *ngIf="metodoPagoSeleccionado === 'transferencia'" [formGroup]="getFormGroup('transferencia')" class="space-y-4">
+          <input type="text" class="w-full p-2 border rounded" placeholder="Banco" formControlName="banco">
+          <div *ngIf="getFormGroup('transferencia')?.get('banco')?.invalid && getFormGroup('transferencia')?.get('banco')?.touched" class="text-red-500 text-sm">
+            Banco es requerido.
+          </div>
+          <input type="text" class="w-full p-2 border rounded" placeholder="Número de Cuenta" formControlName="cuenta">
+          <div *ngIf="getFormGroup('transferencia')?.get('cuenta')?.invalid && getFormGroup('transferencia')?.get('cuenta')?.touched" class="text-red-500 text-sm">
+            Número de cuenta es requerido.
+          </div>
         </div>
       </div>
 
@@ -91,16 +112,16 @@
         <h4 class="text-lg font-semibold mb-4">Confirmación</h4>
         <p class="mb-4"><strong>Método de Pago:</strong> {{ metodoPagoSeleccionado }}</p>
         <div *ngIf="metodoPagoSeleccionado === 'tarjeta'" class="space-y-2">
-          <p><strong>Número de Tarjeta:</strong> {{ datosPago['tarjeta'].numero | slice: -4 }}</p>
-          <p><strong>Titular:</strong> {{ datosPago['tarjeta'].titular }}</p>
-          <p><strong>Fecha de Expiración:</strong> {{ datosPago['tarjeta'].fecha }}</p>
+          <p><strong>Número de Tarjeta:</strong> {{ getFormGroup('tarjeta')?.get('numero')?.value | slice: -4 }}</p>
+          <p><strong>Titular:</strong> {{ getFormGroup('tarjeta')?.get('titular')?.value }}</p>
+          <p><strong>Fecha de Expiración:</strong> {{ getFormGroup('tarjeta')?.get('fecha')?.value }}</p>
         </div>
         <div *ngIf="metodoPagoSeleccionado === 'paypal'" class="space-y-2">
-          <p><strong>Email de PayPal:</strong> {{ datosPago['paypal'].email }}</p>
+          <p><strong>Email de PayPal:</strong> {{ getFormGroup('paypal')?.get('email')?.value }}</p>
         </div>
         <div *ngIf="metodoPagoSeleccionado === 'transferencia'" class="space-y-2">
-          <p><strong>Banco:</strong> {{ datosPago['transferencia'].banco }}</p>
-          <p><strong>Número de Cuenta:</strong> {{ datosPago['transferencia'].cuenta }}</p>
+          <p><strong>Banco:</strong> {{ getFormGroup('transferencia')?.get('banco')?.value }}</p>
+          <p><strong>Número de Cuenta:</strong> {{ getFormGroup('transferencia')?.get('cuenta')?.value }}</p>
         </div>
         <p class="mt-4 text-lg font-semibold"><strong>Total a pagar:</strong> {{ totalCarrito | currency }}</p>
       </div>

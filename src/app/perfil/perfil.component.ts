@@ -1,6 +1,6 @@
 // src/app/perfil/perfil.component.ts
-import { Component, OnInit } from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Cliente } from '../modelos/Cliente';
 import { UploadImgComponent } from '../upload-img/upload-img.component';
@@ -12,10 +12,10 @@ import { NombreImg } from '../modelos/NombreImg';
   selector: 'app-perfil',
   imports: [
     NgIf,
+    NgForOf,
     UploadImgComponent,
     FormsModule,
-    ReactiveFormsModule,
-    NgForOf
+    ReactiveFormsModule
   ],
   templateUrl: './perfil.component.html',
   standalone: true,
@@ -29,6 +29,9 @@ export class PerfilComponent implements OnInit {
   perfilForm!: FormGroup;
   productosDonados: NombreImg[] = [];
   acontecimientosDonados: NombreImg[] = [];
+
+  @ViewChild('productosSlider', { static: false }) productosSlider!: ElementRef;
+  @ViewChild('acontecimientosSlider', { static: false }) acontecimientosSlider!: ElementRef;
 
   constructor(private service: AuthService, private fb: FormBuilder) {}
 
@@ -123,5 +126,15 @@ export class PerfilComponent implements OnInit {
     if (this.cliente) {
       this.cliente.img = imageUrl;
     }
+  }
+
+  prevSlide(type: string) {
+    const slider = type === 'productos' ? this.productosSlider.nativeElement : this.acontecimientosSlider.nativeElement;
+    slider.scrollBy({ left: -200, behavior: 'smooth' });
+  }
+
+  nextSlide(type: string) {
+    const slider = type === 'productos' ? this.productosSlider.nativeElement : this.acontecimientosSlider.nativeElement;
+    slider.scrollBy({ left: 200, behavior: 'smooth' });
   }
 }

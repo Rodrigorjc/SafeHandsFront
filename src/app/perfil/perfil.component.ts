@@ -7,7 +7,6 @@ import { UploadImgComponent } from '../upload-img/upload-img.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NombreImg } from '../modelos/NombreImg';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,7 +34,7 @@ export class PerfilComponent implements OnInit {
   @ViewChild('productosSlider', { static: false }) productosSlider!: ElementRef;
   @ViewChild('acontecimientosSlider', { static: false }) acontecimientosSlider!: ElementRef;
 
-  constructor(private service: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(private service: AuthService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.getRol();

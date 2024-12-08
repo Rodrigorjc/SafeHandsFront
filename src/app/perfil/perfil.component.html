@@ -1,3 +1,4 @@
+<!-- src/app/perfil/perfil.component.html -->
 <div class="flex justify-center items-center">
   <div *ngIf="rol === 'ONG'">
     ong
@@ -17,6 +18,20 @@
       </form>
     </div>
     <div class="w-2/3 mx-3.5 bg-amber-50 rounded-xl">
+      <h3>Productos Donados</h3>
+      <ul>
+        <li *ngFor="let producto of productosDonados">
+          <img [src]="producto.img" alt="{{producto.nombre}}">
+          {{producto.nombre}}
+        </li>
+      </ul>
+      <h3>Acontecimientos Donados</h3>
+      <ul>
+        <li *ngFor="let acontecimiento of acontecimientosDonados">
+          <img [src]="acontecimiento.img" alt="{{acontecimiento.nombre}}">
+          {{acontecimiento.nombre}}
+        </li>
+      </ul>
     </div>
   </div>
   <div *ngIf="rol === 'PROVEEDOR'">

@@ -189,6 +189,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.imageUrl = imageUrl;
     console.log('URL de la imagen recibida:', imageUrl);
+
   }
 
 }

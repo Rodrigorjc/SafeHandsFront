@@ -97,10 +97,10 @@ export class AuthService {
   }
 
   getProductosDonados(userId: number): Observable<NombreImg[]> {
-    return this.http.get<NombreImg[]>(`/api/${userId}/productos-donados`);
+    return this.http.get<NombreImg[]>(`/api/cliente/${userId}/productos-donados`);
   }
 
   getAcontecimientosDonados(userId: number): Observable<NombreImg[]> {
-    return this.http.get<NombreImg[]>(`/api/${userId}/acontecimientos-donados`);
+    return this.http.get<NombreImg[]>(`/api/cliente/${userId}/acontecimientos-donados`);
   }
 }

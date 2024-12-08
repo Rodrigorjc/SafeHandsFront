@@ -7,6 +7,8 @@ import { UploadImgComponent } from '../upload-img/upload-img.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NombreImg } from '../modelos/NombreImg';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-perfil',
@@ -33,7 +35,7 @@ export class PerfilComponent implements OnInit {
   @ViewChild('productosSlider', { static: false }) productosSlider!: ElementRef;
   @ViewChild('acontecimientosSlider', { static: false }) acontecimientosSlider!: ElementRef;
 
-  constructor(private service: AuthService, private fb: FormBuilder) {}
+  constructor(private service: AuthService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.getRol();
@@ -138,4 +140,5 @@ export class PerfilComponent implements OnInit {
     const slider = type === 'productos' ? this.productosSlider.nativeElement : this.acontecimientosSlider.nativeElement;
     slider.scrollBy({ left: 200, behavior: 'smooth' });
   }
+
 }

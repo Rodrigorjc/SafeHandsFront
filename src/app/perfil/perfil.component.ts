@@ -95,7 +95,6 @@ export class PerfilComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching cliente details', err);
-        alert(`Error fetching cliente details: ${err.message}`);
       }
     });
   }

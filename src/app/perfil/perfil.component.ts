@@ -64,6 +64,8 @@ export class PerfilComponent implements OnInit {
             title: 'Perfil actualizado',
             text: 'El perfil se ha actualizado correctamente.',
             confirmButtonText: 'Cerrar'
+          }).then(() => {
+            location.reload();
           });
         },
         error: (err) => {

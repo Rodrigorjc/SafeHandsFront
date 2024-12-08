@@ -4,6 +4,7 @@ import {AuthService} from '../services/auth.service';
 import {Cliente} from '../modelos/Cliente';
 import {UploadImgComponent} from '../upload-img/upload-img.component';
 import {FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
@@ -38,6 +39,38 @@ export class PerfilComponent implements OnInit{
     });
   }
 
+  onSubmit(): void {
+    if (this.perfilForm.valid) {
+      const clientePerfilDTO: Cliente = {
+        dni: this.perfilForm.value.dni,
+        email: this.perfilForm.value.email,
+        username: this.perfilForm.value.username,
+        img: this.cliente?.img || ''
+      };
+
+      this.service.updateClientePerfil(this.numberId, clientePerfilDTO).subscribe({
+        next: (updatedCliente) => {
+          console.log('Cliente updated successfully', updatedCliente);
+          Swal.fire({
+            icon: 'success',
+            title: 'Perfil actualizado',
+            text: 'El perfil se ha actualizado correctamente.',
+            confirmButtonText: 'Cerrar'
+          });
+        },
+        error: (err) => {
+          console.error('Error updating cliente', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar el perfil',
+            text: 'Hubo un problema al actualizar el perfil. Por favor, inténtalo nuevamente.',
+            confirmButtonText: 'Cerrar'
+          });
+        }
+      });
+    }
+  }
+
   getRol() {
     this.rol = localStorage.getItem('rol');
   }
@@ -65,9 +98,4 @@ export class PerfilComponent implements OnInit{
     }
   }
 
-  onSubmit(): void {
-    if (this.perfilForm.valid) {
-      console.log(this.perfilForm.value);
-    }
-  }
 }

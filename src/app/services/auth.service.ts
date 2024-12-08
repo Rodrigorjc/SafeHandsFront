@@ -88,6 +88,10 @@ export class AuthService {
   }
 
   obtenerCliente(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`api/cliente/getByUserID/${id}`);
+    return this.http.get<Cliente>(`/api/cliente/getByUserID/${id}`);
+  }
+
+  updateClientePerfil(id: number, cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`/api/cliente/perfil/${id}`, cliente);
   }
 }

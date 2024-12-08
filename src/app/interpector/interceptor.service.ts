@@ -25,7 +25,6 @@ export class InterceptorService implements HttpInterceptor {
       });
     }
 
-    console.log('Request Headers:', request.headers);
 
     return next.handle(request).pipe(
       tap(event => {

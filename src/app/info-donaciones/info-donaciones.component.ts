@@ -48,7 +48,6 @@ export class InfoDonacionesComponent implements OnInit{
     return this.service.getTotal().subscribe({
       next: (response: any) => {
         this.totalDonaciones = response.total;
-        console.log('Total:', response.total);
       },
       error: (error) => {
         console.error('Error', error);
@@ -68,7 +67,6 @@ export class InfoDonacionesComponent implements OnInit{
   cargarInfoProveedores(): void {
     this.service.obtenerInfoProveedores().subscribe((data: any) => {
       this.proveedores = data;
-      console.log(this.proveedores);
     });
   }
 
@@ -78,7 +76,6 @@ export class InfoDonacionesComponent implements OnInit{
       this.proveedorSeleccionado = this.proveedores.find(
         (p) => p.id === +this.proveedorSeleccionadoId
       ) || null;
-      console.log('Proveedor seleccionado:', this.proveedorSeleccionado); // Verifica el objeto seleccionado
     } else {
       this.proveedorSeleccionado = null;
     }
@@ -87,7 +84,6 @@ export class InfoDonacionesComponent implements OnInit{
   cargarInfoAcontecimiento(): void {
     this.service.obtenerInfoAcontecimineto().subscribe((data: any) => {
       this.aconteciminetos = data;
-      console.log(this.aconteciminetos);
     });
   }
 
@@ -97,7 +93,6 @@ export class InfoDonacionesComponent implements OnInit{
       this.aconteciminetoSeleccionado = this.aconteciminetos.find(
         (p) => p.id === +this.aconteciminetoSeleccionadoId
       ) || null;
-      console.log('Proveedor seleccionado:', this.aconteciminetoSeleccionado); // Verifica el objeto seleccionado
     } else {
       this.aconteciminetoSeleccionado = null;
     }

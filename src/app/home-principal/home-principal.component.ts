@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgStyle} from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-principal',
@@ -21,6 +22,9 @@ export class HomePrincipalComponent implements OnInit, OnDestroy{
 
   private targetPersons = 1350;
   private targetPlaces = 330;
+
+  constructor(private router: Router) {}
+
 
   ngOnInit() {
     this.intervalId = setInterval(() => {
@@ -60,5 +64,9 @@ export class HomePrincipalComponent implements OnInit, OnDestroy{
         clearInterval(interval); // Detener la animación al llegar al objetivo.
       }
     }, speed);
+  }
+
+  register() {
+    this.router.navigate(['/register'])
   }
 }

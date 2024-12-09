@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
             if (role === "PROVEEDOR") {
               this.router.navigate(['homeProveedor']);
             } else if (role === "CLIENTE") {
-              this.router.navigate(['home']);
+              this.router.navigate(['home/cliente']);
             } else if (role === "ONG") {
               this.router.navigate(['homeONG']);
             }

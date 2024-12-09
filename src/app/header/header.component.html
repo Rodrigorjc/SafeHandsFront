@@ -28,7 +28,7 @@
         <div class="hidden sm:ml-6 sm:block w-2/3">
           <div class="flex">
             <div class="flex space-x-4 items-center">
-              <button *ngIf="userRole === 'CLIENTE' && userRole === 'PROVEEDOR' && userRole === 'ONG'" href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
+              <button *ngIf="userRole === 'CLIENTE' && userRole === 'PROVEEDOR' && userRole === 'ONG'" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
               <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <a *ngIf="userRole === 'CLIENTE'" href="/listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
                 <a *ngIf="userRole === 'CLIENTE'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>

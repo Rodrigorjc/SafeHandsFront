@@ -16,11 +16,18 @@ export class HomePrincipalComponent implements OnInit, OnDestroy{
   currentSlide = 0;
   slides = [1, 2, 3];
   intervalId: any;
+  personsHelped = 0;
+  placesHelped = 0;
+
+  private targetPersons = 1350;
+  private targetPlaces = 330;
 
   ngOnInit() {
     this.intervalId = setInterval(() => {
       this.nextSlide();
     }, 5000);
+    this.animateNumbers('personsHelped', this.targetPersons, 50);
+    this.animateNumbers('placesHelped', this.targetPlaces, 30);
   }
 
   ngOnDestroy() {
@@ -39,5 +46,19 @@ export class HomePrincipalComponent implements OnInit, OnDestroy{
 
   goToSlide(index: number) {
     this.currentSlide = index;
+  }
+
+  animateNumbers(property: 'personsHelped' | 'placesHelped', target: number, speed: number) {
+    const increment = Math.ceil(target / 100); // Incremento gradual.
+    const interval = setInterval(() => {
+      if (this[property] < target) {
+        this[property] += increment;
+        if (this[property] > target) {
+          this[property] = target; // Asegurar que no pase el valor objetivo.
+        }
+      } else {
+        clearInterval(interval); // Detener la animación al llegar al objetivo.
+      }
+    }, speed);
   }
 }

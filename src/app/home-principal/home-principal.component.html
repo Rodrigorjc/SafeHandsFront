@@ -1,3 +1,47 @@
-<div>
+<div class="relative w-full overflow-hidden bg-gray-100">
+  <!-- Contenedor del slider -->
+  <div
+    class="flex transition-transform duration-700"
+    [ngStyle]="{'transform': 'translateX(' + currentSlide * -100 + '%)'}"
+  >
+    <div class="min-w-full h-96 bg-cover bg-center" style="background-image: url('https://estaticos-cdn.prensaiberica.es/clip/de389637-99b8-49b4-9215-7ae49fafaa13_alta-libre-aspect-ratio_default_0.jpg')">
+      <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+        <h2 class="text-white text-3xl font-bold">¡DONA un paso contra la desigualdad mundial!</h2>
+      </div>
+    </div>
+    <div class="min-w-full h-96 bg-cover bg-center" style="background-image: url('https://static.euronews.com/articles/stories/06/58/75/80/1200x675_cmsv2_3a8cbb02-3845-5191-8f38-4925484d7334-6587580.jpg')">
+      <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+        <h2 class="text-white text-3xl font-bold">Apoya nuestras causas sociales</h2>
+      </div>
+    </div>
+    <div class="min-w-full h-96 bg-cover bg-center" style="background-image: url('https://img2.rtve.es/i/?w=1600&i=1699563980290.jpg')">
+      <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+        <h2 class="text-white text-3xl font-bold">Haz la diferencia hoy mismo</h2>
+      </div>
+    </div>
+  </div>
 
+  <!-- Controles de navegación -->
+  <button
+    class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+    (click)="prevSlide()"
+  >
+    &#9664;
+  </button>
+  <button
+    class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+    (click)="nextSlide()"
+  >
+    &#9654;
+  </button>
+
+  <!-- Indicadores -->
+  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+    <div
+      *ngFor="let slide of slides; let i = index"
+      class="w-3 h-3 rounded-full cursor-pointer"
+      [ngClass]="{'bg-gray-300': currentSlide !== i, 'bg-white': currentSlide === i}"
+      (click)="goToSlide(i)"
+    ></div>
+  </div>
 </div>

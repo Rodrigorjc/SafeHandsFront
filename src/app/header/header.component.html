@@ -28,13 +28,13 @@
         <div class="hidden sm:ml-6 sm:block w-2/3">
           <div class="flex">
             <div class="flex space-x-4 items-center">
-              <button href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
+              <button *ngIf="userRole === 'CLIENTE' && userRole === 'PROVEEDOR' && userRole === 'ONG'" href="#" class="rounded mx-1 bg-marronOscuro px-3 py-2 hover:bg-amber-100" aria-current="page" (click)="mostarMenu()">Menú <i class="fa-solid fa-caret-down"></i></button>
               <div *ngIf="isMenuVisible" class="absolute left-0 mt-2 top-12 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/listado/proveedores" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
-                <a *ngIf="userRole !== 'ONG' && userRole !== 'PROVEEDOR'" href="/nosotros" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-9">Sobre Nosotros</a>
-                <a href="/informacion/donaciones" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Información sobre donaciones</a>
+                <a *ngIf="userRole === 'CLIENTE'" href="/listado/acontecimientos" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Acontecimientos</a>
+                <a *ngIf="userRole === 'CLIENTE'" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">ONG</a>
+                <a *ngIf="userRole === 'CLIENTE'" href="/listado/proveedores" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Proveedores</a>
+                <a *ngIf="userRole === 'CLIENTE'" href="/nosotros" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-9">Sobre Nosotros</a>
+                <a *ngIf="userRole === 'CLIENTE'" href="/informacion/donaciones" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Información sobre donaciones</a>
                 <div *ngIf="userRole === 'ONG'">
                   <a href="/ong/crear/acontecimiento" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-4">Crear Acontecimientos</a>
                   <a href="/ong/validar/proveedor" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-5">Validar Proveedores</a>
@@ -55,43 +55,44 @@
       </div>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <div class="relative">
-          <button type="button" class="relative rounded-full bg-gray-800 p-1.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" (click)="toggleCart()">
+          <button *ngIf="userRole === 'CLIENTE'" type="button" class="relative rounded-full bg-gray-800 p-1.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" (click)="toggleCart()">
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">View notifications</span>
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
 
-          <div *ngIf="isCartVisible" class="fixed inset-0 flex justify-end z-50 bg-black/50">
-            <div class="bg-white w-96 h-full shadow-2xl p-6 flex flex-col">
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800">Carrito de Compras</h2>
-                <button class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full text-gray-600" (click)="toggleCart()">✕</button>
-              </div>
-              <ul class="flex-1 overflow-y-auto">
-                <li *ngFor="let producto of productosEnCarrito" class="border-b py-4">
-                  <div class="flex justify-between items-center">
-                    <div>
-                      <h3 class="font-medium text-gray-700">{{ producto.nombre }}</h3>
-                      <p class="text-sm text-gray-500">Cantidad: {{ producto.cantidad }}</p>
-                      <div class="flex items-center space-x-0.5">
-                        <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.disminuirCantidad(producto)">-</button>
-                        <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.aumentarCantidad(producto)">+</button>
+          <div *ngIf="userRole === 'CLIENTE'">
+            <div *ngIf="isCartVisible" class="fixed inset-0 flex justify-end z-50 bg-black/50">
+              <div class="bg-white w-96 h-full shadow-2xl p-6 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-2xl font-semibold text-gray-800">Carrito de Compras</h2>
+                  <button class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full text-gray-600" (click)="toggleCart()">✕</button>
+                </div>
+                <ul class="flex-1 overflow-y-auto">
+                  <li *ngFor="let producto of productosEnCarrito" class="border-b py-4">
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <h3 class="font-medium text-gray-700">{{ producto.nombre }}</h3>
+                        <p class="text-sm text-gray-500">Cantidad: {{ producto.cantidad }}</p>
+                        <div class="flex items-center space-x-0.5">
+                          <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.disminuirCantidad(producto)">-</button>
+                          <button class="py-1 px-3 bg-gray-200 hover:bg-gray-300 rounded-full" (click)="carritoService.aumentarCantidad(producto)">+</button>
+                        </div>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-800">{{ producto.precio | currency }}</p>
+                        <p class="text-sm text-gray-600">Total: {{ producto.total | currency }}</p>
                       </div>
                     </div>
-                    <div>
-                      <p class="font-semibold text-gray-800">{{ producto.precio | currency }}</p>
-                      <p class="text-sm text-gray-600">Total: {{ producto.total | currency }}</p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <div class="mt-6 space-y-4">
-                <a href="/carrito/detalles" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">Pagar</a>
-                <button class="w-full text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded" (click)="toggleCart()">Cerrar</button>
+                  </li>
+                </ul>
+                <div class="mt-6 space-y-4">
+                  <a href="/carrito/detalles" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">Pagar</a>
+                  <button class="w-full text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded" (click)="toggleCart()">Cerrar</button>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
 
         <!-- Profile dropdown -->

@@ -31,11 +31,12 @@ import {CrearAcontecimientoOngComponent} from './crear-acontecimiento-ong/crear-
 import {AcontecimientoProductoComponent} from './acontecimiento-producto/acontecimiento-producto.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
+import {HomePrincipalComponent} from './home-principal/home-principal.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomePrincipalComponent },
   { path: 'demo', component: DemoComponent},
   { path: 'producto', component: ProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
@@ -43,7 +44,7 @@ export const routes: Routes = [
   // { path: 'producto/adm', component: ProductoAdmComponent },
   // { path: 'pedido/adm', component: PedidoAdmComponent },
   // { path: 'informacion/donacioness', component: DonacionesComponent},
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: HomePrincipalComponent, pathMatch: 'full' },
   { path: 'proveedor/productos', component:ProductosProveedorComponent},
   { path: 'proveedor/productos/:id', component:ProductosProveedorComponent},
   // { path:'ong/detalles', component:OngDetallesComponent},

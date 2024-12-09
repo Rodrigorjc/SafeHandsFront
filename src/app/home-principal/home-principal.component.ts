@@ -69,4 +69,8 @@ export class HomePrincipalComponent implements OnInit, OnDestroy{
   register() {
     this.router.navigate(['/register'])
   }
+
+  proveedores() {
+    this.router.navigate(['/listado/proveedores'])
+  }
 }

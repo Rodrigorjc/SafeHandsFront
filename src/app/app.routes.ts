@@ -32,6 +32,7 @@ import {AcontecimientoProductoComponent} from './acontecimiento-producto/acontec
 import {PerfilComponent} from './perfil/perfil.component';
 import {InfoAcontecimientoComponent} from './info-acontecimiento/info-acontecimiento.component';
 import {HomePrincipalComponent} from './home-principal/home-principal.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -69,5 +70,5 @@ export const routes: Routes = [
   { path: 'acontecimiento/admin', component: AcontecimientoAdminComponent},
   { path: 'carrito/detalles', component: DetalleCarritoComponent},
   { path: 'perfil/usuario', component: PerfilComponent},
-  { path: '**', redirectTo: '/home' } // Redirecciona rutas no encontradas al login
+  { path: '**', component:PageNotFoundComponent } // Redirecciona rutas no encontradas al login
 ];

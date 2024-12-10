@@ -30,53 +30,24 @@ export class AcontecimientoService {
   }
 
 
-
-  // Acontecimientos ADMIN
-  private apiUrl = 'http://localhost:8081/acontecimiento';
-
-  getAcontecimientos(): Observable<Acontecimiento[]> {
-    return this.http.get<Acontecimiento[]>(`${this.apiUrl}`);
-  }
-
-  // getAcontecimientoById(id: number): Observable<Acontecimiento> {
-  //   return this.http.get<Acontecimiento>(`${this.apiUrl}/${id}`);
-  // }
-
-  crearAcontecimiento(acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-    return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);
-  }
-
-  // editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-  //   return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
-  // }
-
-  eliminarAcontecimiento(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
   getAcontecimientoByIdd(id: string): Observable<Acontecimineto> {
     return this.http.get<Acontecimineto>(`/api/acontecimiento/getById/${id}`)
   }
 
 
-
   crearAcontecimientoOng(acontecimiento: any): Observable<any> {
-    return this.http.post<any>(`/api/acontecimiento/crear/acontecimiento/admin/ong`, acontecimiento);
+    return this.http.post<any>(`api/acontecimiento/crear/acontecimiento/admin/ong`, acontecimiento);
   }
 
-  eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
+  eliminarAcontecimiento(acontecimientoId: number): Observable<string> {
     return this.http.delete(`/api/acontecimiento/eliminar/${acontecimientoId}`, {responseType: 'text'});
   }
-  // crearAcontecimiento(acontecimiento: any): Observable<any> {
-  //   return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
-  // }
 
-  editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
+  editarAcontecimiento(acontecimiento: any, acontecimientoId: any): Observable<any> {
     return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);
   }
 
   getOngPorAcontecimiento(acontecimientoId: any): Observable<any> {
     return this.http.get<any>(`api/acontecimiento/${acontecimientoId}/ongs`);
   }
-
 }

@@ -1,22 +1,22 @@
-<div class="overflow-x-auto">
-  <table class="min-w-full bg-white">
+<div class="my-3 overflow-x-auto">
+  <table class="min-w-full bg-white shadow-lg rounded-lg">
     <thead>
     <tr>
-      <th colspan="8" class="py-2 px-4 border-b text-center text-xl font-semibold">Proveedores no validados</th>
+      <th colspan="5" class="py-4 px-6 border-b text-center text-2xl font-bold bg-gray-200">Proveedores no validados</th>
     </tr>
-    <tr>
-      <th class="py-2 px-4 border-b text-center font-bold">Logo</th>
-      <th class="py-2 px-4 border-b text-center font-bold">Nombre</th>
-      <th class="py-2 px-4 border-b text-center font-bold">Acciones</th>
+    <tr class="bg-gray-100">
+      <th class="py-3 px-4 border-b border-gray-300 text-center font-bold">Logo</th>
+      <th class="py-3 px-4 border-b border-gray-300 text-center font-bold">Nombre</th>
+      <th class="py-3 px-4 border-b border-gray-300 text-center font-bold">Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let proveedor of proveedores" class="text-center">
-      <td class="py-2 px-4 border-b text-center">
+    <tr *ngFor="let proveedor of proveedores" class="hover:bg-gray-50 text-center">
+      <td class="py-3 px-4 border-b border-gray-300">
         <img [src]="proveedor.img" alt="{{ proveedor.img }}" class="w-16 h-16 object-cover rounded-full mx-auto mb-2" />
       </td>
-      <td  [routerLink]="['/proveedor/detalles', proveedor.idUsuario]" class="py-2 px-4 border-b text-center">{{ proveedor.nombre }}</td>
-      <td class="py-2 px-4 border-b text-center space-x-2">
+      <td [routerLink]="['/proveedor/detalles', proveedor.idUsuario]" class="py-3 px-4 border-b border-gray-300">{{ proveedor.nombre }}</td>
+      <td class="py-3 px-4 border-b border-gray-300 space-x-2">
         <img src="/confirmar-48.png" alt="Validar" (click)="confirmValidation(proveedor.id)" class="w-8 h-8 cursor-pointer inline-block" />
         <img src="/eliminar-48.png" alt="Eliminar" (click)="confirmDelete(proveedor.id)" class="w-8 h-8 cursor-pointer inline-block" />
       </td>

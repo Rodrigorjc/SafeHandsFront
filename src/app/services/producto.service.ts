@@ -13,25 +13,25 @@ export class ProductoService {
 
 
   crearProducto(product: any): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/crear`, product);
+    return this.http.post<any>(`api/producto/crear`, product);
   }
 
   eliminarProducto(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.authUrl}/eliminar/${id}`);
+    return this.http.delete<any>(`api/producto/eliminar/${id}`);
   }
 
 
   obtenerProductos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.authUrl}/listar`);
+    return this.http.get<any[]>(`api/producto/listar`);
   }
 
   obtenerProductoId(id: string): Observable<any> {
-    return this.http.get<any>(`${this.authUrl}/listar/${id}`);
+    return this.http.get<any>(`api/producto/listar/${id}`);
   }
 
 
   vincularProductoAcontecimiento(productoId: number, acontecimientoId: number): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/${productoId}/vincular/${acontecimientoId}`, {});
+    return this.http.post<any>(`api/producto/${productoId}/vincular/${acontecimientoId}`, {});
   }
 
   obtenerProductosAconteciminetoId(id:number): Observable<Producto[]> {
@@ -39,7 +39,7 @@ export class ProductoService {
   }
 
   editarProducto(product: any, productoId:any): Observable<any> {
-    return this.http.put<any>(`/api/producto/editar/${productoId}`, product);
+    return this.http.put<any>(`api/producto/editar/${productoId}`, product);
   }
 
 }

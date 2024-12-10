@@ -131,7 +131,7 @@ export class CrearAcontecimientoOngComponent implements OnInit {
   }
 
   private confirmarEliminacion(acontecimientoId: number) {
-    this.acontecimientoService.eliminarAcontecimieto(acontecimientoId).subscribe({
+    this.acontecimientoService.eliminarAcontecimiento(acontecimientoId).subscribe({
       next: (response) => {
         this.acontecimientos = this.acontecimientos.filter(a => a.id !== acontecimientoId);
         console.log('Acontecimiento eliminado:', response);

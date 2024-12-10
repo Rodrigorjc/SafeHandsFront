@@ -62,6 +62,8 @@ export class ValidarProveedorComponent implements OnInit {
           proveedor.id === proveedorId ? { ...proveedor, validado: true } : proveedor
         );
         this.showSuccess('Proveedor validado con exito');
+        location.reload();
+
       },
       error: (err) => {
         console.error('Error validating proveedor', err);

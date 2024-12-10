@@ -49,15 +49,12 @@ export class HomeProveedorComponent implements OnInit {
     this.proveedorId = localStorage.getItem('userId');
     if (this.proveedorId) {
       this.getProveedorDetalles(this.proveedorId);
-      console.log('Proveedor ID:', this.proveedorId);
     }
     this.acontecimientoService.getAcontecimiento().subscribe({
       next: (data) => {
         this.acontecimientos = data;
-        console.log('Acontecimientos:', data);
       },
       error: (err) => {
-        console.error('Error fetching acontecimientos', err);
         alert(`Error fetching acontecimientos: ${err.message}`);
       }
     });
@@ -81,19 +78,13 @@ export class HomeProveedorComponent implements OnInit {
     }
   }
 
-  getRandomProducts(): Product[] {
-    const shuffled = this.products.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 4);
-  }
 
   getProveedorDetalles(id: string): void {
     this.proveedorService.getProveedor(id).subscribe({
       next: (data) => {
         this.proveedor = data;
-        console.log('Proveedor details:', data);
       },
       error: (err) => {
-        console.error('Error fetching proveedor details', err);
       }
     });
   }

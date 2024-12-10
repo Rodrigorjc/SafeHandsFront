@@ -1,15 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {NgIf} from '@angular/common';
-import {AuthService} from '../services/auth.service';
-import {Cliente} from '../modelos/Cliente';
-import {UploadImgComponent} from '../upload-img/upload-img.component';
-import {FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { OngService } from '../services/ong.service';
+// src/app/perfil/perfil.component.ts
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { AuthService } from '../services/auth.service';
+import { Cliente } from '../modelos/Cliente';
+import { UploadImgComponent } from '../upload-img/upload-img.component';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { NombreImg } from '../modelos/NombreImg';
+
 
 @Component({
   selector: 'app-perfil',
   imports: [
     NgIf,
+    NgForOf,
     UploadImgComponent,
     FormsModule,
     ReactiveFormsModule
@@ -18,40 +22,65 @@ import { OngService } from '../services/ong.service';
   standalone: true,
   styleUrl: './perfil.component.css'
 })
-export class PerfilComponent implements OnInit{
-
+export class PerfilComponent implements OnInit {
   rol: string | null = '';
   userID: string | null = localStorage.getItem('userId');
-  numberId: number = Number(this.userID)
+  numberId: number = Number(this.userID);
   cliente: Cliente | null = null;
   perfilForm!: FormGroup;
-  perfilFormOng!: FormGroup;
-  ong: any|null = null;
+  productosDonados: NombreImg[] = [];
+  acontecimientosDonados: NombreImg[] = [];
 
-  constructor(private service: AuthService, private fb: FormBuilder, private ongService: OngService) {
-  }
+  @ViewChild('productosSlider', { static: false }) productosSlider!: ElementRef;
+  @ViewChild('acontecimientosSlider', { static: false }) acontecimientosSlider!: ElementRef;
+
+  constructor(private service: AuthService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.getRol();
-    if(this.rol === 'CLIENTE'){
-    this.getCliente(this.numberId);}
+    this.getCliente(this.numberId);
+    this.getProductosDonados(this.numberId);
+    this.getAcontecimientosDonados(this.numberId);
     this.perfilForm = this.fb.group({
       dni: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required]
     });
-    if (this.rol === 'ONG') {
-    this.getOng(this.numberId);}
-    this.perfilFormOng = this.fb.group({
-      sede: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      ubicacion: ['', Validators.required],
-      img: [''],
-      numVoluntarios: ['', Validators.required]
-    });
+  }
+
+  onSubmit(): void {
+    if (this.perfilForm.valid) {
+      const clientePerfilDTO: Cliente = {
+        dni: this.perfilForm.value.dni,
+        email: this.perfilForm.value.email,
+        username: this.perfilForm.value.username,
+        img: this.cliente?.img || ''
+      };
+
+      this.service.updateClientePerfil(this.numberId, clientePerfilDTO).subscribe({
+        next: (updatedCliente) => {
+          console.log('Cliente updated successfully', updatedCliente);
+          Swal.fire({
+            icon: 'success',
+            title: 'Perfil actualizado',
+            text: 'El perfil se ha actualizado correctamente.',
+            confirmButtonText: 'Cerrar'
+          }).then(() => {
+            location.reload();
+          });
+        },
+        error: (err) => {
+          console.error('Error updating cliente', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar el perfil',
+            text: 'Hubo un problema al actualizar el perfil. Por favor, inténtalo nuevamente.',
+            confirmButtonText: 'Cerrar'
+          });
+        }
+      });
     }
+  }
 
   getRol() {
     this.rol = localStorage.getItem('rol');
@@ -62,40 +91,38 @@ export class PerfilComponent implements OnInit{
       next: (data) => {
         this.cliente = data;
         this.perfilForm.patchValue({
-          dni: this.ong.dni,
+          dni: this.cliente.dni,
           email: this.cliente.email,
           username: this.cliente.username
         });
       },
       error: (err) => {
         console.error('Error fetching cliente details', err);
-        alert(`Error fetching cliente details: ${err.message}`);
       }
     });
   }
 
-  getOng(id: number) {
-    this.ongService.getIdOngPorIdUsuario(id).subscribe({
+  getProductosDonados(userId: number) {
+    this.service.getProductosDonados(userId).subscribe({
       next: (data) => {
-        this.ong = data;
-        this.perfilFormOng.patchValue({
-          sede: this.ong.sede,
-          email: this.ong.email,
-          username: this.ong.username,
-          descripcion: this.ong.descripcion,
-          ubicacion: this.ong.ubicacion,
-          img: this.ong.img,
-          numVoluntarios: this.ong.numVoluntarios
-        });
+        this.productosDonados = data;
       },
       error: (err) => {
-        console.error('Error fetching ong details', err);
-        alert(`Error fetching ong details: ${err.message}`);
+        console.error('Error fetching productos donados', err);
       }
     });
   }
 
-
+  getAcontecimientosDonados(userId: number) {
+    this.service.getAcontecimientosDonados(userId).subscribe({
+      next: (data) => {
+        this.acontecimientosDonados = data;
+      },
+      error: (err) => {
+        console.error('Error fetching acontecimientos donados', err);
+      }
+    });
+  }
 
   onImageUploaded(imageUrl: string) {
     if (this.cliente) {
@@ -103,12 +130,14 @@ export class PerfilComponent implements OnInit{
     }
   }
 
-  onSubmit(): void {
-    if (this.perfilForm.valid) {
-      console.log(this.perfilForm.value);
-    }
-    if (this.perfilFormOng.valid) {
-      console.log(this.perfilFormOng.value);
-    }
+  prevSlide(type: string) {
+    const slider = type === 'productos' ? this.productosSlider.nativeElement : this.acontecimientosSlider.nativeElement;
+    slider.scrollBy({ left: -200, behavior: 'smooth' });
   }
+
+  nextSlide(type: string) {
+    const slider = type === 'productos' ? this.productosSlider.nativeElement : this.acontecimientosSlider.nativeElement;
+    slider.scrollBy({ left: 200, behavior: 'smooth' });
+  }
+
 }

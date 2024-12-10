@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Producto } from '../modelos/Producto';
 import { CarritoService } from '../services/carrito.service';
-import {CurrencyPipe, JsonPipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { CurrencyPipe, NgForOf, NgIf, SlicePipe } from '@angular/common';
+import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import Swal from 'sweetalert2';
-import {ProductosCarrito} from '../modelos/ProductosCarrito';
-import {Pedido} from '../modelos/Pedido';
-
+import { ProductosCarrito } from '../modelos/ProductosCarrito';
+import { Pedido } from '../modelos/Pedido';
 
 @Component({
   selector: 'app-detalle-carrito',
@@ -15,28 +14,41 @@ import {Pedido} from '../modelos/Pedido';
     CurrencyPipe,
     NgIf,
     FormsModule,
-    SlicePipe
+    SlicePipe,
+    ReactiveFormsModule
   ],
   templateUrl: './detalle-carrito.component.html',
   standalone: true,
   styleUrl: './detalle-carrito.component.css'
 })
-export class DetalleCarritoComponent implements OnInit{
+export class DetalleCarritoComponent implements OnInit {
   productosEnCarrito: Producto[] = [];
   totalCarrito: number = 0;
   isModalOpen = false;
   pasoActual = 1;
   metodoPagoSeleccionado: string | null = null;
 
-  datosPago: { [key: string]: any } = {
-    tarjeta: { numero: '', titular: '', fecha: '', cvv: '' },
-    paypal: { email: '' },
-    transferencia: { banco: '', cuenta: '' }
-  };
+  pagoForm!: FormGroup;
 
-  constructor(public carritoService: CarritoService) { }
+  constructor(public carritoService: CarritoService, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.pagoForm = this.fb.group({
+      tarjeta: this.fb.group({
+        numero: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+        titular: ['', Validators.required],
+        fecha: ['', Validators.required],
+        cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]]
+      }),
+      paypal: this.fb.group({
+        email: ['', [Validators.required, Validators.email]]
+      }),
+      transferencia: this.fb.group({
+        banco: ['', Validators.required],
+        cuenta: ['', Validators.required]
+      })
+    });
+
     this.carritoService.carrito$.subscribe(productos => {
       this.productosEnCarrito = productos;
       this.totalCarrito = this.carritoService.obtenerTotalCarrito();
@@ -65,7 +77,8 @@ export class DetalleCarritoComponent implements OnInit{
       idProducto: producto.id,
       cantidad: producto.cantidad,
       precioUnitario: producto.precio,
-      total: producto.total
+      total: producto.total,
+      idAcontecimiento: producto.idAcontecimiento
     }));
   }
 
@@ -76,39 +89,17 @@ export class DetalleCarritoComponent implements OnInit{
   }
 
   validarDatosPago(): boolean {
-    if (this.metodoPagoSeleccionado === 'tarjeta') {
-      const { numero, titular, fecha, cvv } = this.datosPago['tarjeta'];
-      if (!numero || !titular || !fecha || !cvv) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Datos incompletos',
-          text: 'Por favor, completa todos los campos de la tarjeta.',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      }
-    } else if (this.metodoPagoSeleccionado === 'paypal') {
-      const { email } = this.datosPago['paypal'];
-      if (!email) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Datos incompletos',
-          text: 'Por favor, ingresa tu correo de PayPal.',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      }
-    } else if (this.metodoPagoSeleccionado === 'transferencia') {
-      const { banco, cuenta } = this.datosPago['transferencia'];
-      if (!banco || !cuenta) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Datos incompletos',
-          text: 'Por favor, completa todos los campos de la transferencia bancaria.',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      }
+    const metodoPago = this.metodoPagoSeleccionado;
+    const formGroup = metodoPago ? this.pagoForm.get(metodoPago) : null;
+
+    if (formGroup && formGroup.invalid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Datos incompletos',
+        text: 'Por favor, completa todos los campos correctamente.',
+        confirmButtonText: 'OK'
+      });
+      return false;
     }
     return true;
   }
@@ -131,7 +122,6 @@ export class DetalleCarritoComponent implements OnInit{
     if (this.pasoActual < 3) {
       this.pasoActual++;
     } else {
-      // Muestra SweetAlert2 con el spinner de carga
       Swal.fire({
         title: 'Procesando pago...',
         text: 'Por favor, espera un momento.',
@@ -139,26 +129,25 @@ export class DetalleCarritoComponent implements OnInit{
         allowEscapeKey: false,
         showConfirmButton: false,
         didOpen: () => {
-          Swal.showLoading(); // Activa el spinner
+          Swal.showLoading();
         }
       });
 
       const pedido = this.crearPedido();
 
-      // Realiza la petición al backend
       this.carritoService.pagarCarrito(pedido)
         .subscribe({
           next: (response) => {
-            console.log('Respuesta del backend:', response); // Agregar log para depuración
             if (response === 'Pedido realizado correctamente') {
-              // Pago exitoso
               Swal.fire({
                 icon: 'success',
-                title: '¡Pago realizado con éxito!',
-                text: 'Gracias por su compra.',
-                confirmButtonText: 'Cerrar'
-              }).then(() => {
-                window.location.reload(); // Recarga la página
+                title: 'Pago realizado',
+                text: 'Tu pedido ha sido procesado correctamente.',
+                confirmButtonText: 'OK'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
               });
               this.toggleModal();
               const carrito = localStorage.getItem('carrito');
@@ -166,7 +155,6 @@ export class DetalleCarritoComponent implements OnInit{
                 localStorage.removeItem('carrito');
               }
             } else {
-              // Error en el pago
               Swal.fire({
                 icon: 'error',
                 title: 'Error en el pago',
@@ -176,7 +164,6 @@ export class DetalleCarritoComponent implements OnInit{
             }
           },
           error: (err) => {
-            // Error en el pago
             console.error('Error al realizar el pago:', err);
             Swal.fire({
               icon: 'error',
@@ -189,11 +176,13 @@ export class DetalleCarritoComponent implements OnInit{
     }
   }
 
-
   pasoAnterior(): void {
     if (this.pasoActual > 1) {
       this.pasoActual--;
     }
   }
 
+  getFormGroup(metodo: string): FormGroup {
+    return this.pagoForm.get(metodo) as FormGroup;
+  }
 }

@@ -6,4 +6,5 @@ export class Producto{
   url?:string;
   cantidad?: number;
   total?: number;
+  idAcontecimiento?: number;
 }

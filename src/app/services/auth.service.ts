@@ -8,6 +8,7 @@ import {Login} from '../modelos/Login';
 import Swal from 'sweetalert2';
 import {ActualizarHeaderService} from './actualizar-header.service';
 import {Cliente} from '../modelos/Cliente';
+import {NombreImg} from '../modelos/NombreImg';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -88,6 +89,18 @@ export class AuthService {
   }
 
   obtenerCliente(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`api/cliente/getByUserID/${id}`);
+    return this.http.get<Cliente>(`/api/cliente/getByUserID/${id}`);
+  }
+
+  updateClientePerfil(id: number, cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`/api/cliente/perfil/${id}`, cliente);
+  }
+
+  getProductosDonados(userId: number): Observable<NombreImg[]> {
+    return this.http.get<NombreImg[]>(`/api/cliente/${userId}/productos-donados`);
+  }
+
+  getAcontecimientosDonados(userId: number): Observable<NombreImg[]> {
+    return this.http.get<NombreImg[]>(`/api/cliente/${userId}/acontecimientos-donados`);
   }
 }

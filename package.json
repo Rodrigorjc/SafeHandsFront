@@ -6,7 +6,8 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "doc": "typedoc --entryPointStrategy expand ./src --out docs"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +45,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
+    "typedoc": "^0.27.4",
     "typescript": "~5.5.2"
   }
 }

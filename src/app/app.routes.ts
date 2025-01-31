@@ -40,7 +40,7 @@ export const routes: Routes = [
   { path: 'producto', component: ProductoComponent },
   { path: 'nosotros', component: NosotrosComponent },
   // { path: 'producto/listar', component: ProductoListarComponent },
-  // { path: 'producto/adm', component: ProductoAdmComponent },
+  { path: 'producto/adm', component: ProductoAdmComponent },
   // { path: 'pedido/adm', component: PedidoAdmComponent },
   // { path: 'informacion/donacioness', component: DonacionesComponent},
   { path: '', component: HomeComponent, pathMatch: 'full' },

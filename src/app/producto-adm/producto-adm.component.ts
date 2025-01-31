@@ -60,7 +60,7 @@ export class ProductoAdmComponent implements OnInit {
 
   guardarProducto(): void {
     if (this.productoActual.id) {
-      this.productoService.editarProducto(this.productoActual).subscribe({
+      this.productoService.editarProducto(this.productoActual, this.productoActual.id).subscribe({
         next: (producto) => {
           Swal.fire('Éxito', 'Producto editado exitosamente', 'success');
           const index = this.productos.findIndex(p => p.id === producto.id);
@@ -81,10 +81,6 @@ export class ProductoAdmComponent implements OnInit {
     }
     this.productoActual = this.crearProductoVacio();
   }
-
-
-
-
 
   eliminarProducto(id: number | null): void {
     if (id == null) return;

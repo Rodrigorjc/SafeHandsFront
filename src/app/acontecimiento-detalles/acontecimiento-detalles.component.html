@@ -16,5 +16,22 @@
         </div>
     </div>
 </div>
+
+    <h3 class="text-2xl font-semibold mt-10 mb-4">Ongs que estan asociadas a este acontecimineto</h3>
+    <div class="container mx-auto py-4 px-4">
+      <div *ngIf="asociados.length === 0" class="text-center text-gray-500">
+        <h3 class="text-2xl font-semibold mt-2 mb-4">No hay Ongs asociados.</h3>
+      </div>
+      <div *ngIf="asociados.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div *ngFor="let ong of asociados" class="bg-[#D4DDB1] rounded-lg p-4 text-center shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+          <div [routerLink]="['/ong/detalles', ong.idUsuario]">
+          <img [src]="ong?.img" alt="{{ ong.img }}" class="w-full h-40 object-cover rounded-md mb-2">
+          <p class="font-medium">{{ ong.ubicacion }}</p>
+          <p class="text-sm text-gray-500">{{ ong.descripcion }}</p>
+          <p class="text-lg font-semibold mt-2">{{ ong.sede }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 </div>

@@ -1,6 +1,13 @@
 export class Acontecimiento{
-  id?: number;
+  id?: number | undefined;
   nombre?: string;
+  descripcion?: string;
+  ubicacion?: string;
+  img?: string;
+  idOng?: number;
+
   totalRecaudadoAcontecimiento?: number;
+
+
 
 }

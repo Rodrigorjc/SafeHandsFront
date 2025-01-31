@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {ActualizarHeaderService} from '../services/actualizar-header.service';
 import {CarritoService} from '../services/carrito.service';
@@ -27,6 +28,8 @@ export class HeaderComponent implements OnInit {
   img: Observable<any> = of('');
   isCartVisible = false;
   productosEnCarrito: Producto[] = [];
+  userRole: any | null = null;
+
 
   constructor(private authService: AuthService,  private actualizar: ActualizarHeaderService, public carritoService: CarritoService) {
     this.carritoService.carrito$.subscribe(productos => {
@@ -48,13 +51,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.refreshHeader();
+    this.userRole = localStorage.getItem('rol');
     this.actualizar.refreshHeader$.subscribe(() => {
       this.refreshHeader();
     });
-  }
-
-  gettotal(){
-
   }
 
   refreshHeader() {

@@ -11,6 +11,7 @@ export class AcontecimientoService {
 
   constructor(private http: HttpClient) {}
 
+
   getAcontecimiento(): Observable<any[]> {
     return this.http.get<any[]>("/api/acontecimiento/listar");
   }
@@ -45,9 +46,9 @@ export class AcontecimientoService {
     return this.http.post<Acontecimiento>(`${this.apiUrl}`, acontecimiento);
   }
 
-  editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
-    return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
-  }
+  // editarAcontecimiento(id: number, acontecimiento: Acontecimiento): Observable<Acontecimiento> {
+  //   return this.http.put<Acontecimiento>(`${this.apiUrl}/${id}`, acontecimiento);
+  // }
 
   eliminarAcontecimiento(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
@@ -64,7 +65,18 @@ export class AcontecimientoService {
   }
 
   eliminarAcontecimieto(acontecimientoId: number): Observable<string> {
-    return this.http.delete(`/api/acontecimineto/eliminar/${acontecimientoId}`,{ responseType:'text'} );
+    return this.http.delete(`/api/acontecimiento/eliminar/${acontecimientoId}`, {responseType: 'text'});
+  }
+  // crearAcontecimiento(acontecimiento: any): Observable<any> {
+  //   return this.http.post<any>(`${this.apiUrl}/crear`, acontecimiento);
+  // }
+
+  editarAcontecimiento(acontecimiento: any, acontecimientoId:any): Observable<any> {
+    return this.http.put<any>(`api/acontecimiento/editar/${acontecimientoId}`, acontecimiento);
+  }
+
+  getOngPorAcontecimiento(acontecimientoId: any): Observable<any> {
+    return this.http.get<any>(`api/acontecimiento/${acontecimientoId}/ongs`);
   }
 
 }

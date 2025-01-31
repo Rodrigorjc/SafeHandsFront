@@ -380,4 +380,6 @@ body {
 }
 
 
-
+.hidden {
+  display: none;
+}

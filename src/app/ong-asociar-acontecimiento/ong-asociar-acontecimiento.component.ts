@@ -18,8 +18,9 @@ export class OngAsociarAcontecimientoComponent implements OnInit {
   asociados: any[] = [];
   noAsociados: any[] = [];
   ong: any = {};
-  ongId: string | null = null;
+  ongId: any | null = null;
   asociarForm: FormGroup;
+  userId: any | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,21 +35,42 @@ export class OngAsociarAcontecimientoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ongId = this.route.snapshot.paramMap.get('id');
-    this.asociarForm.patchValue({ ongId: this.ongId });
+    this.userId = localStorage.getItem('userId');
 
-    if (this.ongId) {
-      this.acontecimientoService.getAcontecimientosByOngId(this.ongId).subscribe({
-        next: (data) => {
-          this.asociados = data;
-          this.loadNoAsociados();
+    if (this.userId) {
+      this.ongService.getIdOngPorIdUsuario(this.userId).subscribe({
+        next: (ongId) => {
+          this.ongId = ongId;
+          this.acontecimientoService.getAcontecimientosByOngId(this.ongId).subscribe({
+            next: (data) => {
+              this.asociados = data;
+              console.log('Acontecimientos asociados:', data);
+              this.loadNoAsociados();
+            },
+            error: (err) => {
+              console.error('Error fetching acontecimientos asociados', err);
+              this.showAlert(`Error al obtener los acontecimientos asociados: ${err.message}`);
+            }
+          });
+
+          this.ongService.getOngById(this.userId).subscribe({
+            next: (data) => {
+              this.ong = data;
+              console.log('ONG:', data);
+            },
+            error: (err) => {
+              console.error('Error fetching ONG details', err);
+              this.showAlert(`Error al obtener los detalles de la ONG: ${err.message}`);
+            }
+          });
         },
         error: (err) => {
-          console.error('Error fetching asociados', err);
-          this.showAlert(`Error al obtener los acontecimientos asociados: ${err.message}`);
+          console.error('Error fetching ONG ID', err);
+          this.showAlert(`Error al obtener el ID de la ONG: ${err.message}`);
         }
       });
     }
+
   }
 
   loadNoAsociados() {

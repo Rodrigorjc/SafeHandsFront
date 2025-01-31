@@ -106,6 +106,7 @@ export class AdminOngComponent implements OnInit {
       return;
     }
 
+    this.ongForm.patchValue({img: this.imageUrl});
     this.ongService.crearOng(this.ongForm.value).subscribe({
       next: (createdOng: Ong) => {
         this.ongs.push(createdOng);

@@ -47,6 +47,7 @@ export class ProductosProveedorComponent implements OnInit {
   alertMessage: string | null = null;
   successMessage: string | null = null
   imageUrl: string | null = null;
+  userId: any | null = null;
 
   @ViewChild('productFormElement') productFormElement!: ElementRef;
 
@@ -71,7 +72,7 @@ export class ProductosProveedorComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productoId = this.route.snapshot.paramMap.get('id');
+    this.productoId = localStorage.getItem('userId');
     if (this.productoId) {
       this.productoService.obtenerProductoId(this.productoId).subscribe({
         next: (data) => {
@@ -147,7 +148,7 @@ export class ProductosProveedorComponent implements OnInit {
     if (!this.validateForm(this.editProductForm)) {
       return;
     }
-
+    this.editProductForm.patchValue({ url: this.imageUrl });
     this.productoService.editarProducto(this.editProductForm.value, this.productoId).subscribe({
       next: (updatedProduct) => {
         const index = this.products.findIndex(p => p.id === updatedProduct.id);
@@ -166,6 +167,13 @@ export class ProductosProveedorComponent implements OnInit {
         Swal.fire('Error', 'Error actualizando producto', 'error');
       }
     });
+  }
+
+  editProduct(product: Product) {
+    this.editProductForm.patchValue(product);
+    this.showEditForm = true;
+    this.productoId = product.id.toString();
+    this.scrollToForm();
   }
 
   confirmDelete(id: number): void {
@@ -216,12 +224,6 @@ export class ProductosProveedorComponent implements OnInit {
     }, 3000); // Clear the success message after 10 seconds
   }
 
-  editProduct(product: Product) {
-    this.editProductForm.patchValue(product);
-    this.showEditForm = true;
-    this.productoId = product.id.toString();
-    this.scrollToForm();
-  }
 
   private scrollToForm() {
     setTimeout(() => {

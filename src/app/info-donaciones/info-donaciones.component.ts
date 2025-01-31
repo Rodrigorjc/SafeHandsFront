@@ -41,7 +41,7 @@ export class InfoDonacionesComponent implements OnInit{
   }
 
   redireccion() {
-    this.router.navigate(['/listado/aconteciminetos']);
+    this.router.navigate(['/listado/acontecimientos']);
   }
 
   getTotal(){

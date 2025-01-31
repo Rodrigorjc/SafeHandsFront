@@ -3,4 +3,5 @@ export class ProveedorInfo {
   id?: number;
   img?: string;
   total?: number;
+
 }

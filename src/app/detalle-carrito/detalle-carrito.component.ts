@@ -75,7 +75,59 @@ export class DetalleCarritoComponent implements OnInit{
     return new Pedido(userId, productos);
   }
 
+  validarDatosPago(): boolean {
+    if (this.metodoPagoSeleccionado === 'tarjeta') {
+      const { numero, titular, fecha, cvv } = this.datosPago['tarjeta'];
+      if (!numero || !titular || !fecha || !cvv) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos incompletos',
+          text: 'Por favor, completa todos los campos de la tarjeta.',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      }
+    } else if (this.metodoPagoSeleccionado === 'paypal') {
+      const { email } = this.datosPago['paypal'];
+      if (!email) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos incompletos',
+          text: 'Por favor, ingresa tu correo de PayPal.',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      }
+    } else if (this.metodoPagoSeleccionado === 'transferencia') {
+      const { banco, cuenta } = this.datosPago['transferencia'];
+      if (!banco || !cuenta) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos incompletos',
+          text: 'Por favor, completa todos los campos de la transferencia bancaria.',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      }
+    }
+    return true;
+  }
+
   siguientePaso(): void {
+    if (this.pasoActual === 1 && !this.metodoPagoSeleccionado) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Método de pago no seleccionado',
+        text: 'Por favor, selecciona un método de pago.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    if (this.pasoActual === 2 && !this.validarDatosPago()) {
+      return;
+    }
+
     if (this.pasoActual < 3) {
       this.pasoActual++;
     } else {
@@ -92,7 +144,6 @@ export class DetalleCarritoComponent implements OnInit{
       });
 
       const pedido = this.crearPedido();
-
 
       // Realiza la petición al backend
       this.carritoService.pagarCarrito(pedido)
